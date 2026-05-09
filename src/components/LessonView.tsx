@@ -5,6 +5,7 @@ import remarkGfm from "remark-gfm";
 import { lessonBySlug, lessons } from "../content/lessons";
 import CodeRunner from "./CodeRunner";
 import TerminalPane from "./TerminalPane";
+import Checkpoint from "./Checkpoint";
 
 export default function LessonView() {
   const { slug } = useParams<{ slug: string }>();
@@ -80,6 +81,12 @@ export default function LessonView() {
             <div className="mt-8 rounded-lg border-2 border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/30 p-4">
               <p className="font-bold text-amber-800 dark:text-amber-300 mb-1">⚠ Gotcha</p>
               <p className="text-amber-900 dark:text-amber-200 text-sm">{lesson.gotcha}</p>
+            </div>
+          )}
+
+          {lesson.checkpoint && (
+            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+              <Checkpoint checkpoint={lesson.checkpoint} />
             </div>
           )}
 
