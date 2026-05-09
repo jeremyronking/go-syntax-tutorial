@@ -1,26 +1,32 @@
 import { useState, useCallback, useRef } from "react";
 import Editor from "@monaco-editor/react";
 import { compileGo, type PlaygroundResponse } from "../lib/playground";
+import { useProgressStore } from "../store/progress";
 
 interface CodeRunnerProps {
   starterCode: string;
   streamReplay?: boolean;
-  onCodeChange?: (code: string) => void;
+  slug: string;
 }
 
-export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: CodeRunnerProps) {
-  const [code, setCode] = useState(starterCode);
+export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunnerProps) {
+  const editorDraft = useProgressStore((s) => s.editorDrafts[slug]);
+  const [code, setCode] = useState(editorDraft ?? starterCode);
   const [output, setOutput] = useState<string[]>([]);
   const [errors, setErrors] = useState<string | null>(null);
   const [running, setRunning] = useState(false);
   const [replaying, setReplaying] = useState(false);
   const skipRef = useRef(false);
 
+  const setEditorDraft = useProgressStore((s) => s.setEditorDraft);
+  const setLessonStatus = useProgressStore((s) => s.setLessonStatus);
+
   const handleRun = useCallback(async () => {
     setRunning(true);
     setOutput([]);
     setErrors(null);
     skipRef.current = false;
+    setLessonStatus(slug, "in-progress");
 
     try {
       const res: PlaygroundResponse = await compileGo(code);
@@ -43,9 +49,7 @@ export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: 
 
       // Stream replay
       setReplaying(true);
-      // Stream replay
       const accumulated: string[] = [];
-      let elapsed = 0;
 
       for (const event of res.Events) {
         if (skipRef.current) {
@@ -53,10 +57,7 @@ export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: 
           continue;
         }
 
-        // Delay is in nanoseconds — convert to ms
         const delayMs = event.Delay / 1_000_000;
-        elapsed += delayMs;
-
         if (delayMs > 0) {
           await new Promise<void>((resolve) => setTimeout(resolve, delayMs));
         }
@@ -70,7 +71,7 @@ export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: 
       setErrors(err instanceof Error ? err.message : "Unknown error");
       setRunning(false);
     }
-  }, [code, streamReplay]);
+  }, [code, streamReplay, slug, setLessonStatus]);
 
   const handleReset = useCallback(() => {
     setCode(starterCode);
@@ -78,20 +79,16 @@ export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: 
     setErrors(null);
     setReplaying(false);
     skipRef.current = false;
-    onCodeChange?.(starterCode);
-  }, [starterCode, onCodeChange]);
-
-  const handleSkip = useCallback(() => {
-    skipRef.current = true;
-  }, []);
+    setEditorDraft(slug, starterCode);
+  }, [starterCode, slug, setEditorDraft]);
 
   const handleEditorChange = useCallback(
     (value: string | undefined) => {
       const v = value ?? "";
       setCode(v);
-      onCodeChange?.(v);
+      setEditorDraft(slug, v);
     },
-    [onCodeChange],
+    [slug, setEditorDraft],
   );
 
   return (
@@ -113,15 +110,13 @@ export default function CodeRunner({ starterCode, streamReplay, onCodeChange }: 
         </button>
         {replaying && (
           <button
-            onClick={handleSkip}
+            onClick={() => { skipRef.current = true; }}
             className="px-3 py-1.5 rounded border border-amber-400 dark:border-amber-500 text-amber-700 dark:text-amber-300 text-sm hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors"
           >
             Skip animation →
           </button>
         )}
-        <span className="ml-auto text-xs text-gray-400">
-          ⌘Enter
-        </span>
+        <span className="ml-auto text-xs text-gray-400">⌘Enter</span>
       </div>
 
       {/* Monaco editor */}

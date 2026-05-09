@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { lessonBySlug, lessons } from "../content/lessons";
@@ -9,23 +9,17 @@ import TerminalPane from "./TerminalPane";
 export default function LessonView() {
   const { slug } = useParams<{ slug: string }>();
   const lesson = lessonBySlug(slug ?? "");
-  const [, setEditorDraft] = useState<string | undefined>(undefined);
 
   // Cmd/Ctrl+Enter keyboard shortcut
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
         e.preventDefault();
-        // The CodeRunner handles its own run; this is just a signal
         document.dispatchEvent(new CustomEvent("gotour:run"));
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
-
-  const handleCodeChange = useCallback((code: string) => {
-    setEditorDraft(code);
   }, []);
 
   if (!lesson) {
@@ -51,7 +45,7 @@ export default function LessonView() {
     <CodeRunner
       starterCode={lesson.starterCode ?? ""}
       streamReplay={lesson.streamReplay}
-      onCodeChange={handleCodeChange}
+      slug={lesson.slug}
     />
   ) : lesson.runMode === "terminal" ? (
     <TerminalPane lines={lesson.terminalOutput ?? []} />
@@ -84,12 +78,8 @@ export default function LessonView() {
 
           {lesson.gotcha && (
             <div className="mt-8 rounded-lg border-2 border-amber-400 dark:border-amber-500 bg-amber-50 dark:bg-amber-950/30 p-4">
-              <p className="font-bold text-amber-800 dark:text-amber-300 mb-1">
-                ⚠ Gotcha
-              </p>
-              <p className="text-amber-900 dark:text-amber-200 text-sm">
-                {lesson.gotcha}
-              </p>
+              <p className="font-bold text-amber-800 dark:text-amber-300 mb-1">⚠ Gotcha</p>
+              <p className="text-amber-900 dark:text-amber-200 text-sm">{lesson.gotcha}</p>
             </div>
           )}
 
