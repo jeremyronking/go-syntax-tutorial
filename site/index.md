@@ -41,6 +41,7 @@ Wall-clock between the agent's first phase commit and its Phase 19 polish commit
 | **Commits** (Phase 01–19) | 19 | 19 | 15 (some bundled) |
 | **Lines added** (excl. lockfile) | 4,997 | 4,744 | 5,494 |
 | **Files created** | 125 | 54 | 47 |
+| **Subscription** | Claude Max ($100/mo) | Google AI Pro ($20/mo, via Google One) | Ollama ($20/mo) |
 
 A few honest caveats:
 
@@ -48,7 +49,8 @@ A few honest caveats:
 - All three started from the same `458d83c` baseline (the spec commit). The clock starts at each agent's first phase commit so kickoff lag isn't counted.
 - **go-glm**'s extra hour is mid-run rework, not after-the-fact debugging: clean cadence through Phase 12, then ~41 minutes across two bundled "Phase 12–14" / "Phase 14–18" commits that revisit earlier work. Post-Phase-19 commits (a directory restructure and a dark-mode fix) are not included.
 - **go-claude**'s file count is an architecture choice — one TypeScript module per lesson — not 2× the work. The other two used a small handful of registry modules.
-- Token usage, $ cost, and model think-time aren't shown; git can't see them.
+- Token usage and model think-time aren't shown; git can't see them. Subscription cost is the flat monthly rate, not the marginal cost of this run.
+- All three runs were driven from the same workstation — an **M4 Max MacBook Pro (36 GB)** — but inference happened in each provider's cloud, so the laptop spec didn't influence the comparison.
 
 ## What this is
 
