@@ -2,6 +2,9 @@
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/700.css";
 
+/* Use class-based dark mode (toggle via .dark on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-gopher-cyan: #00ADD8;
   --color-gopher-cyan-light: #29BDE6;
