@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Editor from "@monaco-editor/react";
 import { compileGo, type PlaygroundResponse } from "../lib/playground";
 import { useProgressStore } from "../store/progress";
@@ -17,6 +17,16 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
   const [running, setRunning] = useState(false);
   const [replaying, setReplaying] = useState(false);
   const skipRef = useRef(false);
+  const [editorTheme, setEditorTheme] = useState(document.documentElement.classList.contains("dark") ? "vs-dark" : "light");
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setEditorTheme(document.documentElement.classList.contains("dark") ? "vs-dark" : "light");
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
   const prefersReducedMotion = useRef(
     typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false,
   );
@@ -50,14 +60,12 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
         return;
       }
 
-      // If user prefers reduced motion, skip animation
       if (prefersReducedMotion.current) {
         setOutput(res.Events.map((e) => e.Message));
         setRunning(false);
         return;
       }
 
-      // Stream replay
       setReplaying(true);
       const accumulated: string[] = [];
 
@@ -101,10 +109,12 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
     [slug, setEditorDraft],
   );
 
+  const hasOutput = errors || output.length > 0;
+
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shrink-0">
         <button
           onClick={handleRun}
           disabled={running}
@@ -129,12 +139,12 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
         <span className="ml-auto text-xs text-gray-400">⌘Enter</span>
       </div>
 
-      {/* Monaco editor */}
-      <div className="flex-1 min-h-0">
+      {/* Editor — scrolls when content is long; shrinks when output appears */}
+      <div className={hasOutput ? "h-[45%]" : "flex-1"}>
         <Editor
           height="100%"
           language="go"
-          theme="vs-dark"
+          theme={editorTheme}
           value={code}
           onChange={handleEditorChange}
           options={{
@@ -149,19 +159,26 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
         />
       </div>
 
-      {/* Output pane */}
-      <div className="border-t border-gray-200 dark:border-gray-700 bg-gray-950 text-gray-100 max-h-48 overflow-y-auto">
-        {errors && (
-          <pre className="p-3 text-red-400 font-mono text-sm whitespace-pre-wrap">{errors}</pre>
-        )}
-        {output.length > 0 && (
-          <pre className="p-3 font-mono text-sm whitespace-pre-wrap">
-            {output.join("")}
-          </pre>
-        )}
-        {!errors && output.length === 0 && !running && (
-          <p className="p-3 text-gray-500 text-sm">Output will appear here after running.</p>
-        )}
+      {/* Output — always visible; fills remaining space below editor */}
+      <div className={hasOutput ? "flex-1 min-h-0" : "h-[120px] shrink-0"}>
+        <div className="h-full flex flex-col border-t border-gray-200 dark:border-gray-700">
+          <div className="px-3 py-1 text-xs font-mono text-gray-400 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shrink-0">
+            Output
+          </div>
+          <div className="flex-1 overflow-y-auto bg-gray-950 p-3">
+            {errors && (
+              <pre className="text-red-400 font-mono text-sm whitespace-pre-wrap">{errors}</pre>
+            )}
+            {output.length > 0 && (
+              <pre className="font-mono text-sm whitespace-pre-wrap text-gray-100">
+                {output.join("")}
+              </pre>
+            )}
+            {!errors && output.length === 0 && !running && (
+              <p className="text-gray-500 text-sm">Output will appear here after running.</p>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

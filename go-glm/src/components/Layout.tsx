@@ -53,7 +53,7 @@ export default function Layout() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col">
+    <div className="h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 flex flex-col">
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm">
         <div className="max-w-screen-2xl mx-auto flex items-center justify-between px-4 h-14">
@@ -90,7 +90,7 @@ export default function Layout() {
         )}
 
         {/* Content pane */}
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-hidden">
           <Outlet />
         </main>
       </div>
