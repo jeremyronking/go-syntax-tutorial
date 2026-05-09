@@ -6,6 +6,7 @@ import { functionsCheckpoint } from './checkpoints/functions';
 import { interfacesCheckpoint } from './checkpoints/interfaces';
 import { genericsCheckpoint } from './checkpoints/generics';
 import { errorsCheckpoint } from './checkpoints/errors';
+import { concurrencyCheckpoint } from './checkpoints/concurrency';
 
 export const checkpoints: Checkpoint[] = [
   fundamentalsCheckpoint,
@@ -15,6 +16,7 @@ export const checkpoints: Checkpoint[] = [
   interfacesCheckpoint,
   genericsCheckpoint,
   errorsCheckpoint,
+  concurrencyCheckpoint,
 ];
 
 export function checkpointBySection(sectionId: string): Checkpoint | undefined {

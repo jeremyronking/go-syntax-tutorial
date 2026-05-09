@@ -32,6 +32,13 @@ import { whenNotGenerics } from './lessons/when-not-generics';
 import { errorInterface } from './lessons/error-interface';
 import { errorWrapping } from './lessons/error-wrapping';
 import { panicRecover } from './lessons/panic-recover';
+import { goroutines } from './lessons/goroutines';
+import { channels } from './lessons/channels';
+import { closeRange } from './lessons/close-range';
+import { selectLesson } from './lessons/select';
+import { syncMutex } from './lessons/sync-mutex';
+import { atomics } from './lessons/atomics';
+import { contextLesson } from './lessons/context';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -67,6 +74,13 @@ export const lessons: Lesson[] = [
   errorInterface,
   errorWrapping,
   panicRecover,
+  goroutines,
+  channels,
+  closeRange,
+  selectLesson,
+  syncMutex,
+  atomics,
+  contextLesson,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
