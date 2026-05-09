@@ -67,7 +67,8 @@ export default function CodeRunner({ initialCode, streamReplay, onChange }: Code
       if (res.Events && res.Events.length > 0) {
         rawEvents.current = res.Events
         
-        if (streamReplay) {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        if (streamReplay && !prefersReducedMotion) {
           setIsReplaying(true)
           let cumulatedDelay = 0
           

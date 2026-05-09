@@ -60,7 +60,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh] bg-zinc-900/50 backdrop-blur-sm" onClick={onClose} role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh] bg-zinc-900/50 backdrop-blur-sm" onClick={onClose} role="dialog" aria-modal="true" aria-label="Command Palette">
       <div 
         className="w-full max-w-xl bg-white dark:bg-zinc-900 rounded-xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800"
         onClick={e => e.stopPropagation()}

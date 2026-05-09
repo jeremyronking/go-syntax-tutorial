@@ -13,4 +13,21 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@monaco-editor/react') || id.includes('monaco-editor')) {
+            return 'monaco'
+          }
+          if (id.includes('react/') || id.includes('react-dom/') || id.includes('react-router')) {
+            return 'react-vendor'
+          }
+          if (id.includes('react-markdown') || id.includes('remark-gfm')) {
+            return 'markdown'
+          }
+        }
+      }
+    }
+  }
 })

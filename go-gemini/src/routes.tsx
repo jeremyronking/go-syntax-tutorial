@@ -1,7 +1,9 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Layout from './components/Layout'
 import Landing from './pages/Landing'
-import LessonView from './pages/LessonView'
+
+const LessonView = lazy(() => import('./pages/LessonView'))
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'lesson/:slug',
-        element: <LessonView />
+        element: (
+          <Suspense fallback={<div className="flex h-full items-center justify-center p-8 text-zinc-500">Loading lesson...</div>}>
+            <LessonView />
+          </Suspense>
+        )
       }
     ]
   }
