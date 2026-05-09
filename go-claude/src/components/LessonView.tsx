@@ -52,7 +52,7 @@ export function LessonView() {
 
         {/* Right column — sticky on lg+, exactly fills the viewport below the
             topbar so the OUTPUT region is always visible without scrolling. */}
-        <aside className="mt-8 pb-10 lg:mt-0 lg:pb-0 lg:sticky lg:top-12 lg:h-[calc(100vh-3rem)]">
+        <aside className="mt-8 pb-10 lg:mt-0 lg:pb-0 lg:sticky lg:top-12 lg:h-[calc(100vh-8rem)]">
           <div className="h-[28rem] lg:h-full">
             <CodeArea lesson={lesson} />
           </div>
