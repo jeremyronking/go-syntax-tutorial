@@ -25,10 +25,11 @@ export function LessonView() {
   const section = sections.find((s) => s.id === lesson.sectionId);
 
   return (
-    <article className="px-6 lg:px-10 py-10">
+    <article className="px-6 lg:px-10">
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:gap-10 lg:items-start">
-        {/* Left column — prose, scrolls with the page */}
-        <div className="max-w-prose lg:max-w-none lg:min-w-0">
+        {/* Left column — prose, scrolls with the page. Vertical padding lives
+            here (not on the article) so it doesn't push the right pane down. */}
+        <div className="py-10 max-w-prose lg:max-w-none lg:min-w-0">
           <p className="font-mono text-xs uppercase tracking-widest text-gopher">
             {section?.letter ?? '?'} · {section?.title ?? lesson.sectionId}
           </p>
@@ -49,11 +50,9 @@ export function LessonView() {
           <LessonNav slug={lesson.slug} />
         </div>
 
-        {/* Right column — sticky on lg+, full viewport height under the topbar.
-            Output sits at the bottom of this pane and never scrolls off-screen;
-            the editor flexes to fill above it. Below lg, the column stacks
-            below the prose with a fixed height. */}
-        <aside className="mt-8 lg:mt-0 lg:sticky lg:top-12 lg:h-[calc(100vh-3rem)]">
+        {/* Right column — sticky on lg+, exactly fills the viewport below the
+            topbar so the OUTPUT region is always visible without scrolling. */}
+        <aside className="mt-8 pb-10 lg:mt-0 lg:pb-0 lg:sticky lg:top-12 lg:h-[calc(100vh-3rem)]">
           <div className="h-[28rem] lg:h-full">
             <CodeArea lesson={lesson} />
           </div>
