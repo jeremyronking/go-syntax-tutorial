@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: go-claude
-    details: Built by Claude (Sonnet 4.5) in Claude Code. Right-hand sticky code panel, terminal pane for non-runnable lessons, Cmd+K palette.
+    details: Built by Claude (Opus 4.7) in Claude Code. Right-hand sticky code panel, terminal pane for non-runnable lessons, Cmd+K palette.
     link: https://go-claude.jking.ai
     linkText: Open go-claude
   - title: go-gemini
