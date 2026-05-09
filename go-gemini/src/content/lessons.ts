@@ -1,8 +1,10 @@
 import type { Lesson } from './types'
-import { helloWorld } from './lessons/hello-world'
+import { sectionALessons } from './lessons/section-a'
+import { sectionBLessons } from './lessons/section-b'
 
 export const lessons: Lesson[] = [
-  helloWorld,
+  ...sectionALessons,
+  ...sectionBLessons,
 ]
 
 export function getLessonBySlug(slug: string): Lesson | undefined {
