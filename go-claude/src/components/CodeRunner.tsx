@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import type { Lesson } from '../content/types';
 import { compile, type PlaygroundEvent, type PlaygroundResponse } from '../lib/playground';
+import { useProgressStore } from '../store/progress';
 
 const NS_PER_MS = 1_000_000;
 
@@ -25,7 +26,13 @@ export function CodeRunner({
   initialCode?: string;
   onChange?: (code: string) => void;
 }) {
-  const [code, setCode] = useState(initialCode ?? lesson.starterCode ?? '');
+  const setEditorDraft = useProgressStore((s) => s.setEditorDraft);
+  const setLessonStatus = useProgressStore((s) => s.setLessonStatus);
+  const persistedDraft = useProgressStore((s) => s.editorDrafts[lesson.slug]);
+  const [code, setCode] = useState(
+    initialCode ?? persistedDraft ?? lesson.starterCode ?? ''
+  );
+  const draftDebounce = useRef<number | undefined>(undefined);
   const [output, setOutput] = useState<Output[]>([]);
   const [status, setStatus] = useState<RunStatus>('idle');
   const replayCancel = useRef<{ cancelled: boolean } | null>(null);
@@ -45,17 +52,20 @@ export function CodeRunner({
   };
 
   const reset = () => {
-    setCode(lesson.starterCode ?? '');
+    const starter = lesson.starterCode ?? '';
+    setCode(starter);
     setOutput([]);
     setStatus('idle');
     skipReplay();
-    onChange?.(lesson.starterCode ?? '');
+    onChange?.(starter);
+    setEditorDraft(lesson.slug, starter);
   };
 
   const run = async () => {
     skipReplay();
     setOutput([]);
     setStatus('running');
+    setLessonStatus(lesson.slug, 'in-progress');
     try {
       const response: PlaygroundResponse = await compile({ body: code });
       const out: Output[] = [];
@@ -159,6 +169,10 @@ export function CodeRunner({
             const next = v ?? '';
             setCode(next);
             onChange?.(next);
+            window.clearTimeout(draftDebounce.current);
+            draftDebounce.current = window.setTimeout(() => {
+              setEditorDraft(lesson.slug, next);
+            }, 500);
           }}
           onMount={handleEditorMount}
           options={{
