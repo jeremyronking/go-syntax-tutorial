@@ -1,11 +1,14 @@
 import express from "express";
 import cors from "cors";
+import path from "node:path";
 
 const PORT = parseInt(process.env.PORT ?? "8787", 10);
 const UPSTREAM =
   process.env.PLAYGROUND_UPSTREAM ?? "https://play.golang.org";
+const STATIC_DIR = process.env.STATIC_DIR;
 
 const app = express();
+app.set("trust proxy", true); // behind Cloudflare tunnel / nginx
 app.use(cors());
 app.use(express.text({ type: "application/x-www-form-urlencoded" }));
 
@@ -46,7 +49,25 @@ app.get("/health", (_req, res) => {
   res.json({ ok: true, upstream: UPSTREAM });
 });
 
+if (STATIC_DIR) {
+  app.use(
+    express.static(STATIC_DIR, {
+      maxAge: "1y",
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith("index.html")) {
+          res.setHeader("Cache-Control", "no-cache");
+        }
+      },
+    })
+  );
+  // SPA fallback (Express 4 wildcard).
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(STATIC_DIR, "index.html"));
+  });
+}
+
 app.listen(PORT, () => {
-  console.log(`GoTour proxy listening on :${PORT}`);
+  console.log(`go-glm listening on :${PORT}`);
   console.log(`  Upstream: ${UPSTREAM}/compile`);
+  if (STATIC_DIR) console.log(`  Static: ${STATIC_DIR}`);
 });

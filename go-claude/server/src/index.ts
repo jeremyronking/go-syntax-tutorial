@@ -1,10 +1,13 @@
 import express from 'express';
+import path from 'node:path';
 
 const PORT = Number(process.env.PORT ?? 8787);
 const PLAYGROUND_UPSTREAM =
   process.env.PLAYGROUND_UPSTREAM ?? 'https://play.golang.org/compile';
+const STATIC_DIR = process.env.STATIC_DIR; // unset in dev (Vite serves), set in prod container
 
 const app = express();
+app.set('trust proxy', true); // behind Cloudflare tunnel / nginx
 
 app.use(
   express.urlencoded({
@@ -46,7 +49,27 @@ app.post('/api/compile', async (req, res) => {
   }
 });
 
+if (STATIC_DIR) {
+  app.use(
+    express.static(STATIC_DIR, {
+      maxAge: '1y',
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('index.html')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        }
+      },
+    })
+  );
+  // SPA fallback for client-side routing — Express 4 wildcard.
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(STATIC_DIR, 'index.html'));
+  });
+}
+
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`go-claude proxy listening on :${PORT} → ${PLAYGROUND_UPSTREAM}`);
+  console.log(
+    `go-claude listening on :${PORT} → ${PLAYGROUND_UPSTREAM}` +
+      (STATIC_DIR ? ` · static: ${STATIC_DIR}` : '')
+  );
 });

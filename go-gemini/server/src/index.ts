@@ -1,8 +1,11 @@
 import express from 'express';
+import path from 'node:path';
 
 const app = express();
+app.set('trust proxy', true); // behind Cloudflare tunnel / nginx
 const port = process.env.PORT || 8787;
 const upstream = process.env.PLAYGROUND_UPSTREAM || 'https://play.golang.org/compile';
+const STATIC_DIR = process.env.STATIC_DIR;
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -39,6 +42,26 @@ app.post('/api/compile', async (req, res) => {
   }
 });
 
+if (STATIC_DIR) {
+  app.use(
+    express.static(STATIC_DIR, {
+      maxAge: '1y',
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('index.html')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        }
+      },
+    })
+  );
+  // SPA fallback (Express 4 wildcard).
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(STATIC_DIR, 'index.html'));
+  });
+}
+
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}, proxying /api/compile to ${upstream}`);
+  console.log(
+    `go-gemini listening on :${port} → ${upstream}` +
+      (STATIC_DIR ? ` · static: ${STATIC_DIR}` : '')
+  );
 });
