@@ -34,4 +34,13 @@ go-claude/
 └── package.json
 ```
 
-Subsequent phases add the Playground proxy, the layout, the lesson framework, the code runner, content, and polish. See repo issue #1 for the phase tracker.
+## Code execution
+Snippets compile against the public Go Playground. In dev, Vite proxies `/api/compile` → `https://play.golang.org/compile`. In prod, run the Express service in [`server/`](./server/README.md) and point your hosting at it.
+
+```bash
+# from this directory
+pnpm --filter go-claude-proxy test:smoke   # round-trip a hello-world against the upstream
+pnpm --filter go-claude-proxy dev          # run the prod-style proxy on :8787
+```
+
+Subsequent phases add the layout, the lesson framework, the code runner, content, and polish. See repo issue #1 for the phase tracker.
