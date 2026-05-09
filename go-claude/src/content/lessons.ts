@@ -22,6 +22,16 @@ import { functions } from './lessons/functions';
 import { variadic } from './lessons/variadic';
 import { closures } from './lessons/closures';
 import { methods } from './lessons/methods';
+import { interfacesLesson } from './lessons/interfaces';
+import { typeAssertions } from './lessons/type-assertions';
+import { embedding } from './lessons/embedding';
+import { stdlibInterfaces } from './lessons/stdlib-interfaces';
+import { typeParameters } from './lessons/type-parameters';
+import { constraints } from './lessons/constraints';
+import { whenNotGenerics } from './lessons/when-not-generics';
+import { errorInterface } from './lessons/error-interface';
+import { errorWrapping } from './lessons/error-wrapping';
+import { panicRecover } from './lessons/panic-recover';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -47,6 +57,16 @@ export const lessons: Lesson[] = [
   variadic,
   closures,
   methods,
+  interfacesLesson,
+  typeAssertions,
+  embedding,
+  stdlibInterfaces,
+  typeParameters,
+  constraints,
+  whenNotGenerics,
+  errorInterface,
+  errorWrapping,
+  panicRecover,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
