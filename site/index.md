@@ -31,6 +31,25 @@ features:
     linkText: Open go-glm
 ---
 
+## By the numbers
+
+Wall-clock between the agent's first phase commit and its Phase 19 polish commit, plus a few git-derivable side-channels:
+
+| | go-claude | go-gemini | go-glm |
+|---|---|---|---|
+| **Implementation time** | 24m 32s | 36m 18s | 1h 13m 18s |
+| **Commits** (Phase 01–19) | 19 | 19 | 15 (some bundled) |
+| **Lines added** (excl. lockfile) | 4,997 | 4,744 | 5,494 |
+| **Files created** | 125 | 54 | 47 |
+
+A few honest caveats:
+
+- "Implementation time" is wall-clock between commits, not active model think-time. It includes any pauses, retries, or tool waits the agent didn't actively bill against.
+- All three started from the same `458d83c` baseline (the spec commit). The clock starts at each agent's first phase commit so kickoff lag isn't counted.
+- **go-glm**'s extra hour is mid-run rework, not after-the-fact debugging: clean cadence through Phase 12, then ~41 minutes across two bundled "Phase 12–14" / "Phase 14–18" commits that revisit earlier work. Post-Phase-19 commits (a directory restructure and a dark-mode fix) are not included.
+- **go-claude**'s file count is an architecture choice — one TypeScript module per lesson — not 2× the work. The other two used a small handful of registry modules.
+- Token usage, $ cost, and model think-time aren't shown; git can't see them.
+
 ## What this is
 
 Three coding agents — **Claude Code**, **Google Antigravity**, and the **Pi coding agent** running **GLM-5.1** — were each handed the same brief and the same set of GitHub issues, then turned loose to build an interactive Go tutorial autonomously.
