@@ -13,6 +13,15 @@ import { switchLesson } from './lessons/switch';
 import { typeSwitchLesson } from './lessons/type-switch';
 import { deferLesson } from './lessons/defer';
 import { labelsGoto } from './lessons/labels-goto';
+import { arrays } from './lessons/arrays';
+import { slices } from './lessons/slices';
+import { maps } from './lessons/maps';
+import { structs } from './lessons/structs';
+import { pointers } from './lessons/pointers';
+import { functions } from './lessons/functions';
+import { variadic } from './lessons/variadic';
+import { closures } from './lessons/closures';
+import { methods } from './lessons/methods';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -29,6 +38,15 @@ export const lessons: Lesson[] = [
   typeSwitchLesson,
   deferLesson,
   labelsGoto,
+  arrays,
+  slices,
+  maps,
+  structs,
+  pointers,
+  functions,
+  variadic,
+  closures,
+  methods,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
