@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Landing } from './pages/Landing';
-import { LessonView } from './pages/LessonView';
+import { LessonView } from './components/LessonView';
 import { applyTheme, readTheme } from './lib/theme';
 
 export default function App() {
