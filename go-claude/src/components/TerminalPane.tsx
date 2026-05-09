@@ -3,8 +3,8 @@ import type { TerminalLine } from '../content/types';
 
 export function TerminalPane({ lines }: { lines: TerminalLine[] }) {
   return (
-    <div className="rounded-md overflow-hidden border border-divider bg-black/80 shadow-inner">
-      <div className="flex items-center gap-1.5 border-b border-divider px-3 py-2 bg-elevated/60">
+    <div className="rounded-md overflow-hidden border border-divider bg-black/80 shadow-inner flex flex-col h-full">
+      <div className="flex items-center gap-1.5 border-b border-divider px-3 py-2 bg-elevated/60 shrink-0">
         <span className="block size-2.5 rounded-full bg-red-500/70" />
         <span className="block size-2.5 rounded-full bg-yellow-500/70" />
         <span className="block size-2.5 rounded-full bg-green-500/70" />
@@ -12,7 +12,7 @@ export function TerminalPane({ lines }: { lines: TerminalLine[] }) {
           terminal · pre-recorded output
         </span>
       </div>
-      <pre className="p-4 text-sm font-mono leading-relaxed text-fg overflow-x-auto">
+      <pre className="flex-1 min-h-0 overflow-auto p-4 text-sm font-mono leading-relaxed text-fg">
         {lines.map((line, i) => (
           <TerminalLineRow key={i} line={line} />
         ))}

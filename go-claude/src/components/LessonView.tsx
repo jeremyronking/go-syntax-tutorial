@@ -25,29 +25,40 @@ export function LessonView() {
   const section = sections.find((s) => s.id === lesson.sectionId);
 
   return (
-    <article className="px-6 lg:px-10 py-10 max-w-prose">
-      <p className="font-mono text-xs uppercase tracking-widest text-gopher">
-        {section?.letter ?? '?'} · {section?.title ?? lesson.sectionId}
-      </p>
-      <h1 className="mt-2 text-3xl font-semibold">{lesson.title}</h1>
+    <article className="px-6 lg:px-10 py-10">
+      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,560px)] lg:gap-10 lg:items-start">
+        {/* Left column — prose, scrolls with the page */}
+        <div className="max-w-prose lg:max-w-none lg:min-w-0">
+          <p className="font-mono text-xs uppercase tracking-widest text-gopher">
+            {section?.letter ?? '?'} · {section?.title ?? lesson.sectionId}
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold">{lesson.title}</h1>
 
-      {lesson.concurrencyNote && (
-        <p className="mt-3 italic text-sm text-fg-muted">
-          Playground uses a deterministic fake clock; real runtime scheduling will differ.
-        </p>
-      )}
+          {lesson.concurrencyNote && (
+            <p className="mt-3 italic text-sm text-fg-muted">
+              Playground uses a deterministic fake clock; real runtime scheduling will differ.
+            </p>
+          )}
 
-      <div className="mt-6">
-        <Prose>{lesson.body}</Prose>
+          <div className="mt-6">
+            <Prose>{lesson.body}</Prose>
+          </div>
+
+          {lesson.gotcha && <Gotcha>{lesson.gotcha}</Gotcha>}
+
+          <LessonNav slug={lesson.slug} />
+        </div>
+
+        {/* Right column — sticky on lg+, full viewport height under the topbar.
+            Output sits at the bottom of this pane and never scrolls off-screen;
+            the editor flexes to fill above it. Below lg, the column stacks
+            below the prose with a fixed height. */}
+        <aside className="mt-8 lg:mt-0 lg:sticky lg:top-12 lg:h-[calc(100vh-3rem)]">
+          <div className="h-[28rem] lg:h-full">
+            <CodeArea lesson={lesson} />
+          </div>
+        </aside>
       </div>
-
-      <div className="mt-6">
-        <CodeArea lesson={lesson} />
-      </div>
-
-      {lesson.gotcha && <Gotcha>{lesson.gotcha}</Gotcha>}
-
-      <LessonNav slug={lesson.slug} />
     </article>
   );
 }

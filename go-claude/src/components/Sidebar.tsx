@@ -13,7 +13,7 @@ export function Sidebar() {
   return (
     <nav
       aria-label="Lesson navigation"
-      className="hidden lg:block w-64 shrink-0 border-r border-divider overflow-y-auto p-3 text-sm"
+      className="hidden lg:block w-64 shrink-0 border-r border-divider lg:sticky lg:top-12 lg:h-[calc(100vh-3rem)] overflow-y-auto p-3 text-sm"
     >
       <Link
         to="/"

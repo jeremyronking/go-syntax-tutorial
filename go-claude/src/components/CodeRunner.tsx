@@ -102,7 +102,6 @@ export function CodeRunner({
       if (!cancel.cancelled) {
         setStatus('done');
       } else {
-        // dump remaining
         for (const e of events) {
           if (out.find((o) => o.text === e.Message && o.kind === e.Kind)) continue;
           out.push({ kind: e.Kind, text: e.Message });
@@ -121,13 +120,13 @@ export function CodeRunner({
 
   useEffect(() => {
     if (initialCode !== undefined && initialCode !== code) setCode(initialCode);
-    // we only sync incoming initialCode on mount-ish
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialCode]);
 
   return (
-    <div className="rounded-md border border-divider bg-elevated/40 overflow-hidden">
-      <div className="flex items-center gap-2 border-b border-divider px-3 py-2">
+    <div className="rounded-md border border-divider bg-elevated/40 flex flex-col h-full overflow-hidden">
+      {/* Toolbar */}
+      <div className="flex items-center gap-2 border-b border-divider px-3 py-2 shrink-0">
         <span className="font-mono text-[10px] uppercase tracking-widest text-fg-muted">
           Playground
         </span>
@@ -159,7 +158,8 @@ export function CodeRunner({
         </div>
       </div>
 
-      <div className="h-[320px]">
+      {/* Editor flexes to fill available space; can scroll internally. */}
+      <div className="flex-1 min-h-0">
         <Editor
           height="100%"
           defaultLanguage="go"
@@ -188,23 +188,29 @@ export function CodeRunner({
         />
       </div>
 
+      {/* Output sticks at the bottom of the pane, capped at 35vh.
+          Scrolls internally for long compiler errors. */}
       {output.length > 0 && (
-        <div className="border-t border-divider bg-app p-3">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">Output</p>
-          <pre className="mt-2 whitespace-pre-wrap break-words text-sm font-mono leading-relaxed">
-            {output.map((o, i) => (
-              <span
-                key={i}
-                className={
-                  o.kind === 'compile-error' || o.kind === 'vet-error' || o.kind === 'stderr'
-                    ? 'text-red-400'
-                    : 'text-fg'
-                }
-              >
-                {o.text}
-              </span>
-            ))}
-          </pre>
+        <div className="border-t border-divider bg-app shrink-0 max-h-[35vh] overflow-y-auto">
+          <div className="px-3 py-2">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
+              Output
+            </p>
+            <pre className="mt-1 whitespace-pre-wrap break-words text-sm font-mono leading-relaxed">
+              {output.map((o, i) => (
+                <span
+                  key={i}
+                  className={
+                    o.kind === 'compile-error' || o.kind === 'vet-error' || o.kind === 'stderr'
+                      ? 'text-red-400'
+                      : 'text-fg'
+                  }
+                >
+                  {o.text}
+                </span>
+              ))}
+            </pre>
+          </div>
         </div>
       )}
     </div>
