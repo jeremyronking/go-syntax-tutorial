@@ -33,10 +33,11 @@ services:
       PLAYGROUND_UPSTREAM: https://play.golang.org
 
   go-landing:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: site/Dockerfile
+    image: go-landing:latest
     container_name: go-landing
     restart: unless-stopped
     ports:
       - "8180:80"
-    volumes:
-      - ./landing:/usr/share/nginx/html:ro
