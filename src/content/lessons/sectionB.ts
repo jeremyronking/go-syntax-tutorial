@@ -458,3 +458,70 @@ export const sectionACheckpoint: Lesson["checkpoint"] = {
     },
   ],
 };
+// Section B checkpoint
+export const sectionBCheckpoint: Lesson["checkpoint"] = {
+  id: "checkpoint-b",
+  sectionSlug: "B",
+  questions: [
+    {
+      type: "mcq",
+      prompt: "In what order do deferred functions execute in Go?",
+      options: [
+        "FIFO (first deferred, first executed)",
+        "LIFO (last deferred, first executed)",
+        "Random order",
+        "In the order they appear in the function body",
+      ],
+      correctIndex: 1,
+      explanation: "Deferred functions execute in LIFO (stack) order. The last defer registered runs first when the function returns.",
+    },
+    {
+      type: "mcq",
+      prompt: "What does this code print?\n\ndefer fmt.Println(\"first\")\ndefer fmt.Println(\"second\")",
+      options: [
+        "first then second",
+        "second then first",
+        "Compile error",
+        "Only second",
+      ],
+      correctIndex: 1,
+      explanation: "Defers execute in LIFO order, so 'second' is registered last and runs first.",
+    },
+    {
+      type: "mcq",
+      prompt: "What does this print?\n\nx := 1\ndefer fmt.Println(x)\nx = 2",
+      options: [
+        "2",
+        "1",
+        "Compile error",
+        "Undefined",
+      ],
+      correctIndex: 1,
+      explanation: "defer evaluates arguments immediately at the defer call. x is 1 when the defer is registered, so it prints 1 even though x becomes 2.",
+    },
+    {
+      type: "mcq",
+      prompt: "In Go 1.22+, what does this print?\n\nfor i := 0; i < 3; i++ {\n  go func() { fmt.Println(i) }()\n}",
+      options: [
+        "333 (all goroutines see final value)",
+        "012 (each goroutine captures its own i)",
+        "Random order but always 0, 1, 2",
+        "Compile error",
+      ],
+      correctIndex: 1,
+      explanation: "Go 1.22 changed loop variable semantics — each iteration gets its own variable. Before 1.22, this would print 333.",
+    },
+    {
+      type: "mcq",
+      prompt: "What does switch without an expression do in Go?",
+      options: [
+        "Compile error — switch always needs an expression",
+        "It's equivalent to if/else if/else",
+        "It matches on the type of the variable",
+        "It always falls through to default",
+      ],
+      correctIndex: 1,
+      explanation: "A switch without an expression is equivalent to switch true { case ... }. It's a cleaner way to write if/else if/else chains.",
+    },
+  ],
+};

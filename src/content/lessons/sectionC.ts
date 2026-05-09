@@ -21,7 +21,7 @@ func main() {
     c[0] = 99
     fmt.Println(b, c) // [1 2 3] [99 2 3]
 
-    fmt.Printf("type: %T\n", a) // [3]int
+    fmt.Printf("type: %T\\n", a) // [3]int
 }
 \`\`\`
 
@@ -40,7 +40,7 @@ func main() {
     c[0] = 99
     fmt.Println(b, c)
 
-    fmt.Printf("type: %T\n", a)
+    fmt.Printf("type: %T\\n", a)
 }`,
   },
   {
@@ -75,8 +75,7 @@ func main() {
     dst[0] = 99
     fmt.Println("original:", s, "copy:", dst)
 }
-\`\`\`,
-`,
+\`\`\``,
     runMode: "playground",
     starterCode: `package main
 
@@ -98,7 +97,7 @@ func main() {
     dst[0] = 99
     fmt.Println("original:", s, "copy:", dst)
 }`,
-    gotcha: "Slices alias their underlying array. `a[i:j]` shares storage with `a`. Modifying the sub-slice modifies the original. Use `copy` to break the alias, or use the three-index slice `a[i:j:k]` to prevent `append` from overwriting shared memory.",
+    gotcha: "Slices alias their underlying array. \${BT}a[i:j]\${BT} shares storage with \${BT}a\${BT}. Modifying the sub-slice modifies the original. Use \${BT}copy\${BT} to break the alias, or use the three-index slice \${BT}a[i:j:k]\${BT} to prevent \${BT}append\${BT} from overwriting shared memory.",
   },
   {
     slug: "maps",
@@ -167,7 +166,7 @@ func main() {
     fmt.Println(nilMap["x"])
     _ = nilMap
 }`,
-    gotcha: "Writing to a nil map panics at runtime. Always initialize maps with `make` or a map literal before inserting.",
+    gotcha: "Writing to a nil map panics at runtime. Always initialize maps with \${BT}make\${BT} or a map literal before inserting.",
   },
   {
     slug: "structs",
@@ -298,66 +297,70 @@ func main() {
 func inc(n *int) {
     *n++
 }`,
-  },
+  }
 ];
 
 export const sectionCCheckpoint: Lesson["checkpoint"] = {
-  id: "checkpoint-c",
-  sectionSlug: "C",
-  questions: [
+  "id": "checkpoint-c",
+  "sectionSlug": "C",
+  "questions": [
     {
-      type: "mcq",
-      prompt: "What does this program print?\n\n```go\na := []int{1, 2, 3}\nb := a[1:2]\nb = append(b, 99)\nfmt.Println(a)\n```",
-      options: [
+      "type": "mcq",
+      "prompt": "What does this program print?\n\na := []int{1, 2, 3}\nb := a[1:2]\nb = append(b, 99)\nfmt.Println(a)",
+      "options": [
         "[1 2 3]",
         "[1 2 99]",
         "[1 2 3 99]",
-        "Compile error",
+        "Compile error"
       ],
-      correctIndex: 1,
-      explanation: "The sub-slice b shares the underlying array with a. `append(b, 99)` overwrites a[2] because b has capacity to extend. This is slice aliasing in action.",
+      "correctIndex": 1,
+      "explanation": "The sub-slice b shares the underlying array with a. append(b, 99) overwrites a[2] because b has capacity to extend. This is slice aliasing."
     },
     {
-      type: "mcq",
-      prompt: "What happens when you write to a nil map?",
-      options: [
+      "type": "mcq",
+      "prompt": "What happens when you write to a nil map?",
+      "options": [
         "The value is stored with key as zero value",
         "Runtime panic",
         "Compile error",
-        "Returns the zero value",
+        "Returns the zero value"
       ],
-      correctIndex: 1,
-      explanation: "Writing to a nil map panics at runtime. Reads from a nil map return the zero value safely.",
+      "correctIndex": 1,
+      "explanation": "Writing to a nil map panics at runtime. Reads from a nil map return the zero value safely."
     },
     {
-      type: "mcq",
-      prompt: "What is the zero value of a slice?",
-      options: [
+      "type": "mcq",
+      "prompt": "What is the zero value of a slice?",
+      "options": [
         "An empty slice with capacity 0",
         "nil",
         "[]int{}",
-        "Undefined",
+        "Undefined"
       ],
-      correctIndex: 1,
-      explanation: "The zero value of a slice is nil. `var s []int` gives you nil, not an empty initialized slice.",
+      "correctIndex": 1,
+      "explanation": "The zero value of a slice is nil. var s []int gives you nil, not an empty initialized slice."
     },
     {
-      type: "fill",
-      prompt: "Write a three-index slice expression that takes elements 1-3 of slice `s` with capacity limited to 3:",
-      acceptedAnswers: ["s[1:4:4]", "s[1:3:4]", "s[1:4:5]"],
-      explanation: "s[low:high:max] gives length=high-low and capacity=max-low. The exact expression depends on what you need, but the key idea is that max caps the capacity.",
+      "type": "fill",
+      "prompt": "Write a three-index slice expression that takes elements 1-3 of slice s with capacity limited to 3:",
+      "acceptedAnswers": [
+        "s[1:4:4]",
+        "s[1:3:4]",
+        "s[1:4:5]"
+      ],
+      "explanation": "s[low:high:max] gives length=high-low and capacity=max-low."
     },
     {
-      type: "mcq",
-      prompt: "Can you compare two structs with `==`?",
-      options: [
+      "type": "mcq",
+      "prompt": "Can you compare two structs with ==?",
+      "options": [
         "Always, all structs are comparable",
         "Only if all fields are comparable",
         "Never, use reflect.DeepEqual",
-        "Only if they have exported fields",
+        "Only if they have exported fields"
       ],
-      correctIndex: 1,
-      explanation: "Structs are comparable with == only if all their fields are comparable. If a struct contains a slice or map, == is a compile error.",
-    },
-  ],
+      "correctIndex": 1,
+      "explanation": "Structs are comparable with == only if all their fields are comparable. A struct containing a slice or map makes == a compile error."
+    }
+  ]
 };

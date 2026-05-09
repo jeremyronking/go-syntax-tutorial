@@ -264,61 +264,61 @@ func main() {
     c.Reset()
     fmt.Println(c.Value())
 }`,
-    gotcha: "A value receiver on `*T` is callable on both `T` and `*T`. A pointer receiver on `T` is only callable on `*T` or an addressable `T`. If a method mutates, use a pointer receiver. A common pattern: pick pointer receivers for all methods on a type to be consistent.",
-  },
+    gotcha: "A value receiver on *T is callable on both T and *T. A pointer receiver on T is only callable on *T or an addressable T. If a method mutates, use a pointer receiver. A common pattern: pick pointer receivers for all methods on a type to be consistent.",
+  }
 ];
 
 export const sectionDCheckpoint: Lesson["checkpoint"] = {
-  id: "checkpoint-d",
-  sectionSlug: "D",
-  questions: [
+  "id": "checkpoint-d",
+  "sectionSlug": "D",
+  "questions": [
     {
       type: "mcq",
-      prompt: "Which receiver type should a `Scale(float64)` method on a `Point` struct use if it modifies the point?",
-      options: [
-        "Value receiver: `func (p Point) Scale(f float64)`",
-        "Pointer receiver: `func (p *Point) Scale(f float64)`",
+      "prompt": "Which receiver type should a Scale(float64) method on a Point struct use if it modifies the point?",
+      "options": [
+        "Value receiver: func (p Point) Scale(f float64)",
+        "Pointer receiver: func (p *Point) Scale(f float64)",
         "Either works identically",
-        "Neither — it must be a top-level function",
+        "Neither — it must be a top-level function"
       ],
-      correctIndex: 1,
-      explanation: "If the method mutates the receiver, it must use a pointer receiver. Value receivers operate on a copy.",
+      "correctIndex": 1,
+      "explanation": "If the method mutates the receiver, it must use a pointer receiver. Value receivers operate on a copy."
     },
     {
       type: "mcq",
-      prompt: "What does `...int` mean in a function signature `func sum(nums ...int)`?",
-      options: [
+      "prompt": "What does ...int mean in func sum(nums ...int)?",
+      "options": [
         "The function takes exactly one slice of int",
         "The function takes zero or more int arguments, collected into a slice",
         "The function takes an optional int",
-        "It's a compile error",
+        "It's a compile error"
       ],
-      correctIndex: 1,
-      explanation: "Variadic parameters collect any number of trailing arguments into a slice of that type.",
+      "correctIndex": 1,
+      "explanation": "Variadic parameters collect any number of trailing arguments into a slice of that type."
     },
     {
       type: "mcq",
-      prompt: "In a naked return, what values are returned?",
-      options: [
+      "prompt": "In a naked return, what values are returned?",
+      "options": [
         "Zero values of the return types",
         "The current values of the named return variables",
         "Compile error — naked returns are not allowed",
-        "The values from the last function call",
+        "The values from the last function call"
       ],
-      correctIndex: 1,
-      explanation: "Naked returns use the current values of the named return variables. They're valid only in short functions.",
+      "correctIndex": 1,
+      "explanation": "Naked returns use the current values of the named return variables. They're valid only in short functions."
     },
     {
       type: "mcq",
-      prompt: "Can you call `Counter{count: 5}.Inc()` if `Inc` has a pointer receiver?",
-      options: [
-        "Yes, if `Inc` takes `*Counter`",
+      "prompt": "Can you call Counter{count: 5}.Inc() if Inc has a pointer receiver?",
+      "options": [
+        "Yes, if Inc takes *Counter",
         "No — the literal is not addressable",
         "Only if you store it in a variable first",
-        "Compile error",
+        "Compile error"
       ],
-      correctIndex: 1,
-      explanation: "Composite literals like `Counter{count: 5}` are not addressable, so you can't call pointer-receiver methods on them. Store in a variable first: `c := Counter{count: 5}; c.Inc()`.",
-    },
-  ],
+      "correctIndex": 1,
+      "explanation": "Composite literals like Counter{count: 5} are not addressable. Store in a variable first: c := Counter{count: 5}; c.Inc()"
+    }
+  ]
 };
