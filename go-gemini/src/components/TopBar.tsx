@@ -2,7 +2,7 @@ import { useThemeStore } from '../store/theme'
 import { Sun, Moon, Search } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
-export default function TopBar() {
+export default function TopBar({ onOpenPalette }: { onOpenPalette?: () => void }) {
   const { theme, toggleTheme } = useThemeStore()
 
   return (
@@ -15,7 +15,10 @@ export default function TopBar() {
       </div>
 
       <div className="flex-1 max-w-md px-4 hidden md:block">
-        <button className="w-full flex items-center justify-between px-3 py-1.5 text-sm text-zinc-500 bg-zinc-100 dark:bg-zinc-800 rounded-md border border-zinc-200 dark:border-zinc-700 hover:border-gotour-cyan transition-colors focus:outline-none">
+        <button 
+          onClick={onOpenPalette}
+          className="w-full flex items-center justify-between px-3 py-1.5 text-sm text-zinc-500 bg-zinc-100 dark:bg-zinc-800 rounded-md border border-zinc-200 dark:border-zinc-700 hover:border-gotour-cyan transition-colors focus:outline-none"
+        >
           <div className="flex items-center gap-2">
             <Search size={16} />
             <span>Search...</span>
