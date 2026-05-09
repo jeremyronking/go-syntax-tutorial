@@ -29,14 +29,14 @@ export default function Layout() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors">
+    <div className="h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors">
       <TopBar onOpenPalette={() => setIsPaletteOpen(true)} />
       <div className="flex-1 flex overflow-hidden">
         {/* Sidebar wrapper hidden on mobile unless toggled (will implement later) */}
         <div className="hidden lg:block w-64 border-r border-zinc-200 dark:border-zinc-800 flex-shrink-0 overflow-y-auto">
           <Sidebar />
         </div>
-        <main className="flex-1 overflow-y-auto relative">
+        <main className="flex-1 overflow-hidden relative">
           <Outlet />
         </main>
       </div>
