@@ -39,6 +39,14 @@ import { selectLesson } from './lessons/select';
 import { syncMutex } from './lessons/sync-mutex';
 import { atomics } from './lessons/atomics';
 import { contextLesson } from './lessons/context';
+import { packagesVisibility } from './lessons/packages-visibility';
+import { initOrder } from './lessons/init-order';
+import { internalModules } from './lessons/internal-modules';
+import { embedFiles } from './lessons/embed-files';
+import { reflectBasics } from './lessons/reflect-basics';
+import { unsafePointer } from './lessons/unsafe-pointer';
+import { cgoLesson } from './lessons/cgo';
+import { buildTags } from './lessons/build-tags';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -81,6 +89,14 @@ export const lessons: Lesson[] = [
   syncMutex,
   atomics,
   contextLesson,
+  packagesVisibility,
+  initOrder,
+  internalModules,
+  embedFiles,
+  reflectBasics,
+  unsafePointer,
+  cgoLesson,
+  buildTags,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
