@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Landing } from './pages/Landing';
 import { LessonView } from './components/LessonView';
+import { CheckpointView } from './pages/CheckpointView';
 import { applyTheme, readTheme } from './lib/theme';
 
 export default function App() {
@@ -16,6 +17,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/lesson/:slug" element={<LessonView />} />
+          <Route path="/checkpoint/:sectionId" element={<CheckpointView />} />
           <Route
             path="*"
             element={
