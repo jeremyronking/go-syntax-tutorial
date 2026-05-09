@@ -9,6 +9,7 @@ import { sectionGLessons } from './lessons/section-g'
 import { sectionHLessons } from './lessons/section-h'
 import { sectionILessons } from './lessons/section-i'
 import { sectionJLessons } from './lessons/section-j'
+import { sectionK1Lessons } from './lessons/section-k1'
 
 export const lessons: Lesson[] = [
   ...sectionALessons,
@@ -21,6 +22,7 @@ export const lessons: Lesson[] = [
   ...sectionHLessons,
   ...sectionILessons,
   ...sectionJLessons,
+  ...sectionK1Lessons,
 ]
 
 export function getLessonBySlug(slug: string): Lesson | undefined {
