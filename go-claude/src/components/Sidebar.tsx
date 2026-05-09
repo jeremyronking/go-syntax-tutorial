@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { sections } from '../content/sections';
 import { lessonsBySection } from '../content/lessons';
+import { checkpointBySection } from '../content/checkpoints';
 import { useProgressStore } from '../store/progress';
 import { useSidebarStore } from '../store/sidebar';
 
@@ -27,6 +28,7 @@ export function Sidebar() {
           const done = lessons.filter((l) => progress[l.slug] === 'complete').length;
           const isCollapsed = !!collapsed[s.id];
           const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+          const checkpoint = checkpointBySection(s.id);
 
           return (
             <li key={s.id} className="rounded">
@@ -48,10 +50,7 @@ export function Sidebar() {
               {!isCollapsed && total > 0 && (
                 <>
                   <div className="mx-2 mt-1 h-0.5 rounded bg-ink-800 overflow-hidden">
-                    <div
-                      className="h-full bg-gopher transition-all"
-                      style={{ width: `${pct}%` }}
-                    />
+                    <div className="h-full bg-gopher transition-all" style={{ width: `${pct}%` }} />
                   </div>
                   <ul className="ml-4 mt-1 space-y-0.5">
                     {lessons.map((l) => {
@@ -80,6 +79,24 @@ export function Sidebar() {
                         </li>
                       );
                     })}
+                    {checkpoint && (
+                      <li>
+                        <NavLink
+                          to={`/checkpoint/${s.id}`}
+                          className={({ isActive }) =>
+                            [
+                              'flex items-center gap-2 px-2 py-1 rounded text-xs italic',
+                              isActive
+                                ? 'bg-ink-800 text-gopher'
+                                : 'text-ink-400 hover:bg-ink-900/60 hover:text-gopher',
+                            ].join(' ')
+                          }
+                        >
+                          <span className="font-mono text-[10px] text-ink-500 w-4">→</span>
+                          <span className="flex-1">checkpoint</span>
+                        </NavLink>
+                      </li>
+                    )}
                   </ul>
                 </>
               )}
