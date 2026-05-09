@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import CommandPalette from "./CommandPalette";
+import { useProgressStore } from "../store/progress";
 
 const THEME_KEY = "gotour:v1:theme";
 
@@ -95,6 +96,21 @@ export default function Layout() {
       </div>
 
       <CommandPalette />
+
+      {/* Footer with reset progress */}
+      <footer className="border-t border-gray-200 dark:border-gray-800 py-3 px-4 text-center">
+        <button
+          onClick={() => {
+            if (window.confirm("Reset all progress, editor drafts, and checkpoint scores?")) {
+              useProgressStore.getState().resetProgress();
+              window.location.reload();
+            }
+          }}
+          className="text-xs text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+        >
+          Reset progress
+        </button>
+      </footer>
     </div>
   );
 }

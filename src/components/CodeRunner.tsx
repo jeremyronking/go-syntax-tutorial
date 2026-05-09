@@ -17,6 +17,9 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
   const [running, setRunning] = useState(false);
   const [replaying, setReplaying] = useState(false);
   const skipRef = useRef(false);
+  const prefersReducedMotion = useRef(
+    typeof window !== "undefined" ? window.matchMedia("(prefers-reduced-motion: reduce)").matches : false,
+  );
 
   const setEditorDraft = useProgressStore((s) => s.setEditorDraft);
   const setLessonStatus = useProgressStore((s) => s.setLessonStatus);
@@ -42,6 +45,13 @@ export default function CodeRunner({ starterCode, streamReplay, slug }: CodeRunn
       }
 
       if (!streamReplay || !res.Events?.length) {
+        setOutput(res.Events.map((e) => e.Message));
+        setRunning(false);
+        return;
+      }
+
+      // If user prefers reduced motion, skip animation
+      if (prefersReducedMotion.current) {
         setOutput(res.Events.map((e) => e.Message));
         setRunning(false);
         return;

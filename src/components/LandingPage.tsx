@@ -1,20 +1,29 @@
 import { Link } from "react-router-dom";
+import { sections, lessons } from "../content/lessons";
 
-const sections = [
-  { letter: "A", title: "Language Fundamentals", lessons: 7 },
-  { letter: "B", title: "Control Flow", lessons: 7 },
-  { letter: "C", title: "Composite Types", lessons: 5 },
-  { letter: "D", title: "Functions", lessons: 4 },
-  { letter: "E", title: "Interfaces & Polymorphism", lessons: 4 },
-  { letter: "F", title: "Generics", lessons: 3 },
-  { letter: "G", title: "Errors, Panic, Recover", lessons: 3 },
-  { letter: "H", title: "Concurrency", lessons: 7 },
-  { letter: "I", title: "Packages & Project Layout", lessons: 4 },
-  { letter: "J", title: "Reflection & Low-level", lessons: 4 },
-  { letter: "K", title: "Toolchain", lessons: 15 },
-];
+const sectionNames: Record<string, string> = {
+  A: "Language Fundamentals",
+  B: "Control Flow",
+  C: "Composite Types",
+  D: "Functions",
+  E: "Interfaces & Polymorphism",
+  F: "Generics",
+  G: "Errors, Panic, Recover",
+  H: "Concurrency",
+  I: "Packages & Project Layout",
+  J: "Reflection & Low-level",
+  K1: "Toolchain: build/run/modules",
+  K2: "Toolchain: test/format/vet/doc",
+  K3: "Toolchain: advanced",
+};
 
 export default function LandingPage() {
+  const sectionData = sections.map((s) => ({
+    letter: s,
+    title: sectionNames[s] ?? s,
+    lessons: lessons.filter((l) => l.section === s).length,
+  }));
+
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
       {/* Hero */}
@@ -40,10 +49,10 @@ export default function LandingPage() {
       <section>
         <h2 className="text-2xl font-bold mb-6">Jump to a topic</h2>
         <div className="grid gap-3 sm:grid-cols-2">
-          {sections.map((s) => (
+          {sectionData.map((s) => (
             <Link
               key={s.letter}
-              to={`/lesson/section-${s.letter.toLowerCase()}`}
+              to={`/lesson/${lessons.find((l) => l.section === s.letter)?.slug ?? ""}`}
               className="group rounded-lg border border-gray-200 dark:border-gray-800 p-4 hover:border-[var(--color-gopher-cyan)] transition-colors"
             >
               <div className="flex items-center gap-3">
