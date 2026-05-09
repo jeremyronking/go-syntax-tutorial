@@ -25,7 +25,8 @@ export default function LandingPage() {
   }));
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
+    <div className="h-full overflow-y-auto">
+      <div className="max-w-3xl mx-auto px-6 py-12">
       {/* Hero */}
       <section className="text-center mb-16">
         <h1 className="text-4xl sm:text-5xl font-bold mb-4">
@@ -72,6 +73,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+      </div>
     </div>
   );
 }
