@@ -8,15 +8,18 @@ const CodeRunner = lazy(() =>
 );
 
 export function CodeArea({ lesson }: { lesson: Lesson }) {
+  // Key by slug so React unmounts/remounts the runner on lesson change —
+  // otherwise Monaco's internal state (and our local code state) bleeds
+  // across lessons.
   if (lesson.runMode === 'playground' && lesson.starterCode) {
     return (
       <Suspense fallback={<EditorSkeleton />}>
-        <CodeRunner lesson={lesson} />
+        <CodeRunner key={lesson.slug} lesson={lesson} />
       </Suspense>
     );
   }
   if (lesson.runMode === 'terminal' && lesson.terminalOutput) {
-    return <TerminalPane lines={lesson.terminalOutput} />;
+    return <TerminalPane key={lesson.slug} lines={lesson.terminalOutput} />;
   }
   if (lesson.runMode === 'annotated' && lesson.starterCode) {
     return (
