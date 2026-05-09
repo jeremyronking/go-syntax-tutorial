@@ -4,7 +4,7 @@ title: The prompt
 
 # The prompt
 
-Each of the three coding agents — **Claude** (via Claude Code), **Gemini** (via Google Antigravity), and **GLM-4.6** (via the Pi coding agent) — was handed the same product [spec](/spec) and the same set of [phased GitHub issues](/issues/epic), then given the instruction below.
+Each of the three coding agents — **Claude** (via Claude Code), **Gemini** (via Google Antigravity), and **GLM-5.1** (via the Pi coding agent) — was handed the same product [spec](/spec) and the same set of [phased GitHub issues](/issues/epic), then given the instruction below.
 
 > What I would like you to do is create this application in a folder called `go-XXX` using a git worktree (from `main`) to not affect the current active branch. You are responsible for implementing **ALL issues** which are mapped out in `gh issue #1`. **DO NOT CLOSE THE ISSUES**, please.
 >

@@ -26,14 +26,14 @@ features:
     link: https://go-gemini.jking.ai
     linkText: Open go-gemini
   - title: go-glm
-    details: Built by GLM-4.6 (cloud) in the Pi coding agent. The GLM take on the same lesson set.
+    details: Built by GLM-5.1 (cloud) in the Pi coding agent. The GLM take on the same lesson set.
     link: https://go-glm.jking.ai
     linkText: Open go-glm
 ---
 
 ## What this is
 
-Three coding agents — **Claude Code**, **Google Antigravity**, and the **Pi coding agent** running **GLM-4.6** — were each handed the same brief and the same set of GitHub issues, then turned loose to build an interactive Go tutorial autonomously.
+Three coding agents — **Claude Code**, **Google Antigravity**, and the **Pi coding agent** running **GLM-5.1** — were each handed the same brief and the same set of GitHub issues, then turned loose to build an interactive Go tutorial autonomously.
 
 The [spec](/spec) is the brief that defines the product. The [prompt](/prompt) is the meta-instruction that told each agent how to work. The [issues](/issues/epic) are the phased breakdown all three followed.
 
