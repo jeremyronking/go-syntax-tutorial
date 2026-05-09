@@ -141,7 +141,7 @@ export default function LessonView() {
       </div>
 
       {/* Editor Pane */}
-      <div className="flex-1 p-6 bg-zinc-100 dark:bg-zinc-900 overflow-y-auto flex flex-col">
+      <div className="flex-1 p-6 bg-zinc-100 dark:bg-zinc-900 overflow-hidden flex flex-col">
         {lesson.runMode === 'playground' && initialCode ? (
           <CodeRunner
             key={lesson.slug}
