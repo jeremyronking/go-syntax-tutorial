@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useRef, useMemo } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import debounce from 'lodash-es/debounce'
-import { getLessonBySlug } from '../content/lessons'
-import { AlertCircle, CheckCircle2 } from 'lucide-react'
+import { getLessonBySlug, lessons } from '../content/lessons'
+import { AlertCircle, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react'
 import CodeRunner from '../components/CodeRunner'
 import TerminalPane from '../components/TerminalPane'
 import AnnotatedPane from '../components/AnnotatedPane'
@@ -36,6 +36,13 @@ export default function LessonView() {
   const handleEditorChange = (code: string) => {
     handleEditorChangeRef.current?.(code)
   }
+
+  const sortedLessons = useMemo(() => {
+    return [...lessons].sort((a, b) => a.order - b.order)
+  }, [])
+  const currentIndex = sortedLessons.findIndex((l) => l.slug === slug)
+  const prevLesson = currentIndex > 0 ? sortedLessons[currentIndex - 1] : null
+  const nextLesson = currentIndex !== -1 && currentIndex < sortedLessons.length - 1 ? sortedLessons[currentIndex + 1] : null
 
   if (!lesson || !slug) {
     return (
@@ -85,15 +92,41 @@ export default function LessonView() {
             </div>
           )}
           
-          <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex justify-end">
+          <div className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <div className="flex-1">
+              {prevLesson && (
+                <Link
+                  to={`/lesson/${prevLesson.slug}`}
+                  className="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                >
+                  <ChevronLeft size={16} />
+                  {prevLesson.title}
+                </Link>
+              )}
+            </div>
+            
             {!isComplete && (
-              <button
-                onClick={() => markLessonStatus(slug, 'complete')}
-                className="px-4 py-2 bg-gotour-cyan text-zinc-900 rounded font-semibold hover:brightness-110 transition-colors"
-              >
-                Mark complete
-              </button>
+              <div className="flex-1 flex justify-center">
+                <button
+                  onClick={() => markLessonStatus(slug, 'complete')}
+                  className="px-4 py-2 bg-gotour-cyan text-zinc-900 rounded font-semibold hover:brightness-110 transition-colors"
+                >
+                  Mark complete
+                </button>
+              </div>
             )}
+            
+            <div className="flex-1 flex justify-end">
+              {nextLesson && (
+                <Link
+                  to={`/lesson/${nextLesson.slug}`}
+                  className="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                >
+                  {nextLesson.title}
+                  <ChevronRight size={16} />
+                </Link>
+              )}
+            </div>
           </div>
         </div>
       </div>
