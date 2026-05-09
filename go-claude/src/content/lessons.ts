@@ -47,6 +47,10 @@ import { reflectBasics } from './lessons/reflect-basics';
 import { unsafePointer } from './lessons/unsafe-pointer';
 import { cgoLesson } from './lessons/cgo';
 import { buildTags } from './lessons/build-tags';
+import { toolchainBuild } from './lessons/toolchain-build';
+import { toolchainInstall } from './lessons/toolchain-install';
+import { toolchainModules } from './lessons/toolchain-modules';
+import { toolchainWorkspaces } from './lessons/toolchain-workspaces';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -97,6 +101,10 @@ export const lessons: Lesson[] = [
   unsafePointer,
   cgoLesson,
   buildTags,
+  toolchainBuild,
+  toolchainInstall,
+  toolchainModules,
+  toolchainWorkspaces,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
