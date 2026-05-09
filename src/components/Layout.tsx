@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Outlet, Link } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
 const THEME_KEY = "gotour:v1:theme";
 
@@ -29,6 +30,7 @@ function ThemeToggle({ theme, toggle }: { theme: "dark" | "light"; toggle: () =>
 
 export default function Layout() {
   const [theme, setTheme] = useState<"dark" | "light">(getInitialTheme);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -53,9 +55,20 @@ export default function Layout() {
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm">
         <div className="max-w-screen-2xl mx-auto flex items-center justify-between px-4 h-14">
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
-            <span className="text-[var(--color-gopher-cyan)]">Go</span>Tour
-          </Link>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen((o) => !o)}
+              className="lg:hidden round p-1 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+              aria-label="Toggle sidebar"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <Link to="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
+              <span className="text-[var(--color-gopher-cyan)]">Go</span>Tour
+            </Link>
+          </div>
           <div className="flex items-center gap-3">
             <kbd className="hidden lg:inline-flex items-center gap-1 rounded border border-gray-300 dark:border-gray-600 px-2 py-0.5 text-xs text-gray-500 dark:text-gray-400">
               ⌘K
@@ -66,11 +79,13 @@ export default function Layout() {
       </header>
 
       {/* Main area */}
-      <div className="flex-1 flex">
-        {/* Sidebar — placeholder, real content in Phase 08 */}
-        <aside className="hidden lg:block w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 p-4 overflow-y-auto">
-          <p className="text-sm text-gray-400">Sections will appear here</p>
-        </aside>
+      <div className="flex-1 flex overflow-hidden">
+        {/* Sidebar */}
+        {sidebarOpen && (
+          <aside className="hidden lg:block w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 overflow-y-auto">
+            <Sidebar />
+          </aside>
+        )}
 
         {/* Content pane */}
         <main className="flex-1 overflow-y-auto">
