@@ -9,6 +9,7 @@ import { errorsCheckpoint } from './checkpoints/errors';
 import { concurrencyCheckpoint } from './checkpoints/concurrency';
 import { packagesCheckpoint } from './checkpoints/packages';
 import { lowLevelCheckpoint } from './checkpoints/low-level';
+import { toolchainCheckpoint } from './checkpoints/toolchain';
 
 export const checkpoints: Checkpoint[] = [
   fundamentalsCheckpoint,
@@ -21,6 +22,7 @@ export const checkpoints: Checkpoint[] = [
   concurrencyCheckpoint,
   packagesCheckpoint,
   lowLevelCheckpoint,
+  toolchainCheckpoint,
 ];
 
 export function checkpointBySection(sectionId: string): Checkpoint | undefined {

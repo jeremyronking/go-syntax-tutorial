@@ -57,6 +57,11 @@ import { toolchainRaceCover } from './lessons/toolchain-race-cover';
 import { toolchainFmt } from './lessons/toolchain-fmt';
 import { toolchainVet } from './lessons/toolchain-vet';
 import { toolchainDoc } from './lessons/toolchain-doc';
+import { toolchainGenerate } from './lessons/toolchain-generate';
+import { toolchainEnv } from './lessons/toolchain-env';
+import { toolchainCrossCompile } from './lessons/toolchain-cross-compile';
+import { toolchainLdflags } from './lessons/toolchain-ldflags';
+import { toolchainPprof } from './lessons/toolchain-pprof';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -117,6 +122,11 @@ export const lessons: Lesson[] = [
   toolchainFmt,
   toolchainVet,
   toolchainDoc,
+  toolchainGenerate,
+  toolchainEnv,
+  toolchainCrossCompile,
+  toolchainLdflags,
+  toolchainPprof,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
