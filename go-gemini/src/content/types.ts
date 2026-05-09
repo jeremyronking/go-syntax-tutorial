@@ -3,6 +3,30 @@ export interface TerminalLine {
   text: string;
 }
 
+export interface BaseQuestion {
+  id: string;
+  prompt: string;
+  explanation: string;
+}
+
+export interface MCQQuestion extends BaseQuestion {
+  type: "mcq";
+  options: string[];
+  correctIndex: number;
+}
+
+export interface FillQuestion extends BaseQuestion {
+  type: "fill";
+  acceptedAnswers: string[];
+}
+
+export type Question = MCQQuestion | FillQuestion;
+
+export interface CheckpointDef {
+  id: string;
+  questions: Question[];
+}
+
 export interface Lesson {
   slug: string;
   title: string;
@@ -14,6 +38,5 @@ export interface Lesson {
   terminalOutput?: TerminalLine[];
   streamReplay?: boolean;
   gotcha?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  checkpoint?: any;
+  checkpoint?: CheckpointDef;
 }

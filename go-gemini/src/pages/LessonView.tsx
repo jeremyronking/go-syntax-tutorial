@@ -8,6 +8,7 @@ import { AlertCircle, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-rea
 import CodeRunner from '../components/CodeRunner'
 import TerminalPane from '../components/TerminalPane'
 import AnnotatedPane from '../components/AnnotatedPane'
+import Checkpoint from '../components/Checkpoint'
 import { useProgressStore } from '../store/progress'
 
 export default function LessonView() {
@@ -128,6 +129,14 @@ export default function LessonView() {
               )}
             </div>
           </div>
+          
+          {lesson.checkpoint && (
+            <Checkpoint 
+              checkpoint={lesson.checkpoint} 
+              section={lesson.section}
+              nextLessonSlug={nextLesson?.slug || null}
+            />
+          )}
         </div>
       </div>
 
