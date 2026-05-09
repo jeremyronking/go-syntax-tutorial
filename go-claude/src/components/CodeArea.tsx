@@ -20,7 +20,7 @@ export function CodeArea({ lesson }: { lesson: Lesson }) {
   }
   if (lesson.runMode === 'annotated' && lesson.starterCode) {
     return (
-      <pre className="rounded-md border border-ink-800 bg-ink-900/40 p-4 text-sm font-mono overflow-x-auto">
+      <pre className="rounded-md border border-divider bg-elevated/40 p-4 text-sm font-mono overflow-x-auto">
         {lesson.starterCode}
       </pre>
     );
@@ -30,13 +30,13 @@ export function CodeArea({ lesson }: { lesson: Lesson }) {
 
 function EditorSkeleton() {
   return (
-    <div className="rounded-md border border-ink-800 bg-ink-900/40 overflow-hidden">
-      <div className="border-b border-ink-800 px-3 py-2">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-ink-500">
+    <div className="rounded-md border border-divider bg-elevated/40 overflow-hidden">
+      <div className="border-b border-divider px-3 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
           Loading editor…
         </span>
       </div>
-      <div className="h-[320px] animate-pulse bg-ink-900/30" />
+      <div className="h-[320px] animate-pulse bg-elevated/30" />
     </div>
   );
 }

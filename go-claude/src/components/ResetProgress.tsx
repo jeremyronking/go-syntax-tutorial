@@ -17,7 +17,7 @@ export function ResetProgress() {
     <button
       type="button"
       onClick={onClick}
-      className="text-xs text-ink-500 hover:text-red-400 transition-colors"
+      className="text-xs text-fg-subtle hover:text-red-400 transition-colors"
     >
       Reset progress
     </button>

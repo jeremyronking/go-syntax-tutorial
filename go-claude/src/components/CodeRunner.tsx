@@ -126,9 +126,9 @@ export function CodeRunner({
   }, [initialCode]);
 
   return (
-    <div className="rounded-md border border-ink-800 bg-ink-900/40 overflow-hidden">
-      <div className="flex items-center gap-2 border-b border-ink-800 px-3 py-2">
-        <span className="font-mono text-[10px] uppercase tracking-widest text-ink-400">
+    <div className="rounded-md border border-divider bg-elevated/40 overflow-hidden">
+      <div className="flex items-center gap-2 border-b border-divider px-3 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-fg-muted">
           Playground
         </span>
         <div className="ml-auto flex items-center gap-2">
@@ -136,7 +136,7 @@ export function CodeRunner({
             <button
               type="button"
               onClick={skipReplay}
-              className="rounded px-2 py-1 text-xs text-ink-300 hover:text-gopher"
+              className="rounded px-2 py-1 text-xs text-fg-muted hover:text-gopher"
             >
               Skip animation
             </button>
@@ -144,7 +144,7 @@ export function CodeRunner({
           <button
             type="button"
             onClick={reset}
-            className="rounded px-2 py-1 text-xs text-ink-300 hover:text-gopher"
+            className="rounded px-2 py-1 text-xs text-fg-muted hover:text-gopher"
           >
             Reset
           </button>
@@ -189,8 +189,8 @@ export function CodeRunner({
       </div>
 
       {output.length > 0 && (
-        <div className="border-t border-ink-800 bg-ink-950 p-3">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-ink-500">Output</p>
+        <div className="border-t border-divider bg-app p-3">
+          <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">Output</p>
           <pre className="mt-2 whitespace-pre-wrap break-words text-sm font-mono leading-relaxed">
             {output.map((o, i) => (
               <span
@@ -198,7 +198,7 @@ export function CodeRunner({
                 className={
                   o.kind === 'compile-error' || o.kind === 'vet-error' || o.kind === 'stderr'
                     ? 'text-red-400'
-                    : 'text-ink-100'
+                    : 'text-fg'
                 }
               >
                 {o.text}

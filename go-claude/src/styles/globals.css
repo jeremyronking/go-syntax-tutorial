@@ -3,6 +3,25 @@
 @tailwind utilities;
 
 :root {
+  /* Light theme defaults */
+  --color-app: 255 255 255;
+  --color-elevated: 246 248 250;
+  --color-card: 240 243 248;
+  --color-fg: 11 14 24;
+  --color-fg-muted: 74 81 96;
+  --color-fg-subtle: 110 119 133;
+  --color-divider: 197 202 211;
+  color-scheme: light;
+}
+
+:root.dark {
+  --color-app: 7 9 18;
+  --color-elevated: 11 14 24;
+  --color-card: 7 9 18;
+  --color-fg: 248 250 252;
+  --color-fg-muted: 197 202 211;
+  --color-fg-subtle: 110 119 133;
+  --color-divider: 31 36 51;
   color-scheme: dark;
 }
 
@@ -14,6 +33,8 @@ body,
 
 body {
   font-family: theme('fontFamily.sans');
+  background-color: rgb(var(--color-app));
+  color: rgb(var(--color-fg));
   -webkit-font-smoothing: antialiased;
 }
 

@@ -3,7 +3,7 @@ import remarkGfm from 'remark-gfm';
 
 export function Prose({ children }: { children: string }) {
   return (
-    <div className="prose-gotour max-w-prose text-ink-100 leading-relaxed">
+    <div className="prose-gotour max-w-prose text-fg leading-relaxed">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -11,7 +11,7 @@ export function Prose({ children }: { children: string }) {
             const isBlock = /\n/.test(String(children));
             if (isBlock) {
               return (
-                <pre className="my-4 rounded-md bg-ink-900 border border-ink-800 p-4 overflow-x-auto text-sm">
+                <pre className="my-4 rounded-md bg-elevated border border-divider p-4 overflow-x-auto text-sm">
                   <code className={className} {...rest}>
                     {children}
                   </code>
@@ -19,7 +19,7 @@ export function Prose({ children }: { children: string }) {
               );
             }
             return (
-              <code className="rounded bg-ink-900 px-1.5 py-0.5 text-[0.85em]" {...rest}>
+              <code className="rounded bg-elevated px-1.5 py-0.5 text-[0.85em]" {...rest}>
                 {children}
               </code>
             );
@@ -36,7 +36,7 @@ export function Prose({ children }: { children: string }) {
           ul: ({ children }) => <ul className="list-disc pl-6 my-3 space-y-1">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal pl-6 my-3 space-y-1">{children}</ol>,
           p: ({ children }) => <p className="my-3">{children}</p>,
-          em: ({ children }) => <em className="italic text-ink-200">{children}</em>,
+          em: ({ children }) => <em className="italic text-fg">{children}</em>,
         }}
       >
         {children}

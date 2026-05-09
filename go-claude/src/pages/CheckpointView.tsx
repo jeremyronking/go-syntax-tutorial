@@ -9,7 +9,7 @@ export function CheckpointView() {
     return (
       <div className="px-6 lg:px-10 py-10 max-w-prose">
         <h1 className="text-2xl font-semibold">Checkpoint not yet authored</h1>
-        <p className="mt-2 text-ink-300">No questions registered for section "{sectionId}".</p>
+        <p className="mt-2 text-fg-muted">No questions registered for section "{sectionId}".</p>
         <Link to="/" className="mt-4 inline-block text-gopher hover:underline">
           ← Back to landing
         </Link>

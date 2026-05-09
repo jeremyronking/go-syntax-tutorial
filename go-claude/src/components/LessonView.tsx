@@ -14,7 +14,7 @@ export function LessonView() {
     return (
       <div className="px-6 lg:px-10 py-10 max-w-prose">
         <h1 className="text-2xl font-semibold">Lesson not found</h1>
-        <p className="mt-2 text-ink-300">No lesson registered for slug “{slug}”.</p>
+        <p className="mt-2 text-fg-muted">No lesson registered for slug “{slug}”.</p>
         <Link to="/" className="mt-4 inline-block text-gopher hover:underline">
           ← Back to landing
         </Link>
@@ -32,7 +32,7 @@ export function LessonView() {
       <h1 className="mt-2 text-3xl font-semibold">{lesson.title}</h1>
 
       {lesson.concurrencyNote && (
-        <p className="mt-3 italic text-sm text-ink-400">
+        <p className="mt-3 italic text-sm text-fg-muted">
           Playground uses a deterministic fake clock; real runtime scheduling will differ.
         </p>
       )}

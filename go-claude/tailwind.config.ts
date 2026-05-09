@@ -1,11 +1,23 @@
 import type { Config } from 'tailwindcss';
 
+const cssVar = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
+        // Semantic, theme-aware tokens (driven by CSS variables).
+        app: cssVar('--color-app'),
+        elevated: cssVar('--color-elevated'),
+        card: cssVar('--color-card'),
+        fg: cssVar('--color-fg'),
+        'fg-muted': cssVar('--color-fg-muted'),
+        'fg-subtle': cssVar('--color-fg-subtle'),
+        divider: cssVar('--color-divider'),
+
+        // Brand accent — same in both themes.
         gopher: {
           DEFAULT: '#00ADD8',
           50: '#e6f8fc',
@@ -19,6 +31,8 @@ const config: Config = {
           800: '#004656',
           900: '#00232b',
         },
+
+        // Kept for any explicit palette references that escape the refactor.
         ink: {
           50: '#f8fafc',
           100: '#e6e9ee',

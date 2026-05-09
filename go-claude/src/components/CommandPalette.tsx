@@ -56,18 +56,18 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-xl rounded-md border border-ink-700 bg-ink-900 shadow-2xl overflow-hidden"
+        className="w-full max-w-xl rounded-md border border-divider bg-elevated shadow-2xl overflow-hidden"
       >
         <input
           ref={inputRef}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search lessons…"
-          className="w-full bg-transparent px-4 py-3 text-base text-ink-50 placeholder:text-ink-500 outline-none border-b border-ink-800"
+          className="w-full bg-transparent px-4 py-3 text-base text-fg placeholder:text-fg-subtle outline-none border-b border-divider"
         />
         <ul className="max-h-[50vh] overflow-y-auto py-1">
           {results.length === 0 && (
-            <li className="px-4 py-6 text-sm text-ink-400">No matches.</li>
+            <li className="px-4 py-6 text-sm text-fg-muted">No matches.</li>
           )}
           {results.map((r, i) => (
             <li key={r.lesson.slug}>
@@ -80,17 +80,17 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                 }}
                 className={[
                   'w-full text-left px-4 py-2 flex items-center gap-3',
-                  i === active ? 'bg-ink-800' : 'hover:bg-ink-800/60',
+                  i === active ? 'bg-divider' : 'hover:bg-divider/60',
                 ].join(' ')}
               >
                 <span className="font-mono text-[10px] text-gopher w-4">{r.sectionLetter}</span>
-                <span className="flex-1 truncate text-ink-100">{r.lesson.title}</span>
-                <span className="text-xs text-ink-500 truncate">{r.sectionTitle}</span>
+                <span className="flex-1 truncate text-fg">{r.lesson.title}</span>
+                <span className="text-xs text-fg-subtle truncate">{r.sectionTitle}</span>
               </button>
             </li>
           ))}
         </ul>
-        <div className="px-4 py-2 text-[10px] font-mono text-ink-500 border-t border-ink-800 flex justify-between">
+        <div className="px-4 py-2 text-[10px] font-mono text-fg-subtle border-t border-divider flex justify-between">
           <span>↑↓ navigate · ↵ open · esc close</span>
           <span>{results.length} result{results.length === 1 ? '' : 's'}</span>
         </div>

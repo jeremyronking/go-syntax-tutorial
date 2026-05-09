@@ -45,12 +45,12 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointT }) {
         {section?.letter ?? '?'} · checkpoint
       </p>
       <h1 className="mt-2 text-3xl font-semibold">{checkpoint.title}</h1>
-      <p className="mt-3 text-sm text-ink-300">
+      <p className="mt-3 text-sm text-fg-muted">
         {total} question{total === 1 ? '' : 's'}. Pass at ≥ {Math.round(PASS_THRESHOLD * 100)}% to
         mark this section complete. Failing does not block any lesson.
       </p>
       {previous && (
-        <p className="mt-2 text-xs text-ink-500">
+        <p className="mt-2 text-xs text-fg-subtle">
           Best score: {previous.correct}/{previous.total} ·{' '}
           {new Date(previous.lastAttempt).toLocaleDateString()}
         </p>
@@ -68,7 +68,7 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointT }) {
           />
         ))}
 
-        <div className="flex items-center gap-3 pt-4 border-t border-ink-800">
+        <div className="flex items-center gap-3 pt-4 border-t border-divider">
           {!submitted && (
             <button
               type="submit"
@@ -90,7 +90,7 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointT }) {
               <button
                 type="button"
                 onClick={onRetake}
-                className="ml-auto rounded-md border border-ink-700 px-3 py-1 text-xs hover:border-gopher hover:text-gopher"
+                className="ml-auto rounded-md border border-divider px-3 py-1 text-xs hover:border-gopher hover:text-gopher"
               >
                 Retake
               </button>
@@ -98,7 +98,7 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointT }) {
           )}
           <Link
             to={sectionLessons[sectionLessons.length - 1] ? `/lesson/${sectionLessons[sectionLessons.length - 1]!.slug}` : '/'}
-            className="text-xs text-ink-400 hover:text-gopher"
+            className="text-xs text-fg-muted hover:text-gopher"
           >
             Skip — not now
           </Link>
@@ -124,11 +124,11 @@ function QuestionView({
   const correct = isCorrect(question, answer);
 
   return (
-    <div className="rounded-md border border-ink-800 bg-ink-900/40 p-5">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-ink-500">
+    <div className="rounded-md border border-divider bg-elevated/40 p-5">
+      <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
         Question {index + 1}
       </p>
-      <p className="mt-2 font-medium text-ink-50">{question.prompt}</p>
+      <p className="mt-2 font-medium text-fg">{question.prompt}</p>
 
       {question.kind === 'mcq' && (
         <ul className="mt-4 space-y-2">
@@ -143,12 +143,12 @@ function QuestionView({
                   className={[
                     'flex items-start gap-3 px-3 py-2 rounded border cursor-pointer text-sm',
                     showCorrect
-                      ? 'border-gopher bg-gopher/10 text-ink-50'
+                      ? 'border-gopher bg-gopher/10 text-fg'
                       : showWrong
                         ? 'border-red-500/60 bg-red-500/5'
                         : selected
-                          ? 'border-ink-500'
-                          : 'border-ink-800 hover:border-ink-600',
+                          ? 'border-fg-subtle'
+                          : 'border-divider hover:border-divider',
                   ].join(' ')}
                 >
                   <input
@@ -174,7 +174,7 @@ function QuestionView({
           disabled={submitted}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Your answer…"
-          className="mt-4 w-full rounded border border-ink-800 bg-ink-950 px-3 py-2 text-sm font-mono outline-none focus:border-gopher disabled:opacity-60"
+          className="mt-4 w-full rounded border border-divider bg-app px-3 py-2 text-sm font-mono outline-none focus:border-gopher disabled:opacity-60"
         />
       )}
 

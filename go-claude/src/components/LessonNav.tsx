@@ -15,7 +15,7 @@ export function LessonNav({ slug }: { slug: string }) {
       {prev ? (
         <Link
           to={`/lesson/${prev.slug}`}
-          className="text-ink-300 hover:text-gopher transition-colors"
+          className="text-fg-muted hover:text-gopher transition-colors"
         >
           ← {prev.title}
         </Link>
@@ -25,7 +25,7 @@ export function LessonNav({ slug }: { slug: string }) {
       {next && (
         <Link
           to={`/lesson/${next.slug}`}
-          className="text-ink-300 hover:text-gopher transition-colors"
+          className="text-fg-muted hover:text-gopher transition-colors"
         >
           {next.title} →
         </Link>

@@ -13,11 +13,11 @@ export function Sidebar() {
   return (
     <nav
       aria-label="Lesson navigation"
-      className="hidden lg:block w-64 shrink-0 border-r border-ink-800 overflow-y-auto p-3 text-sm"
+      className="hidden lg:block w-64 shrink-0 border-r border-divider overflow-y-auto p-3 text-sm"
     >
       <Link
         to="/"
-        className="block px-2 py-1 rounded text-[10px] font-mono uppercase tracking-widest text-ink-400 hover:text-gopher"
+        className="block px-2 py-1 rounded text-[10px] font-mono uppercase tracking-widest text-fg-muted hover:text-gopher"
       >
         ← Sections
       </Link>
@@ -36,20 +36,20 @@ export function Sidebar() {
                 type="button"
                 onClick={() => toggle(s.id)}
                 aria-expanded={!isCollapsed}
-                className="w-full flex items-center gap-2 px-2 py-1 text-left rounded hover:bg-ink-900/60"
+                className="w-full flex items-center gap-2 px-2 py-1 text-left rounded hover:bg-elevated/60"
               >
-                <span aria-hidden="true" className="text-ink-500 text-xs">
+                <span aria-hidden="true" className="text-fg-subtle text-xs">
                   {isCollapsed ? '▸' : '▾'}
                 </span>
                 <span className="font-mono text-xs text-gopher">{s.letter}</span>
-                <span className="flex-1 text-ink-200">{s.title}</span>
-                <span className="font-mono text-[10px] text-ink-500">
+                <span className="flex-1 text-fg">{s.title}</span>
+                <span className="font-mono text-[10px] text-fg-subtle">
                   {done}/{total || '–'}
                 </span>
               </button>
               {!isCollapsed && total > 0 && (
                 <>
-                  <div className="mx-2 mt-1 h-0.5 rounded bg-ink-800 overflow-hidden">
+                  <div className="mx-2 mt-1 h-0.5 rounded bg-divider overflow-hidden">
                     <div className="h-full bg-gopher transition-all" style={{ width: `${pct}%` }} />
                   </div>
                   <ul className="ml-4 mt-1 space-y-0.5">
@@ -63,12 +63,12 @@ export function Sidebar() {
                               [
                                 'flex items-center gap-2 px-2 py-1 rounded text-xs',
                                 isActive
-                                  ? 'bg-ink-800 text-gopher'
-                                  : 'text-ink-300 hover:bg-ink-900/60 hover:text-ink-100',
+                                  ? 'bg-divider text-gopher'
+                                  : 'text-fg-muted hover:bg-elevated/60 hover:text-fg',
                               ].join(' ')
                             }
                           >
-                            <span className="font-mono text-[10px] text-ink-500 w-4">
+                            <span className="font-mono text-[10px] text-fg-subtle w-4">
                               {l.order}
                             </span>
                             <span className="flex-1 truncate">{l.title}</span>
@@ -87,12 +87,12 @@ export function Sidebar() {
                             [
                               'flex items-center gap-2 px-2 py-1 rounded text-xs italic',
                               isActive
-                                ? 'bg-ink-800 text-gopher'
-                                : 'text-ink-400 hover:bg-ink-900/60 hover:text-gopher',
+                                ? 'bg-divider text-gopher'
+                                : 'text-fg-muted hover:bg-elevated/60 hover:text-gopher',
                             ].join(' ')
                           }
                         >
-                          <span className="font-mono text-[10px] text-ink-500 w-4">→</span>
+                          <span className="font-mono text-[10px] text-fg-subtle w-4">→</span>
                           <span className="flex-1">checkpoint</span>
                         </NavLink>
                       </li>

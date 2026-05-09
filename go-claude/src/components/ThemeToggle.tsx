@@ -17,7 +17,7 @@ export function ThemeToggle() {
         setTheme(next);
       }}
       aria-label={`Switch to ${next} theme`}
-      className="rounded-md px-2 py-1 text-xs font-mono uppercase tracking-wider border border-ink-700 hover:border-gopher hover:text-gopher transition-colors"
+      className="rounded-md px-2 py-1 text-xs font-mono uppercase tracking-wider border border-divider hover:border-gopher hover:text-gopher transition-colors"
     >
       {theme === 'dark' ? '☾ dark' : '☀ light'}
     </button>
