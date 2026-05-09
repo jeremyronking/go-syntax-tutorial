@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getLessonBySlug } from '../content/lessons'
 import { AlertCircle } from 'lucide-react'
+import CodeRunner from '../components/CodeRunner'
 
 export default function LessonView() {
   const { slug } = useParams<{ slug: string }>()
@@ -45,15 +46,21 @@ export default function LessonView() {
         </div>
       </div>
 
-      {/* Editor Pane Placeholder */}
-      <div className="flex-1 p-6 bg-zinc-100 dark:bg-[#1e1e1e] overflow-y-auto flex flex-col">
-        <div className="flex-1 flex items-center justify-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg">
-          <p className="text-zinc-500 font-mono text-sm">
-            {lesson.runMode === 'playground' ? 'Live Editor & Runner Placeholder' :
-             lesson.runMode === 'terminal' ? 'Terminal Output Placeholder' :
-             'Annotated Snippet Placeholder'}
-          </p>
-        </div>
+      {/* Editor Pane */}
+      <div className="flex-1 p-6 bg-zinc-100 dark:bg-zinc-900 overflow-y-auto flex flex-col">
+        {lesson.runMode === 'playground' && lesson.starterCode ? (
+          <CodeRunner
+            key={lesson.slug}
+            initialCode={lesson.starterCode}
+            streamReplay={lesson.streamReplay}
+          />
+        ) : (
+          <div className="flex-1 flex items-center justify-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg">
+            <p className="text-zinc-500 font-mono text-sm">
+              {lesson.runMode === 'terminal' ? 'Terminal Output Placeholder' : 'Annotated Snippet Placeholder'}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )
