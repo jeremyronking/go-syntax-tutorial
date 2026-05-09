@@ -1,0 +1,1 @@
+// Lesson types will be defined here

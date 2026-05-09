@@ -1,0 +1,1 @@
+// Lesson registry will be defined here

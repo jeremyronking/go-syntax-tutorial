@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/700.css";
+
+@theme {
+  --color-gopher-cyan: #00ADD8;
+  --color-gopher-cyan-light: #29BDE6;
+  --color-gopher-dark: #007D9C;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+  --prose-width: 72ch;
+}
