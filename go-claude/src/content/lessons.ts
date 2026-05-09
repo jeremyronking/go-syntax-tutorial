@@ -51,6 +51,12 @@ import { toolchainBuild } from './lessons/toolchain-build';
 import { toolchainInstall } from './lessons/toolchain-install';
 import { toolchainModules } from './lessons/toolchain-modules';
 import { toolchainWorkspaces } from './lessons/toolchain-workspaces';
+import { toolchainTest } from './lessons/toolchain-test';
+import { toolchainBenchFuzz } from './lessons/toolchain-bench-fuzz';
+import { toolchainRaceCover } from './lessons/toolchain-race-cover';
+import { toolchainFmt } from './lessons/toolchain-fmt';
+import { toolchainVet } from './lessons/toolchain-vet';
+import { toolchainDoc } from './lessons/toolchain-doc';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -105,6 +111,12 @@ export const lessons: Lesson[] = [
   toolchainInstall,
   toolchainModules,
   toolchainWorkspaces,
+  toolchainTest,
+  toolchainBenchFuzz,
+  toolchainRaceCover,
+  toolchainFmt,
+  toolchainVet,
+  toolchainDoc,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
