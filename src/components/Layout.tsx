@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import CommandPalette from "./CommandPalette";
 
 const THEME_KEY = "gotour:v1:theme";
 
@@ -92,6 +93,8 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
+
+      <CommandPalette />
     </div>
   );
 }
