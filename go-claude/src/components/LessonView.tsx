@@ -4,6 +4,7 @@ import { sections } from '../content/sections';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { CodeArea } from './CodeArea';
+import { LessonNav } from './LessonNav';
 
 export function LessonView() {
   const { slug } = useParams<{ slug: string }>();
@@ -45,6 +46,8 @@ export function LessonView() {
       </div>
 
       {lesson.gotcha && <Gotcha>{lesson.gotcha}</Gotcha>}
+
+      <LessonNav slug={lesson.slug} />
     </article>
   );
 }
