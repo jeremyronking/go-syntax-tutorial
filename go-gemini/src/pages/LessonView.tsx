@@ -4,6 +4,8 @@ import remarkGfm from 'remark-gfm'
 import { getLessonBySlug } from '../content/lessons'
 import { AlertCircle } from 'lucide-react'
 import CodeRunner from '../components/CodeRunner'
+import TerminalPane from '../components/TerminalPane'
+import AnnotatedPane from '../components/AnnotatedPane'
 
 export default function LessonView() {
   const { slug } = useParams<{ slug: string }>()
@@ -54,10 +56,14 @@ export default function LessonView() {
             initialCode={lesson.starterCode}
             streamReplay={lesson.streamReplay}
           />
+        ) : lesson.runMode === 'terminal' && lesson.terminalOutput ? (
+          <TerminalPane lines={lesson.terminalOutput} />
+        ) : lesson.runMode === 'annotated' && lesson.starterCode ? (
+          <AnnotatedPane code={lesson.starterCode} />
         ) : (
           <div className="flex-1 flex items-center justify-center border-2 border-dashed border-zinc-300 dark:border-zinc-700 rounded-lg">
             <p className="text-zinc-500 font-mono text-sm">
-              {lesson.runMode === 'terminal' ? 'Terminal Output Placeholder' : 'Annotated Snippet Placeholder'}
+              Missing configuration for {lesson.runMode}
             </p>
           </div>
         )}

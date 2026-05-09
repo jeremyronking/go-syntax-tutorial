@@ -1,3 +1,8 @@
+export interface TerminalLine {
+  kind: "command" | "stdout" | "stderr";
+  text: string;
+}
+
 export interface Lesson {
   slug: string;
   title: string;
@@ -6,7 +11,7 @@ export interface Lesson {
   body: string;
   runMode: "playground" | "terminal" | "annotated";
   starterCode?: string;
-  terminalOutput?: string;
+  terminalOutput?: TerminalLine[];
   streamReplay?: boolean;
   gotcha?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
