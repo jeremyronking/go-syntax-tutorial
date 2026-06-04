@@ -5,6 +5,7 @@ import {
   interfacesCheckpoint, genericsCheckpoint, errorsCheckpoint,
 } from './phase-13';
 import { concurrencyCheckpoint } from './phase-14';
+import { packagesCheckpoint, lowLevelCheckpoint } from './phase-15';
 
 export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   A: [fundamentalsCheckpoint],
@@ -15,6 +16,8 @@ export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   F: [genericsCheckpoint],
   G: [errorsCheckpoint],
   H: [concurrencyCheckpoint],
+  I: [packagesCheckpoint],
+  J: [lowLevelCheckpoint],
 };
 
 const all: Checkpoint[] = [];

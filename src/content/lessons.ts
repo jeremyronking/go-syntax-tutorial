@@ -25,6 +25,12 @@ import {
 import {
   goroutines, channels, closeRange, selectStatement, syncMutex, atomics, context,
 } from './lessons/section-h';
+import {
+  packagesVisibility, initOrder, internalModules, embedFiles,
+} from './lessons/section-i';
+import {
+  reflectBasics, unsafePointer, cgoLesson, buildTags,
+} from './lessons/section-j';
 
 const lessons: Lesson[] = [
   helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
@@ -37,6 +43,8 @@ const lessons: Lesson[] = [
   typeParameters, constraints, whenNotGenerics,
   errorInterface, errorWrapping, panicRecover,
   goroutines, channels, closeRange, selectStatement, syncMutex, atomics, context,
+  packagesVisibility, initOrder, internalModules, embedFiles,
+  reflectBasics, unsafePointer, cgoLesson, buildTags,
 ];
 
 export default lessons;
