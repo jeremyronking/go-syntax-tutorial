@@ -1,21 +1,44 @@
-import { Link } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { Sidebar } from './components/Sidebar';
+import { CommandPalette } from './components/CommandPalette';
+import { Landing } from './pages/Landing';
+import { LessonPlaceholder } from './pages/LessonPlaceholder';
+import { useThemeStore, applyThemeToRoot } from './store/theme';
 
 export default function App(): JSX.Element {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const theme = useThemeStore((s) => s.theme);
+  const location = useLocation();
+  useEffect(() => {
+    applyThemeToRoot(theme);
+  }, [theme]);
+  const openSearch = useCallback(() => setPaletteOpen(true), []);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+  useEffect(() => {
+    setPaletteOpen(false);
+  }, [location.pathname]);
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 text-center">
-      <h1 className="text-5xl font-semibold text-white">
-        Go<span className="text-gopher-cyan">Tour</span>
-      </h1>
-      <p className="max-w-prose text-ink-300">
-        Hello, GoTour. Project scaffold is up. Routing, theming, and the lesson
-        framework land in the next phases.
-      </p>
-      <Link
-        to="/lesson/hello-world"
-        className="text-sm text-gopher-cyan underline decoration-gopher-cyan/40 hover:decoration-gopher-cyan"
-      >
-        Visit the placeholder lesson (coming in Phase 04)
-      </Link>
-    </main>
+    <>
+      <Layout sidebar={<Sidebar />} onOpenSearch={openSearch}>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/lesson/:slug" element={<LessonPlaceholder />} />
+          <Route path="*" element={<Landing />} />
+        </Routes>
+      </Layout>
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+    </>
   );
 }

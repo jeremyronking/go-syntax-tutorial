@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx"],"version":"5.9.3"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/commandpalette.tsx","./src/components/layout.tsx","./src/components/sidebar.tsx","./src/components/topbar.tsx","./src/pages/landing.tsx","./src/pages/lessonplaceholder.tsx","./src/store/theme.ts"],"version":"5.9.3"}
