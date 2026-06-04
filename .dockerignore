@@ -1,0 +1,11 @@
+# Build context hygiene for the go-landing (site) image, which uses the repo
+# root as its context. Keep node_modules/build artifacts out so COPY doesn't
+# trip over pnpm symlinks.
+**/node_modules
+**/dist
+**/.vite
+**/.cache
+.git
+**/.DS_Store
+*.log
+**/*.tsbuildinfo
