@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ResetProgress } from '../components/ResetProgress';
 
 interface Section {
   slug: string;
@@ -65,6 +66,7 @@ export function Landing(): JSX.Element {
           </li>
         ))}
       </ul>
+      <footer className="mt-12 flex justify-end"><ResetProgress /></footer>
     </div>
   );
 }
