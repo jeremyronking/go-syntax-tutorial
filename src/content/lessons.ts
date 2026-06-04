@@ -1,9 +1,42 @@
 import type { Lesson } from './types';
-import helloWorld from './lessons/hello-world';
+import {
+  helloWorld,
+  goRunVsBuild,
+  variables,
+  constantsIota,
+  basicTypes,
+  stringsRunesBytes,
+  numericTypes,
+} from './lessons/section-a';
+import {
+  ifStatement,
+  forLoop,
+  loopVariableCapture,
+  switchStatement,
+  typeSwitch,
+  deferStatement,
+  labelsGoto,
+} from './lessons/section-b';
 
-const lessons: Lesson[] = [helloWorld];
+const lessons: Lesson[] = [
+  helloWorld,
+  goRunVsBuild,
+  variables,
+  constantsIota,
+  basicTypes,
+  stringsRunesBytes,
+  numericTypes,
+  ifStatement,
+  forLoop,
+  loopVariableCapture,
+  switchStatement,
+  typeSwitch,
+  deferStatement,
+  labelsGoto,
+];
 
 export default lessons;
+
 export const lessonsBySlug: Readonly<Record<string, Lesson>> = Object.freeze(
   Object.fromEntries(lessons.map((l) => [l.slug, l])),
 );

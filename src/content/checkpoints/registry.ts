@@ -1,6 +1,10 @@
 import type { Checkpoint, SectionId } from '../types';
+import { fundamentalsCheckpoint, controlFlowCheckpoint } from './phase-11';
 
-export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {};
+export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
+  A: [fundamentalsCheckpoint],
+  B: [controlFlowCheckpoint],
+};
 
 const all: Checkpoint[] = [];
 for (const list of Object.values(CheckpointsBySection) as Checkpoint[][]) {
