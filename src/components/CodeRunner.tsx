@@ -36,6 +36,7 @@ export function CodeRunner({
   const [vetErrors, setVetErrors] = useState<string>('');
   const [status, setStatus] = useState<'idle' | 'running' | 'replaying' | 'done' | 'error'>('idle');
   const [replaying, setReplaying] = useState<boolean>(false);
+  const reduceMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const editorRef = useRef<monacoNs.editor.IStandaloneCodeEditor | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const replayTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -95,7 +96,7 @@ export function CodeRunner({
       const res = await compileOnPlayground(source, ac.signal);
       setCompileErrors(res.Errors ?? '');
       setVetErrors(res.VetErrors ?? '');
-      if (streamReplay && res.Events.length > 0) {
+      if (streamReplay && res.Events.length > 0 && !reduceMotion) {
         setExternalStatus('replaying');
         scheduleReplay(res.Events);
         // Finalize after expected end
@@ -110,7 +111,7 @@ export function CodeRunner({
       setCompileErrors(msg);
       setExternalStatus('error');
     }
-  }, [dumpEvents, scheduleReplay, setExternalStatus, streamReplay]);
+  }, [dumpEvents, reduceMotion, scheduleReplay, setExternalStatus, streamReplay]);
 
   const reset = useCallback(() => {
     if (editorRef.current) editorRef.current.setValue(starterCode);

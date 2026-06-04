@@ -3,7 +3,8 @@ import type { Lesson } from '../content/types';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { LessonNote } from './LessonNote';
-import { CodeRunner } from './CodeRunner';
+import { lazy, Suspense } from 'react';
+const CodeRunner = lazy(() => import('./CodeRunner').then(m => ({ default: m.CodeRunner })));
 import { TerminalPane } from './TerminalPane';
 import { AnnotatedPane } from './AnnotatedPane';
 
@@ -30,6 +31,7 @@ export function LessonView({ lesson, prev, next, draft, onDraftChange, onMarkInP
       <Prose body={lesson.body} />
       {lesson.gotcha ? <Gotcha>{lesson.gotcha}</Gotcha> : null}
       {lesson.runMode === 'playground' && lesson.starterCode ? (
+        <Suspense fallback={<div className="mt-6 rounded-md border border-ink-700 bg-ink-900/40 p-4 text-sm text-ink-300">Loading editor...</div>}>
         <div className="mt-6">
           <CodeRunner
             lessonSlug={lesson.slug}
@@ -42,6 +44,7 @@ export function LessonView({ lesson, prev, next, draft, onDraftChange, onMarkInP
             }}
           />
         </div>
+        </Suspense>
       ) : lesson.runMode === 'terminal' && lesson.terminalOutput ? (
         <div className="mt-6">
           <TerminalPane lines={lesson.terminalOutput} />
