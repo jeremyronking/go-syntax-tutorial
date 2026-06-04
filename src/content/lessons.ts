@@ -31,6 +31,9 @@ import {
 import {
   reflectBasics, unsafePointer, cgoLesson, buildTags,
 } from './lessons/section-j';
+import {
+  toolchainBuild, toolchainInstall, toolchainModules, toolchainWorkspaces,
+} from './lessons/section-k1';
 
 const lessons: Lesson[] = [
   helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
@@ -45,6 +48,7 @@ const lessons: Lesson[] = [
   goroutines, channels, closeRange, selectStatement, syncMutex, atomics, context,
   packagesVisibility, initOrder, internalModules, embedFiles,
   reflectBasics, unsafePointer, cgoLesson, buildTags,
+  toolchainBuild, toolchainInstall, toolchainModules, toolchainWorkspaces,
 ];
 
 export default lessons;

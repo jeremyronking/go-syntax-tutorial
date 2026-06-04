@@ -18,6 +18,7 @@ export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   H: [concurrencyCheckpoint],
   I: [packagesCheckpoint],
   J: [lowLevelCheckpoint],
+  // K1 lands in phase 16 with no checkpoint; K checkpoint lives in phase 18.
 };
 
 const all: Checkpoint[] = [];
