@@ -12,7 +12,7 @@ export function TopBar({ onOpenSearch }: TopBarProps): JSX.Element {
   const mod = isMac ? '⌘' : 'Ctrl';
   return (
     <header className="sticky top-0 z-30 flex h-12 items-center gap-3 border-b border-ink-800 bg-ink-950/85 px-3 backdrop-blur supports-[backdrop-filter]:bg-ink-950/70">
-      <Link to="/" className="flex items-center gap-2 text-white">
+      <Link to="/" className="flex items-center gap-2 text-ink-50">
         <span aria-hidden className="inline-block h-5 w-5 rounded bg-gopher-cyan" />
         <span className="font-semibold tracking-tight">GoTour</span>
       </Link>

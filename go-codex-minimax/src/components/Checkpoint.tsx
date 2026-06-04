@@ -52,7 +52,7 @@ export function Checkpoint({ checkpoint, sectionSlugs }: CheckpointProps): JSX.E
     <article className="mx-auto max-w-prose px-6 py-8">
       <header className="mb-4">
         <p className="font-mono text-xs text-gopher-cyan">Checkpoint · Section {checkpoint.sectionSlug}</p>
-        <h1 className="mt-1 text-3xl font-semibold text-white">{checkpoint.title}</h1>
+        <h1 className="mt-1 text-3xl font-semibold text-ink-50">{checkpoint.title}</h1>
       </header>
       <ol className="space-y-6">
         {checkpoint.questions.map((q, i) => {
@@ -60,7 +60,7 @@ export function Checkpoint({ checkpoint, sectionSlugs }: CheckpointProps): JSX.E
           const correct = isCorrect(q, userAnswer);
           return (
             <li key={`${checkpoint.id}-${q.id}-${attempt}`} className="rounded border border-ink-800 bg-ink-900/40 p-4">
-              <p className="text-sm font-medium text-white">
+              <p className="text-sm font-medium text-ink-50">
                 <span className="mr-2 text-gopher-cyan">{i + 1}.</span>
                 {q.prompt}
               </p>
@@ -75,11 +75,11 @@ export function Checkpoint({ checkpoint, sectionSlugs }: CheckpointProps): JSX.E
                         <label
                           className={`flex cursor-pointer items-start gap-2 rounded border px-2 py-1.5 text-sm ${
                             showCorrect
-                              ? 'border-emerald-400 bg-emerald-400/10 text-emerald-100'
+                              ? 'border-emerald-400 bg-emerald-400/10 text-emerald-700 dark:text-emerald-100'
                               : showWrong
-                                ? 'border-red-400 bg-red-400/10 text-red-100'
+                                ? 'border-red-400 bg-red-400/10 text-red-700 dark:text-red-100'
                                 : selected
-                                  ? 'border-gopher-cyan bg-gopher-cyan/10 text-white'
+                                  ? 'border-gopher-cyan bg-gopher-cyan/10 text-ink-50'
                                   : 'border-ink-700 text-ink-200 hover:border-ink-500'
                           }`}
                         >
@@ -103,13 +103,13 @@ export function Checkpoint({ checkpoint, sectionSlugs }: CheckpointProps): JSX.E
                   value={typeof userAnswer === 'string' ? userAnswer : ''}
                   disabled={submitted}
                   onChange={(e) => setAnswers((a) => ({ ...a, [q.id]: e.target.value }))}
-                  className="mt-3 w-full rounded border border-ink-700 bg-ink-950 px-2 py-1.5 font-mono text-sm text-white focus:border-gopher-cyan focus:outline-none"
+                  className="mt-3 w-full rounded border border-ink-700 bg-ink-950 px-2 py-1.5 font-mono text-sm text-ink-50 focus:border-gopher-cyan focus:outline-none"
                   placeholder="Type your answer…"
                 />
               )}
               {submitted ? (
                 <p
-                  className={`mt-2 text-xs ${correct ? 'text-emerald-300' : 'text-red-300'}`}
+                  className={`mt-2 text-xs ${correct ? 'text-emerald-700 dark:text-emerald-300' : 'text-red-700 dark:text-red-300'}`}
                 >
                   {correct ? '✓ Correct.' : '✗ Incorrect.'} {q.explanation}
                 </p>
@@ -151,7 +151,7 @@ export function Checkpoint({ checkpoint, sectionSlugs }: CheckpointProps): JSX.E
           aria-live="polite"
           className={`mt-4 rounded border p-3 text-sm ${
             passed
-              ? 'border-emerald-400/60 bg-emerald-400/5 text-emerald-100'
+              ? 'border-emerald-400/60 bg-emerald-400/5 text-emerald-700 dark:text-emerald-100'
               : 'border-ink-700 bg-ink-900/40 text-ink-200'
           }`}
         >

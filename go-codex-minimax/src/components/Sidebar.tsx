@@ -54,7 +54,7 @@ export function Sidebar(): JSX.Element {
                 className="flex w-full items-baseline gap-2 px-2 py-1.5 text-left hover:bg-ink-800/60"
               >
                 <span className="font-mono text-xs text-gopher-cyan">{section.id}</span>
-                <span className="flex-1 text-xs font-medium text-white">{section.title}</span>
+                <span className="flex-1 text-xs font-medium text-ink-50">{section.title}</span>
                 <span className="font-mono text-[10px] text-ink-400">
                   {completed}/{total}
                 </span>
@@ -76,7 +76,7 @@ export function Sidebar(): JSX.Element {
                           to={`/lesson/${l.slug}`}
                           aria-current={isActive ? 'page' : undefined}
                           className={`flex items-baseline gap-2 px-2 py-1 text-xs hover:bg-ink-800/60 ${
-                            isActive ? 'bg-ink-800/80 text-white' : 'text-ink-200'
+                            isActive ? 'bg-ink-800/80 text-ink-50' : 'text-ink-200'
                           }`}
                         >
                           <span className="font-mono text-[10px] text-ink-500">
@@ -89,7 +89,7 @@ export function Sidebar(): JSX.Element {
                             </span>
                           ) : null}
                           {status === 'in-progress' ? (
-                            <span aria-label="In progress" className="text-amber-300">
+                            <span aria-label="In progress" className="text-amber-700 dark:text-amber-300">
                               ●
                             </span>
                           ) : null}

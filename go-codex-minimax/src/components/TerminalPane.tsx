@@ -7,7 +7,7 @@ interface TerminalPaneProps {
 
 function lineClass(kind: TerminalLine['kind']): string {
   if (kind === 'command') return 'text-gopher-cyan';
-  if (kind === 'stderr') return 'text-red-300';
+  if (kind === 'stderr') return 'text-red-700 dark:text-red-300';
   return 'text-ink-100';
 }
 

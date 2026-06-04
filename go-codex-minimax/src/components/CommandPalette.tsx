@@ -90,7 +90,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): JSX.Elem
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search lessons by title, section, or prose…"
-            className="w-full bg-transparent text-base text-white placeholder:text-ink-500 focus:outline-none"
+            className="w-full bg-transparent text-base text-ink-50 placeholder:text-ink-500 focus:outline-none"
             aria-label="Search input"
             aria-controls="palette-results"
             aria-activedescendant={hits[active] ? `palette-hit-${active}` : undefined}
@@ -135,7 +135,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps): JSX.Elem
                       <span className="font-mono text-xs text-gopher-cyan">
                         {h.lesson.section}
                       </span>
-                      <span className="font-medium text-white">{h.lesson.title}</span>
+                      <span className="font-medium text-ink-50">{h.lesson.title}</span>
                     </div>
                     <div className="text-xs text-ink-400">
                       {section?.title} · {h.snippet}
