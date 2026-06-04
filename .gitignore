@@ -9,5 +9,4 @@ tsconfig.tsbuildinfo
 .DS_Store
 server/dist/
 *.log
-]<]minimax[>[</EOF
-echo "config files done"
+.DS_Store
