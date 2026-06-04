@@ -12,7 +12,7 @@ export function CheckpointPage(): JSX.Element {
   if (!cp) {
     return (
       <article className="mx-auto max-w-prose px-6 py-10">
-        <h1 className="text-3xl font-semibold text-white">Checkpoint not found</h1>
+        <h1 className="text-3xl font-semibold text-ink-50">Checkpoint not found</h1>
         <p className="mt-3 text-ink-300">
           No checkpoint with id <code className="font-mono">{id}</code> is registered.
         </p>

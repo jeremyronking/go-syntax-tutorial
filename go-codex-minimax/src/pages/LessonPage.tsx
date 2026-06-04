@@ -27,7 +27,7 @@ export function LessonPage(): JSX.Element {
   if (!lesson) {
     return (
       <article className="mx-auto max-w-prose px-6 py-10">
-        <h1 className="text-3xl font-semibold text-white">Lesson not found</h1>
+        <h1 className="text-3xl font-semibold text-ink-50">Lesson not found</h1>
         <p className="mt-3 text-ink-300">
           No lesson with slug <code className="font-mono">{slug}</code> is registered yet.
         </p>

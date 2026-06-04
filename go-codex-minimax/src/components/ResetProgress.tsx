@@ -27,7 +27,7 @@ export function ResetProgress(): JSX.Element {
       type="button"
       onClick={onClick}
       onBlur={() => setConfirming(false)}
-      className="rounded border border-ink-700 px-3 py-1.5 text-xs text-ink-300 hover:border-red-400 hover:text-red-300"
+      className="rounded border border-ink-700 px-3 py-1.5 text-xs text-ink-300 hover:border-red-400 hover:text-red-700 dark:text-red-300"
     >
       {confirming ? 'Click again to confirm — this clears all progress' : 'Reset progress'}
     </button>

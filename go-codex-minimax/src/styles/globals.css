@@ -3,8 +3,44 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * The `ink` scale is defined as RGB-channel CSS variables so the whole ramp
+   * can invert between themes without touching component classes. Light is the
+   * default (:root); dark mode adds `.dark` on <html> (see store/theme.ts).
+   * Light = the ramp reversed (ink-950 is the lightest surface, ink-50 the
+   * darkest text); dark = the ramp in its natural order.
+   */
   :root {
-    color-scheme: light dark;
+    color-scheme: light;
+    --gopher-cyan: 0 125 156;
+    --gopher-light: 0 125 156;
+    --ink-50: 8 10 18;
+    --ink-100: 16 19 28;
+    --ink-200: 27 32 48;
+    --ink-300: 42 48 64;
+    --ink-400: 62 70 85;
+    --ink-500: 91 100 119;
+    --ink-600: 138 147 163;
+    --ink-700: 193 199 211;
+    --ink-800: 221 225 233;
+    --ink-900: 238 240 244;
+    --ink-950: 247 248 250;
+  }
+  .dark {
+    color-scheme: dark;
+    --gopher-cyan: 0 173 216;
+    --gopher-light: 93 201 226;
+    --ink-50: 247 248 250;
+    --ink-100: 238 240 244;
+    --ink-200: 221 225 233;
+    --ink-300: 193 199 211;
+    --ink-400: 138 147 163;
+    --ink-500: 91 100 119;
+    --ink-600: 62 70 85;
+    --ink-700: 42 48 64;
+    --ink-800: 27 32 48;
+    --ink-900: 16 19 28;
+    --ink-950: 8 10 18;
   }
   html {
     -webkit-font-smoothing: antialiased;
@@ -14,7 +50,7 @@
     @apply min-h-screen font-sans;
   }
   ::selection {
-    @apply bg-gopher-cyan/30 text-white;
+    @apply bg-gopher-cyan/30 text-ink-50;
   }
 }
 
@@ -22,9 +58,9 @@
   .prose-tour {
     @apply text-ink-100 leading-relaxed;
   }
-  .prose-tour h1 { @apply text-3xl font-semibold mt-6 mb-3 text-white; }
-  .prose-tour h2 { @apply text-2xl font-semibold mt-5 mb-2 text-white; }
-  .prose-tour h3 { @apply text-xl font-semibold mt-4 mb-2 text-white; }
+  .prose-tour h1 { @apply text-3xl font-semibold mt-6 mb-3 text-ink-50; }
+  .prose-tour h2 { @apply text-2xl font-semibold mt-5 mb-2 text-ink-50; }
+  .prose-tour h3 { @apply text-xl font-semibold mt-4 mb-2 text-ink-50; }
   .prose-tour p { @apply my-3; }
   .prose-tour ul { @apply list-disc pl-6 my-3 space-y-1; }
   .prose-tour ol { @apply list-decimal pl-6 my-3 space-y-1; }
@@ -37,6 +73,6 @@
   .prose-tour hr { @apply border-ink-700 my-6; }
   .prose-tour table { @apply my-3 border-collapse; }
   .prose-tour th, .prose-tour td { @apply border border-ink-700 px-2 py-1; }
-  .prose-tour strong { @apply text-white; }
+  .prose-tour strong { @apply text-ink-50; }
   .prose-tour em { @apply text-ink-200; }
 }

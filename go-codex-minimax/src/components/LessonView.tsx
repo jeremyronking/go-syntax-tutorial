@@ -25,7 +25,7 @@ export function LessonView({ lesson, prev, next, draft, onDraftChange, onMarkInP
         <p className="font-mono text-xs text-gopher-cyan">
           Section {lesson.section} · Lesson {lesson.order}
         </p>
-        <h1 className="mt-1 text-3xl font-semibold text-white">{lesson.title}</h1>
+        <h1 className="mt-1 text-3xl font-semibold text-ink-50">{lesson.title}</h1>
       </header>
       {lesson.note ? <LessonNote>{lesson.note}</LessonNote> : null}
       <Prose body={lesson.body} />

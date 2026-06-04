@@ -24,7 +24,7 @@ const SECTIONS: Section[] = [
 export function Landing(): JSX.Element {
   return (
     <div className="mx-auto max-w-3xl px-6 py-10">
-      <h1 className="text-4xl font-semibold text-white">
+      <h1 className="text-4xl font-semibold text-ink-50">
         Go<span className="text-gopher-cyan">Tour</span>
       </h1>
       <p className="mt-3 text-ink-300">
@@ -47,7 +47,7 @@ export function Landing(): JSX.Element {
         </a>
       </div>
 
-      <h2 id="sections" className="mt-12 text-xl font-semibold text-white">
+      <h2 id="sections" className="mt-12 text-xl font-semibold text-ink-50">
         Sections
       </h2>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -59,7 +59,7 @@ export function Landing(): JSX.Element {
             >
               <div className="flex items-baseline gap-2">
                 <span className="font-mono text-sm text-gopher-cyan">{s.slug}</span>
-                <span className="font-medium text-white">{s.title}</span>
+                <span className="font-medium text-ink-50">{s.title}</span>
               </div>
               <p className="mt-1 text-sm text-ink-300">{s.blurb}</p>
             </a>

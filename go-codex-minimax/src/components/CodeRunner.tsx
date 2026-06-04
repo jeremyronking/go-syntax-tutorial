@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import type * as monacoNs from 'monaco-editor';
 import { compileOnPlayground, nanoToMs, type PlaygroundEvent } from '../lib/playground';
+import { useThemeStore } from '../store/theme';
 
 interface CodeRunnerProps {
   lessonSlug: string;
@@ -37,6 +38,7 @@ export function CodeRunner({
   const [status, setStatus] = useState<'idle' | 'running' | 'replaying' | 'done' | 'error'>('idle');
   const [replaying, setReplaying] = useState<boolean>(false);
   const reduceMotion = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const theme = useThemeStore((s) => s.theme);
   const editorRef = useRef<monacoNs.editor.IStandaloneCodeEditor | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const replayTimeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -181,14 +183,14 @@ export function CodeRunner({
           <button
             type="button"
             onClick={skipReplay}
-            className="rounded border border-amber-400/60 px-3 py-1 text-amber-200 hover:bg-amber-400/10"
+            className="rounded border border-amber-400/60 px-3 py-1 text-amber-700 dark:text-amber-200 hover:bg-amber-400/10"
           >
             Skip animation
           </button>
         ) : null}
         <span
           className={`ml-auto font-mono text-xs ${
-            status === 'error' ? 'text-red-400' : status === 'done' ? 'text-emerald-400' : 'text-ink-400'
+            status === 'error' ? 'text-red-700 dark:text-red-400' : status === 'done' ? 'text-emerald-700 dark:text-emerald-400' : 'text-ink-400'
           }`}
         >
           {statusLabel[status]}
@@ -200,7 +202,7 @@ export function CodeRunner({
           defaultLanguage={GOLANG_LANG_ID}
           language={GOLANG_LANG_ID}
           value={value}
-          theme="vs-dark"
+          theme={theme === 'dark' ? 'vs-dark' : 'vs'}
           onChange={(v) => onDraftChange(v ?? '')}
           onMount={handleMount}
           options={{
@@ -222,10 +224,10 @@ export function CodeRunner({
           </div>
           <pre className="m-0 flex-1 overflow-auto p-3 font-mono text-sm text-ink-100">
             {compileErrors ? (
-              <code className="block whitespace-pre text-red-400">{compileErrors}</code>
+              <code className="block whitespace-pre text-red-700 dark:text-red-400">{compileErrors}</code>
             ) : null}
             {vetErrors ? (
-              <code className="block whitespace-pre text-red-300">{vetErrors}</code>
+              <code className="block whitespace-pre text-red-700 dark:text-red-300">{vetErrors}</code>
             ) : null}
             {output ? <code className="block whitespace-pre">{output}</code> : null}
             {!compileErrors && !vetErrors && !output ? (
