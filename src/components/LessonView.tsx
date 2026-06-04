@@ -1,0 +1,57 @@
+import { Link } from 'react-router-dom';
+import type { Lesson } from '../content/types';
+import { Prose } from './Prose';
+import { Gotcha } from './Gotcha';
+import { LessonNote } from './LessonNote';
+
+interface LessonViewProps {
+  lesson: Lesson;
+  prev?: Lesson;
+  next?: Lesson;
+}
+
+export function LessonView({ lesson, prev, next }: LessonViewProps): JSX.Element {
+  return (
+    <article className="mx-auto max-w-prose px-6 py-8">
+      <header className="mb-4">
+        <p className="font-mono text-xs text-gopher-cyan">
+          Section {lesson.section} · Lesson {lesson.order}
+        </p>
+        <h1 className="mt-1 text-3xl font-semibold text-white">{lesson.title}</h1>
+      </header>
+      {lesson.note ? <LessonNote>{lesson.note}</LessonNote> : null}
+      <Prose body={lesson.body} />
+      {lesson.gotcha ? <Gotcha>{lesson.gotcha}</Gotcha> : null}
+      <div className="mt-6 rounded-md border border-dashed border-ink-700 bg-ink-900/40 p-4 text-sm text-ink-300">
+        <p className="font-mono text-xs uppercase tracking-wider text-ink-500">
+          {lesson.runMode}
+        </p>
+        <p className="mt-1">
+          The interactive {lesson.runMode === 'playground' ? 'code runner' : lesson.runMode === 'terminal' ? 'terminal pane' : 'annotated block'} lands in Phase {lesson.runMode === 'playground' ? '05' : lesson.runMode === 'terminal' ? '06' : '04'}.
+        </p>
+      </div>
+      <nav className="mt-8 flex items-center justify-between border-t border-ink-800 pt-4 text-sm">
+        <div>
+          {prev ? (
+            <Link to={`/lesson/${prev.slug}`} className="text-gopher-cyan hover:underline">
+              ← {prev.title}
+            </Link>
+          ) : (
+            <span />
+          )}
+        </div>
+        <div>
+          {next ? (
+            <Link to={`/lesson/${next.slug}`} className="text-gopher-cyan hover:underline">
+              {next.title} →
+            </Link>
+          ) : (
+            <Link to="/" className="text-ink-400 hover:text-gopher-cyan">
+              Back to landing
+            </Link>
+          )}
+        </div>
+      </nav>
+    </article>
+  );
+}

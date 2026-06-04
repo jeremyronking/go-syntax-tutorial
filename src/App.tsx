@@ -4,7 +4,7 @@ import { Layout } from './components/Layout';
 import { Sidebar } from './components/Sidebar';
 import { CommandPalette } from './components/CommandPalette';
 import { Landing } from './pages/Landing';
-import { LessonPlaceholder } from './pages/LessonPlaceholder';
+import { LessonPage } from './pages/LessonPage';
 import { useThemeStore, applyThemeToRoot } from './store/theme';
 
 export default function App(): JSX.Element {
@@ -34,7 +34,7 @@ export default function App(): JSX.Element {
       <Layout sidebar={<Sidebar />} onOpenSearch={openSearch}>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/lesson/:slug" element={<LessonPlaceholder />} />
+          <Route path="/lesson/:slug" element={<LessonPage />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </Layout>
