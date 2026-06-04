@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'GoTour',
-  description: 'One Go-tutorial spec, three AI implementations.',
+  description: 'One Go-tutorial spec, four AI implementations.',
   cleanUrls: true,
   appearance: 'dark',
 
@@ -38,6 +38,7 @@ export default defineConfig({
           { text: 'go-claude', link: 'https://go-claude.jking.ai' },
           { text: 'go-gemini', link: 'https://go-gemini.jking.ai' },
           { text: 'go-glm', link: 'https://go-glm.jking.ai' },
+          { text: 'go-minimax', link: 'https://go-minimax.jking.ai' },
         ],
       },
       {

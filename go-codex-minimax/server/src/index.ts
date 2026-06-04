@@ -1,9 +1,12 @@
 import express, { type Request, type Response } from 'express';
+import path from 'node:path';
 
 const PORT = Number(process.env.PORT ?? 8787);
 const PLAYGROUND_UPSTREAM = process.env.PLAYGROUND_UPSTREAM ?? 'https://play.golang.org/compile';
+const STATIC_DIR = process.env.STATIC_DIR;
 
 const app = express();
+app.set('trust proxy', true); // behind Cloudflare tunnel / nginx
 app.use(express.urlencoded({ extended: false, limit: '2mb' }));
 app.use(express.json({ limit: '2mb' }));
 
@@ -42,6 +45,24 @@ app.post('/api/compile', async (req: Request, res: Response) => {
   }
 });
 
+if (STATIC_DIR) {
+  app.use(
+    express.static(STATIC_DIR, {
+      maxAge: '1y',
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('index.html')) {
+          res.setHeader('Cache-Control', 'no-cache');
+        }
+      },
+    }),
+  );
+  // SPA fallback for client-side routing (react-router).
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(STATIC_DIR, 'index.html'));
+  });
+}
+
 app.listen(PORT, () => {
   console.warn(`[gotour] playground proxy listening on :${PORT} -> ${PLAYGROUND_UPSTREAM}`);
+  if (STATIC_DIR) console.warn(`[gotour] serving static frontend from ${STATIC_DIR}`);
 });
