@@ -3,14 +3,19 @@ import type { Lesson } from '../content/types';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { LessonNote } from './LessonNote';
+import { CodeRunner } from './CodeRunner';
 
 interface LessonViewProps {
+  draft?: string;
+  onDraftChange?: (value: string) => void;
+  onMarkInProgress?: () => void;
+
   lesson: Lesson;
   prev?: Lesson;
   next?: Lesson;
 }
 
-export function LessonView({ lesson, prev, next }: LessonViewProps): JSX.Element {
+export function LessonView({ lesson, prev, next, draft, onDraftChange, onMarkInProgress }: LessonViewProps): JSX.Element {
   return (
     <article className="mx-auto max-w-prose px-6 py-8">
       <header className="mb-4">
@@ -22,14 +27,29 @@ export function LessonView({ lesson, prev, next }: LessonViewProps): JSX.Element
       {lesson.note ? <LessonNote>{lesson.note}</LessonNote> : null}
       <Prose body={lesson.body} />
       {lesson.gotcha ? <Gotcha>{lesson.gotcha}</Gotcha> : null}
-      <div className="mt-6 rounded-md border border-dashed border-ink-700 bg-ink-900/40 p-4 text-sm text-ink-300">
-        <p className="font-mono text-xs uppercase tracking-wider text-ink-500">
-          {lesson.runMode}
-        </p>
-        <p className="mt-1">
-          The interactive {lesson.runMode === 'playground' ? 'code runner' : lesson.runMode === 'terminal' ? 'terminal pane' : 'annotated block'} lands in Phase {lesson.runMode === 'playground' ? '05' : lesson.runMode === 'terminal' ? '06' : '04'}.
-        </p>
-      </div>
+      {lesson.runMode === 'playground' && lesson.starterCode ? (
+        <div className="mt-6">
+          <CodeRunner
+            lessonSlug={lesson.slug}
+            starterCode={lesson.starterCode}
+            streamReplay={Boolean(lesson.streamReplay)}
+            draft={draft}
+            onDraftChange={(v) => {
+              onMarkInProgress?.();
+              onDraftChange?.(v);
+            }}
+          />
+        </div>
+      ) : (
+        <div className="mt-6 rounded-md border border-dashed border-ink-700 bg-ink-900/40 p-4 text-sm text-ink-300">
+          <p className="font-mono text-xs uppercase tracking-wider text-ink-500">
+            {lesson.runMode}
+          </p>
+          <p className="mt-1">
+            The {lesson.runMode === 'terminal' ? 'terminal pane' : 'annotated block'} lands in Phase {lesson.runMode === 'terminal' ? '06' : '04'}.
+          </p>
+        </div>
+      )}
       <nav className="mt-8 flex items-center justify-between border-t border-ink-800 pt-4 text-sm">
         <div>
           {prev ? (
