@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply min-h-screen font-sans;
+  }
+  ::selection {
+    @apply bg-gopher-cyan/30 text-white;
+  }
+}
+
+@layer components {
+  .prose-tour {
+    @apply text-ink-100 leading-relaxed;
+  }
+  .prose-tour h1 { @apply text-3xl font-semibold mt-6 mb-3 text-white; }
+  .prose-tour h2 { @apply text-2xl font-semibold mt-5 mb-2 text-white; }
+  .prose-tour h3 { @apply text-xl font-semibold mt-4 mb-2 text-white; }
+  .prose-tour p { @apply my-3; }
+  .prose-tour ul { @apply list-disc pl-6 my-3 space-y-1; }
+  .prose-tour ol { @apply list-decimal pl-6 my-3 space-y-1; }
+  .prose-tour li { @apply my-1; }
+  .prose-tour a { @apply text-gopher-cyan underline decoration-gopher-cyan/40 hover:decoration-gopher-cyan; }
+  .prose-tour code { @apply font-mono text-sm bg-ink-800 px-1.5 py-0.5 rounded text-gopher-light; }
+  .prose-tour pre { @apply font-mono text-sm bg-ink-900 border border-ink-700 rounded-md p-3 overflow-x-auto my-3; }
+  .prose-tour pre code { @apply bg-transparent p-0 text-ink-100; }
+  .prose-tour blockquote { @apply border-l-4 border-gopher-cyan/60 pl-3 italic text-ink-300 my-3; }
+  .prose-tour hr { @apply border-ink-700 my-6; }
+  .prose-tour table { @apply my-3 border-collapse; }
+  .prose-tour th, .prose-tour td { @apply border border-ink-700 px-2 py-1; }
+  .prose-tour strong { @apply text-white; }
+  .prose-tour em { @apply text-ink-200; }
+}
