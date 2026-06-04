@@ -17,6 +17,19 @@ import {
   deferStatement,
   labelsGoto,
 } from './lessons/section-b';
+import {
+  arrays,
+  slices,
+  maps,
+  structs,
+  pointers,
+} from './lessons/section-c';
+import {
+  functionsLesson,
+  variadic,
+  closures,
+  methods,
+} from './lessons/section-d';
 
 const lessons: Lesson[] = [
   helloWorld,
@@ -33,6 +46,15 @@ const lessons: Lesson[] = [
   typeSwitch,
   deferStatement,
   labelsGoto,
+  arrays,
+  slices,
+  maps,
+  structs,
+  pointers,
+  functionsLesson,
+  variadic,
+  closures,
+  methods,
 ];
 
 export default lessons;
