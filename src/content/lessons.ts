@@ -22,6 +22,9 @@ import {
 import {
   errorInterface, errorWrapping, panicRecover,
 } from './lessons/section-g';
+import {
+  goroutines, channels, closeRange, selectStatement, syncMutex, atomics, context,
+} from './lessons/section-h';
 
 const lessons: Lesson[] = [
   helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
@@ -33,6 +36,7 @@ const lessons: Lesson[] = [
   interfaces, typeAssertions, embedding, stdlibInterfaces,
   typeParameters, constraints, whenNotGenerics,
   errorInterface, errorWrapping, panicRecover,
+  goroutines, channels, closeRange, selectStatement, syncMutex, atomics, context,
 ];
 
 export default lessons;
