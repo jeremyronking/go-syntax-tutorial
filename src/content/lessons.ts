@@ -34,6 +34,10 @@ import {
 import {
   toolchainBuild, toolchainInstall, toolchainModules, toolchainWorkspaces,
 } from './lessons/section-k1';
+import {
+  toolchainTest, toolchainBenchFuzz, toolchainRaceCover, toolchainFmt,
+  toolchainVet, toolchainDoc,
+} from './lessons/section-k2';
 
 const lessons: Lesson[] = [
   helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
@@ -49,6 +53,8 @@ const lessons: Lesson[] = [
   packagesVisibility, initOrder, internalModules, embedFiles,
   reflectBasics, unsafePointer, cgoLesson, buildTags,
   toolchainBuild, toolchainInstall, toolchainModules, toolchainWorkspaces,
+  toolchainTest, toolchainBenchFuzz, toolchainRaceCover, toolchainFmt,
+  toolchainVet, toolchainDoc,
 ];
 
 export default lessons;
