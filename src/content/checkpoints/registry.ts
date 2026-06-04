@@ -1,12 +1,18 @@
 import type { Checkpoint, SectionId } from '../types';
 import { fundamentalsCheckpoint, controlFlowCheckpoint } from './phase-11';
 import { compositeTypesCheckpoint, functionsCheckpoint } from './phase-12';
+import {
+  interfacesCheckpoint, genericsCheckpoint, errorsCheckpoint,
+} from './phase-13';
 
 export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   A: [fundamentalsCheckpoint],
   B: [controlFlowCheckpoint],
   C: [compositeTypesCheckpoint],
   D: [functionsCheckpoint],
+  E: [interfacesCheckpoint],
+  F: [genericsCheckpoint],
+  G: [errorsCheckpoint],
 };
 
 const all: Checkpoint[] = [];

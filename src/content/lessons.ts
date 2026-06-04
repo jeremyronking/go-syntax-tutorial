@@ -1,60 +1,38 @@
 import type { Lesson } from './types';
 import {
-  helloWorld,
-  goRunVsBuild,
-  variables,
-  constantsIota,
-  basicTypes,
-  stringsRunesBytes,
-  numericTypes,
+  helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
+  stringsRunesBytes, numericTypes,
 } from './lessons/section-a';
 import {
-  ifStatement,
-  forLoop,
-  loopVariableCapture,
-  switchStatement,
-  typeSwitch,
-  deferStatement,
-  labelsGoto,
+  ifStatement, forLoop, loopVariableCapture, switchStatement, typeSwitch,
+  deferStatement, labelsGoto,
 } from './lessons/section-b';
 import {
-  arrays,
-  slices,
-  maps,
-  structs,
-  pointers,
+  arrays, slices, maps, structs, pointers,
 } from './lessons/section-c';
 import {
-  functionsLesson,
-  variadic,
-  closures,
-  methods,
+  functionsLesson, variadic, closures, methods,
 } from './lessons/section-d';
+import {
+  interfaces, typeAssertions, embedding, stdlibInterfaces,
+} from './lessons/section-e';
+import {
+  typeParameters, constraints, whenNotGenerics,
+} from './lessons/section-f';
+import {
+  errorInterface, errorWrapping, panicRecover,
+} from './lessons/section-g';
 
 const lessons: Lesson[] = [
-  helloWorld,
-  goRunVsBuild,
-  variables,
-  constantsIota,
-  basicTypes,
-  stringsRunesBytes,
-  numericTypes,
-  ifStatement,
-  forLoop,
-  loopVariableCapture,
-  switchStatement,
-  typeSwitch,
-  deferStatement,
-  labelsGoto,
-  arrays,
-  slices,
-  maps,
-  structs,
-  pointers,
-  functionsLesson,
-  variadic,
-  closures,
-  methods,
+  helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
+  stringsRunesBytes, numericTypes,
+  ifStatement, forLoop, loopVariableCapture, switchStatement, typeSwitch,
+  deferStatement, labelsGoto,
+  arrays, slices, maps, structs, pointers,
+  functionsLesson, variadic, closures, methods,
+  interfaces, typeAssertions, embedding, stdlibInterfaces,
+  typeParameters, constraints, whenNotGenerics,
+  errorInterface, errorWrapping, panicRecover,
 ];
 
 export default lessons;
