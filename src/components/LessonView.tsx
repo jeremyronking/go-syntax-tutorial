@@ -4,6 +4,8 @@ import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { LessonNote } from './LessonNote';
 import { CodeRunner } from './CodeRunner';
+import { TerminalPane } from './TerminalPane';
+import { AnnotatedPane } from './AnnotatedPane';
 
 interface LessonViewProps {
   draft?: string;
@@ -40,14 +42,20 @@ export function LessonView({ lesson, prev, next, draft, onDraftChange, onMarkInP
             }}
           />
         </div>
+      ) : lesson.runMode === 'terminal' && lesson.terminalOutput ? (
+        <div className="mt-6">
+          <TerminalPane lines={lesson.terminalOutput} />
+        </div>
+      ) : lesson.runMode === 'annotated' && lesson.starterCode ? (
+        <div className="mt-6">
+          <AnnotatedPane code={lesson.starterCode} />
+        </div>
       ) : (
         <div className="mt-6 rounded-md border border-dashed border-ink-700 bg-ink-900/40 p-4 text-sm text-ink-300">
           <p className="font-mono text-xs uppercase tracking-wider text-ink-500">
             {lesson.runMode}
           </p>
-          <p className="mt-1">
-            The {lesson.runMode === 'terminal' ? 'terminal pane' : 'annotated block'} lands in Phase {lesson.runMode === 'terminal' ? '06' : '04'}.
-          </p>
+          <p className="mt-1">No content configured for this lesson yet.</p>
         </div>
       )}
       <nav className="mt-8 flex items-center justify-between border-t border-ink-800 pt-4 text-sm">
