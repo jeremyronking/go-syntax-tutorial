@@ -5,6 +5,7 @@ import { Sidebar } from './components/Sidebar';
 import { CommandPalette } from './components/CommandPalette';
 import { Landing } from './pages/Landing';
 import { LessonPage } from './pages/LessonPage';
+import { CheckpointPage } from './pages/CheckpointPage';
 import { useThemeStore, applyThemeToRoot } from './store/theme';
 
 export default function App(): JSX.Element {
@@ -35,6 +36,7 @@ export default function App(): JSX.Element {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/lesson/:slug" element={<LessonPage />} />
+          <Route path="/checkpoint/:id" element={<CheckpointPage />} />
           <Route path="*" element={<Landing />} />
         </Routes>
       </Layout>
