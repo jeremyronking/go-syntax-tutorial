@@ -6,6 +6,7 @@ import {
 } from './phase-13';
 import { concurrencyCheckpoint } from './phase-14';
 import { packagesCheckpoint, lowLevelCheckpoint } from './phase-15';
+import { toolchainCheckpoint } from './phase-18';
 
 export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   A: [fundamentalsCheckpoint],
@@ -18,7 +19,7 @@ export const CheckpointsBySection: Partial<Record<SectionId, Checkpoint[]>> = {
   H: [concurrencyCheckpoint],
   I: [packagesCheckpoint],
   J: [lowLevelCheckpoint],
-  // K1 lands in phase 16 with no checkpoint; K checkpoint lives in phase 18.
+  K: [toolchainCheckpoint],
 };
 
 const all: Checkpoint[] = [];

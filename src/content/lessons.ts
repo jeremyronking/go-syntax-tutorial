@@ -38,6 +38,10 @@ import {
   toolchainTest, toolchainBenchFuzz, toolchainRaceCover, toolchainFmt,
   toolchainVet, toolchainDoc,
 } from './lessons/section-k2';
+import {
+  toolchainGenerate, toolchainEnv, toolchainCrossCompile,
+  toolchainLdflags, toolchainPprof,
+} from './lessons/section-k3';
 
 const lessons: Lesson[] = [
   helloWorld, goRunVsBuild, variables, constantsIota, basicTypes,
@@ -55,6 +59,8 @@ const lessons: Lesson[] = [
   toolchainBuild, toolchainInstall, toolchainModules, toolchainWorkspaces,
   toolchainTest, toolchainBenchFuzz, toolchainRaceCover, toolchainFmt,
   toolchainVet, toolchainDoc,
+  toolchainGenerate, toolchainEnv, toolchainCrossCompile,
+  toolchainLdflags, toolchainPprof,
 ];
 
 export default lessons;
