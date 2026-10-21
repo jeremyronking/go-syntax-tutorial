@@ -1,9 +1,24 @@
 import { Link } from 'react-router-dom';
 import { ThemeToggle } from './ThemeToggle';
 
-export function TopBar({ onSearchTrigger }: { onSearchTrigger: () => void }) {
+export function TopBar({
+  onSearchTrigger,
+  onMenuToggle,
+}: {
+  onSearchTrigger: () => void;
+  onMenuToggle: () => void;
+}) {
   return (
-    <header className="sticky top-0 z-30 flex h-12 items-center gap-4 border-b border-line bg-app/95 px-4 backdrop-blur lg:px-6">
+    <header className="sticky top-0 z-30 flex h-12 items-center gap-3 border-b border-line bg-app/95 px-4 backdrop-blur lg:px-6">
+      <button
+        type="button"
+        onClick={onMenuToggle}
+        aria-label="Toggle lesson navigation"
+        className="rounded border border-line px-2 py-1 text-xs text-fg-muted transition-colors hover:border-gopher hover:text-gopher lg:hidden"
+      >
+        <span aria-hidden="true">☰</span>
+      </button>
+
       <Link to="/" className="flex items-center gap-2">
         <span
           aria-hidden="true"

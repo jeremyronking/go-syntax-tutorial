@@ -5,6 +5,7 @@ import { useProgressStore } from '../store/progress';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { CodeArea } from './CodeArea';
+import { LessonNav } from './LessonNav';
 
 export function LessonView() {
   const { slug } = useParams<{ slug: string }>();
@@ -66,6 +67,8 @@ export function LessonView() {
               </span>
             )}
           </div>
+
+          <LessonNav slug={lesson.slug} />
         </div>
 
         <aside className="mt-10 lg:mt-0 lg:sticky lg:top-16">
