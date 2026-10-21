@@ -1,24 +1,34 @@
+import { Suspense, lazy } from 'react';
 import type { Lesson } from '../content/types';
 
+const CodeRunner = lazy(() =>
+  import('./CodeRunner').then((m) => ({ default: m.CodeRunner }))
+);
+
 /**
- * Placeholder for the interactive code pane. Phase 05 swaps this for the
- * Monaco-backed CodeRunner; Phase 06 for the TerminalPane.
+ * The code pane on the right of a lesson. Phase 06 adds the TerminalPane for
+ * lessons the Playground sandbox cannot execute.
  */
 export function CodeArea({ lesson }: { lesson: Lesson }) {
+  if (lesson.runMode === 'playground' && lesson.starterCode) {
+    return (
+      <Suspense fallback={<EditorSkeleton />}>
+        <CodeRunner key={lesson.slug} lesson={lesson} />
+      </Suspense>
+    );
+  }
+  return null;
+}
+
+function EditorSkeleton() {
   return (
-    <div className="rounded-md border border-line bg-surface/40 p-4">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
-        {lesson.runMode} pane
-      </p>
-      <p className="mt-2 text-sm text-fg-muted">
-        The interactive editor lands in Phase 05. This lesson runs in{' '}
-        <span className="font-mono text-fg">{lesson.runMode}</span> mode.
-      </p>
-      {lesson.starterCode && (
-        <pre className="mt-3 overflow-x-auto rounded border border-line bg-app p-3 text-xs leading-relaxed text-fg-muted">
-          {lesson.starterCode}
-        </pre>
-      )}
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-line bg-surface/40">
+      <div className="shrink-0 border-b border-line px-3 py-2">
+        <span className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
+          Loading editor…
+        </span>
+      </div>
+      <div className="min-h-0 flex-1 animate-pulse bg-surface/30" />
     </div>
   );
 }
