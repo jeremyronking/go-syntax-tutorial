@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { lessonBySlug } from '../content/lessons';
 import { sectionById } from '../content/sections';
+import { useProgressStore } from '../store/progress';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
 import { CodeArea } from './CodeArea';
@@ -8,6 +9,8 @@ import { CodeArea } from './CodeArea';
 export function LessonView() {
   const { slug } = useParams<{ slug: string }>();
   const lesson = slug ? lessonBySlug(slug) : undefined;
+  const status = useProgressStore((s) => (lesson ? (s.progress[lesson.slug] ?? 'unstarted') : 'unstarted'));
+  const setLessonStatus = useProgressStore((s) => s.setLessonStatus);
 
   if (!lesson) {
     return (
@@ -47,6 +50,22 @@ export function LessonView() {
               <Gotcha>{lesson.gotcha}</Gotcha>
             </div>
           )}
+
+          <div className="mt-8 flex items-center gap-3 border-t border-line pt-5">
+            <button
+              type="button"
+              onClick={() => setLessonStatus(lesson.slug, 'complete')}
+              disabled={status === 'complete'}
+              className="rounded-md border border-line px-3 py-1.5 text-xs text-fg-muted transition-colors hover:border-gopher hover:text-gopher disabled:cursor-default disabled:opacity-60"
+            >
+              {status === 'complete' ? '✓ Completed' : 'Mark complete'}
+            </button>
+            {status === 'in-progress' && (
+              <span className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
+                In progress
+              </span>
+            )}
+          </div>
         </div>
 
         <aside className="mt-10 lg:mt-0 lg:sticky lg:top-16">

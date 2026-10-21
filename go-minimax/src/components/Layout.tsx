@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { TopBar } from './TopBar';
 import { Sidebar } from './Sidebar';
+import { ResetProgress } from './ResetProgress';
 
 /**
  * App shell. Three panes on `lg+` (sidebar / prose / editor), two panes on
@@ -26,8 +27,16 @@ export function Layout() {
       <TopBar onSearchTrigger={() => setPaletteOpen(true)} />
       <div className="flex flex-1 flex-col lg:flex-row">
         <Sidebar />
-        <main className="min-w-0 flex-1">
-          <Outlet />
+        <main className="flex min-w-0 flex-1 flex-col">
+          <div className="flex-1">
+            <Outlet />
+          </div>
+          <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-5 lg:px-10">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
+              GoTour · localStorage namespace gotour:v1
+            </p>
+            <ResetProgress />
+          </footer>
         </main>
       </div>
 

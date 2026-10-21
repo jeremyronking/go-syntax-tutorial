@@ -2,10 +2,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import type { Lesson } from '../content/types';
 import { compile, type PlaygroundEvent } from '../lib/playground';
+import { useProgressStore } from '../store/progress';
 
 const NS_PER_MS = 1_000_000;
 /** Never stall the replay for longer than this on a single event. */
 const MAX_EVENT_DELAY_MS = 2_000;
+/** How long to wait after the last keystroke before persisting a draft. */
+const DRAFT_DEBOUNCE_MS = 500;
 
 type RunStatus = 'idle' | 'running' | 'replaying' | 'done' | 'error';
 
@@ -27,13 +30,37 @@ function prefersReducedMotion(): boolean {
 }
 
 export function CodeRunner({ lesson, initialCode, onChange, onRun }: CodeRunnerProps) {
-  const [code, setCode] = useState(initialCode ?? lesson.starterCode ?? '');
+  const setEditorDraft = useProgressStore((s) => s.setEditorDraft);
+  const setLessonStatus = useProgressStore((s) => s.setLessonStatus);
+  const persistedDraft = useProgressStore((s) => s.editorDrafts[lesson.slug]);
+
+  const [code, setCode] = useState(
+    initialCode ?? persistedDraft ?? lesson.starterCode ?? ''
+  );
   const [output, setOutput] = useState<OutputBlock[]>([]);
   const [status, setStatus] = useState<RunStatus>('idle');
   const skipRef = useRef(false);
   const runRef = useRef<() => void>(() => {});
   const codeRef = useRef(code);
+  const draftTimer = useRef<number | undefined>(undefined);
   codeRef.current = code;
+
+  // Persist the draft a beat after the last keystroke.
+  const scheduleDraft = useCallback(
+    (next: string) => {
+      window.clearTimeout(draftTimer.current);
+      draftTimer.current = window.setTimeout(() => {
+        setEditorDraft(lesson.slug, next);
+      }, DRAFT_DEBOUNCE_MS);
+    },
+    [lesson.slug, setEditorDraft]
+  );
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(draftTimer.current);
+    };
+  }, []);
 
   const skipReplay = useCallback(() => {
     skipRef.current = true;
@@ -43,6 +70,7 @@ export function CodeRunner({ lesson, initialCode, onChange, onRun }: CodeRunnerP
     skipRef.current = false;
     setOutput([]);
     setStatus('running');
+    setLessonStatus(lesson.slug, 'in-progress');
     onRun?.();
 
     let response;
@@ -104,7 +132,7 @@ export function CodeRunner({ lesson, initialCode, onChange, onRun }: CodeRunnerP
 
     setOutput(blocks);
     setStatus('done');
-  }, [lesson.streamReplay, onRun]);
+  }, [lesson.slug, lesson.streamReplay, onRun, setLessonStatus]);
 
   runRef.current = () => {
     void run();
@@ -124,6 +152,7 @@ export function CodeRunner({ lesson, initialCode, onChange, onRun }: CodeRunnerP
     setOutput([]);
     setStatus('idle');
     onChange?.(starter);
+    setEditorDraft(lesson.slug, starter);
   };
 
   const handleMount: OnMount = (editor, monaco) => {
@@ -176,6 +205,7 @@ export function CodeRunner({ lesson, initialCode, onChange, onRun }: CodeRunnerP
             const next = v ?? '';
             setCode(next);
             onChange?.(next);
+            scheduleDraft(next);
           }}
           onMount={handleMount}
           options={{
