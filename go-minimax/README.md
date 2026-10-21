@@ -62,6 +62,38 @@ directly. Both the dev server and the production server proxy `POST /api/compile
 The upstream is overridable with the `PLAYGROUND_UPSTREAM` environment variable
 (default `https://play.golang.org/compile`).
 
+### Build the container
+
+```bash
+docker build -t go-minimax-proxy server/
+docker run --rm -p 8787:8787 go-minimax-proxy
+```
+
+### Fly.io
+
+```bash
+cd server
+fly launch --no-deploy
+fly secrets set PLAYGROUND_UPSTREAM=https://play.golang.org/compile
+fly deploy
+```
+
+### Render
+
+1. New → Web Service → Docker
+2. Root directory: `go-minimax/server` (build with the included Dockerfile)
+3. Env var: `PLAYGROUND_UPSTREAM=https://play.golang.org/compile`
+
+### Smoke test
+
+```bash
+cd server && pnpm smoke
+```
+
+Posts a hello-world program through the proxy and asserts the Playground response shape
+(`Errors` / `Events` / `Status`) plus the expected stdout. `pnpm mock` starts a fake upstream on
+`:9999` if you want to prove the `PLAYGROUND_UPSTREAM` override is honoured.
+
 ## Keyboard shortcuts
 
 | Shortcut | Action |
