@@ -7,7 +7,7 @@ export type SearchResult = {
   lesson: Lesson;
   sectionTitle: string;
   sectionLetter: string;
-  /** Short excerpt around the first match, when the body is what matched. */
+  /** Short excerpt around the match, when the prose is what matched. */
   snippet?: string;
 };
 
@@ -28,14 +28,21 @@ const indexed: Indexed[] = lessons.map((lesson) => {
   };
 });
 
-const fuse = new Fuse(indexed, {
+/** Titles and section names are the strong signals; prose is a weak one. */
+const titleFuse = new Fuse(indexed, {
   keys: [
-    { name: 'title', weight: 0.6 },
+    { name: 'title', weight: 0.75 },
     { name: 'section', weight: 0.25 },
-    { name: 'body', weight: 0.15 },
   ],
   threshold: 0.4,
   minMatchCharLength: 2,
+  ignoreLocation: true,
+});
+
+const bodyFuse = new Fuse(indexed, {
+  keys: [{ name: 'body', weight: 1 }],
+  threshold: 0.35,
+  minMatchCharLength: 3,
   ignoreLocation: true,
 });
 
@@ -45,12 +52,25 @@ export function search(query: string, max = 12): SearchResult[] {
     return indexed.slice(0, max).map((i) => toResult(i.lesson));
   }
 
-  return fuse.search(trimmed, { limit: max }).map((match) => {
+  const bySlug = new Map<string, SearchResult>();
+
+  for (const match of titleFuse.search(trimmed, { limit: max })) {
+    bySlug.set(match.item.lesson.slug, toResult(match.item.lesson));
+  }
+
+  for (const match of bodyFuse.search(trimmed, { limit: max })) {
+    const slug = match.item.lesson.slug;
+    if (bySlug.has(slug)) continue;
+    // Fuzzy prose matching is noisy ("channel" hits "unchanged"), so require
+    // a real word in the prose to start with the query.
+    const snippet = excerpt(match.item.body, trimmed);
+    if (!snippet) continue;
     const result = toResult(match.item.lesson);
-    const bodyMatch = excerpt(match.item.body, trimmed);
-    if (bodyMatch) result.snippet = bodyMatch;
-    return result;
-  });
+    result.snippet = snippet;
+    bySlug.set(slug, result);
+  }
+
+  return Array.from(bySlug.values()).slice(0, max);
 }
 
 function toResult(lesson: Lesson): SearchResult {
@@ -62,11 +82,24 @@ function toResult(lesson: Lesson): SearchResult {
   };
 }
 
-/** Pull a short window of prose around the first literal occurrence of the query. */
+/**
+ * Pull a short window of prose around the first word that starts with the
+ * query. Returns undefined when no such word exists.
+ */
 function excerpt(body: string, query: string): string | undefined {
   const needle = query.toLowerCase();
-  const haystack = body.toLowerCase();
-  const at = haystack.indexOf(needle);
+  const words = body.split(/(\s+)/);
+  let offset = 0;
+  let at = -1;
+
+  for (const word of words) {
+    if (word.trim().length > 0 && word.toLowerCase().replace(/[^a-z0-9]/g, '').startsWith(needle)) {
+      at = offset;
+      break;
+    }
+    offset += word.length;
+  }
+
   if (at < 0) return undefined;
 
   const start = Math.max(0, at - 48);

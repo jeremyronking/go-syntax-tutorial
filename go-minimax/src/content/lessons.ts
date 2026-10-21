@@ -1,8 +1,9 @@
 import type { Lesson } from './types';
 import { helloWorld } from './lessons/hello-world';
 import { goRunVsBuild } from './lessons/go-run-vs-build';
+import { channels } from './lessons/channels';
 
-export const lessons: Lesson[] = [helloWorld, goRunVsBuild];
+export const lessons: Lesson[] = [helloWorld, goRunVsBuild, channels];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
 

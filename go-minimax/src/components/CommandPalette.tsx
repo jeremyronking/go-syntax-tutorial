@@ -2,10 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { search, type SearchResult } from '../lib/search';
 
+/** How long to wait after the last keystroke before re-running the search. */
+const QUERY_DEBOUNCE_MS = 120;
+
 /**
  * Cmd/Ctrl+K command palette. Modal, focus-trapped, arrow-key navigable.
  */
 export function CommandPalette({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [rawQuery, setRawQuery] = useState('');
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -13,11 +17,18 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   const restoreFocusRef = useRef<HTMLElement | null>(null);
   const navigate = useNavigate();
 
+  // Debounce the query so a fast typist does not re-search on every keystroke.
+  useEffect(() => {
+    const id = window.setTimeout(() => setQuery(rawQuery), QUERY_DEBOUNCE_MS);
+    return () => window.clearTimeout(id);
+  }, [rawQuery]);
+
   const results = useMemo<SearchResult[]>(() => (open ? search(query) : []), [query, open]);
 
   useEffect(() => {
     if (!open) return;
     restoreFocusRef.current = document.activeElement as HTMLElement | null;
+    setRawQuery('');
     setQuery('');
     setActive(0);
     const id = window.setTimeout(() => inputRef.current?.focus(), 0);
@@ -27,8 +38,14 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   // Restore focus to whatever had it before the palette opened.
   useEffect(() => {
     if (open) return;
-    restoreFocusRef.current?.focus?.();
+    const target = restoreFocusRef.current;
     restoreFocusRef.current = null;
+    if (target && document.contains(target)) {
+      target.focus();
+      return;
+    }
+    // Fall back to the top-bar search trigger when the opener is gone.
+    document.querySelector<HTMLElement>('button[aria-label="Search lessons"]')?.focus();
   }, [open]);
 
   // Keep the active row scrolled into view.
@@ -104,9 +121,9 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
       >
         <input
           ref={inputRef}
-          value={query}
+          value={rawQuery}
           onChange={(e) => {
-            setQuery(e.target.value);
+            setRawQuery(e.target.value);
             setActive(0);
           }}
           placeholder="Search lessons…"
@@ -129,17 +146,22 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                   onClose();
                 }}
                 className={[
-                  'flex w-full items-center gap-3 px-4 py-2 text-left',
+                  'flex w-full flex-col gap-0.5 px-4 py-2 text-left',
                   i === active ? 'bg-line/60' : 'hover:bg-line/40',
                 ].join(' ')}
               >
-                <span className="w-4 shrink-0 font-mono text-[10px] text-gopher">
-                  {r.sectionLetter}
+                <span className="flex w-full items-center gap-3">
+                  <span className="w-4 shrink-0 font-mono text-[10px] text-gopher">
+                    {r.sectionLetter}
+                  </span>
+                  <span className="flex-1 truncate text-sm text-fg">{r.lesson.title}</span>
+                  <span className="shrink-0 truncate text-xs text-fg-subtle">
+                    {r.sectionTitle}
+                  </span>
                 </span>
-                <span className="flex-1 truncate text-sm text-fg">{r.lesson.title}</span>
-                <span className="shrink-0 truncate text-xs text-fg-subtle">
-                  {r.sectionTitle}
-                </span>
+                {r.snippet && (
+                  <span className="pl-7 text-xs leading-snug text-fg-subtle">{r.snippet}</span>
+                )}
               </button>
             </li>
           ))}
