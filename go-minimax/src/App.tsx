@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Landing } from './pages/Landing';
-import { LessonPlaceholder } from './pages/LessonPlaceholder';
+import { LessonView } from './components/LessonView';
 import { applyTheme, readTheme } from './lib/theme';
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Landing />} />
-          <Route path="/lesson/:slug" element={<LessonPlaceholder />} />
+          <Route path="/lesson/:slug" element={<LessonView />} />
           <Route
             path="*"
             element={

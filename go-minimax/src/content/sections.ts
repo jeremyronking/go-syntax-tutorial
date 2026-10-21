@@ -1,15 +1,6 @@
-export type SectionId =
-  | 'fundamentals'
-  | 'control-flow'
-  | 'composite-types'
-  | 'functions'
-  | 'interfaces'
-  | 'generics'
-  | 'errors'
-  | 'concurrency'
-  | 'packages'
-  | 'low-level'
-  | 'toolchain';
+import type { SectionId } from './types';
+
+export type { SectionId };
 
 export type Section = {
   id: SectionId;

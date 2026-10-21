@@ -1,5 +1,22 @@
 export type RunMode = 'playground' | 'terminal' | 'annotated';
 
+/**
+ * The eleven sections of the tour. Kept as a union so a lesson cannot point
+ * at a section that does not exist.
+ */
+export type SectionId =
+  | 'fundamentals'
+  | 'control-flow'
+  | 'composite-types'
+  | 'functions'
+  | 'interfaces'
+  | 'generics'
+  | 'errors'
+  | 'concurrency'
+  | 'packages'
+  | 'low-level'
+  | 'toolchain';
+
 export type TerminalLine =
   | { kind: 'command'; text: string }
   | { kind: 'stdout'; text: string }
@@ -24,7 +41,7 @@ export type Question = McqQuestion | FillQuestion;
 
 export type Checkpoint = {
   id: string;
-  sectionId: string;
+  sectionId: SectionId;
   title: string;
   questions: Question[];
 };
@@ -32,14 +49,16 @@ export type Checkpoint = {
 export type Lesson = {
   slug: string;
   title: string;
-  sectionId: string;
+  sectionId: SectionId;
   order: number;
+  /** Markdown prose. */
   body: string;
   runMode: RunMode;
   starterCode?: string;
   terminalOutput?: TerminalLine[];
+  /** When true the runner replays stdout in the order the program produced it. */
   streamReplay?: boolean;
-  /** Concurrency lessons carry the deterministic-clock disclaimer. */
+  /** Italic note rendered above the prose (concurrency lessons carry a disclaimer). */
   note?: string;
   gotcha?: string;
   checkpoint?: Checkpoint;
