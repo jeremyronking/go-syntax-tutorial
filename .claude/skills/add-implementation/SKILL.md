@@ -32,7 +32,13 @@ Work on a feature branch from latest `main`.
 **Metrics** (keep the method identical across columns): baseline is `458d83c`, and `<P19>` is the agent's Phase 19 commit.
 - Lines added: `git diff --numstat 458d83c <P19> -- <dir> | grep -vi pnpm-lock.yaml | awk '{s+=$1} END {print s}'`
 - Files created: `git diff --diff-filter=A --name-only 458d83c <P19> -- <dir> | grep -vi pnpm-lock | grep -v specs/ | wc -l`
-- Time: wall clock from the Phase 01 commit to the Phase 19 commit. Check `git show --shortstat` on the phase commits first. If they are empty or share one timestamp, git can't time the run: use the user's reported time, label it "(reported)", and add a caveat saying why.
+- Time: wall clock from the Phase 01 commit to the Phase 19 commit. Check `git show --shortstat` on the phase commits first. If they are empty or share one timestamp, git can't time the run: take the time from the agent's session record (below), or failing that the user's report labelled "(reported)", and add a caveat saying why.
+
+**Confirm provider and model from the agent's session record** before writing any card or Subscription copy. The launch command isn't proof: `ollama launch opencode --model beam:cloud` ran on opencode's hosted `beam-free`, not Ollama cloud. For opencode, query `~/.local/share/opencode/opencode.db`:
+- `session_v2`: find the run by `title`/`directory`/`time_created`; it holds `model` (JSON with `providerID`, `id`, `variant`), `cost`, and the `tokens_*` columns.
+- `session_message`: `json_extract(data,'$.model')` per assistant turn shows whether the provider stayed the same throughout. The first `user` row is the prompt, and the first `idle` row with `outcome: succeeded` marks the end of the autonomous run. Later `user` rows are follow-ups and don't count toward the time.
+
+For other harnesses, find the equivalent local session store, or ask the user for it.
 
 Commit, push, and open a PR (signed `--Claude`).
 
