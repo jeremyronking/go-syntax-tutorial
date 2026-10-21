@@ -1,19 +1,35 @@
+import { useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Layout } from './components/Layout';
+import { Landing } from './pages/Landing';
+import { LessonPlaceholder } from './pages/LessonPlaceholder';
+import { applyTheme, readTheme } from './lib/theme';
+
 export default function App() {
+  useEffect(() => {
+    applyTheme(readTheme());
+  }, []);
+
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <div className="text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-gopher">GoTour</p>
-        <h1 className="mt-3 text-4xl font-semibold tracking-tight">
-          Go syntax &amp; toolchain, by example
-        </h1>
-        <p className="mx-auto mt-4 max-w-prose text-fg-muted">
-          Phase 01 scaffold. The lesson shell, the Playground runner and the toolchain walkthroughs
-          land in the phases that follow.
-        </p>
-        <p className="mt-6 font-mono text-xs text-fg-subtle">
-          The tour is loading… (placeholder build)
-        </p>
-      </div>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/lesson/:slug" element={<LessonPlaceholder />} />
+          <Route
+            path="*"
+            element={
+              <div className="px-6 py-12 max-w-prose">
+                <h1 className="text-3xl font-semibold">404</h1>
+                <p className="mt-2 text-fg-muted">No such route.</p>
+                <a href="/" className="mt-4 inline-block text-gopher hover:underline">
+                  ← Back to landing
+                </a>
+              </div>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
