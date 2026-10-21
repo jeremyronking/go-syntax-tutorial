@@ -1,7 +1,6 @@
 import type { Lesson } from './types';
 import { helloWorld } from './lessons/hello-world';
 import { goRunVsBuild } from './lessons/go-run-vs-build';
-import { channels } from './lessons/channels';
 import {
   variables,
   constantsIota,
@@ -37,6 +36,15 @@ import {
   errorWrapping,
   panicRecover,
 } from './lessons/section-efg';
+import {
+  goroutines,
+  channelBasics,
+  channelClose,
+  selectStatement,
+  syncPrimitives,
+  atomicsAndMemoryModel,
+  contextPackage,
+} from './lessons/section-h';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -72,7 +80,13 @@ export const lessons: Lesson[] = [
   errorInterface,
   errorWrapping,
   panicRecover,
-  channels,
+  goroutines,
+  channelBasics,
+  channelClose,
+  selectStatement,
+  syncPrimitives,
+  atomicsAndMemoryModel,
+  contextPackage,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
