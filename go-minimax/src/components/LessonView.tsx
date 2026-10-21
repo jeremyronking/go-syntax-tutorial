@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import { lessonBySlug } from '../content/lessons';
 import { sectionById } from '../content/sections';
+import { checkpointBySection } from '../content/checkpoints';
 import { useProgressStore } from '../store/progress';
 import { Prose } from './Prose';
 import { Gotcha } from './Gotcha';
@@ -69,6 +70,15 @@ export function LessonView() {
           </div>
 
           <LessonNav slug={lesson.slug} />
+
+          {checkpointBySection(lesson.sectionId) && (
+            <Link
+              to={`/checkpoint/${lesson.sectionId}`}
+              className="mt-4 inline-flex items-center gap-2 rounded-md border border-line px-3 py-1.5 text-xs text-fg-muted transition-colors hover:border-gopher hover:text-gopher"
+            >
+              Section checkpoint →
+            </Link>
+          )}
         </div>
 
         <aside className="mt-10 lg:mt-0 lg:sticky lg:top-16">

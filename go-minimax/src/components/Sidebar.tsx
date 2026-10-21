@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { sections } from '../content/sections';
 import { lessons, lessonsBySection } from '../content/lessons';
+import { checkpointBySection } from '../content/checkpoints';
 import { useProgressStore } from '../store/progress';
 import { useSidebarStore } from '../store/sidebar';
 
@@ -39,6 +40,7 @@ export function Sidebar({
           const done = sectionLessons.filter((l) => progress[l.slug] === 'complete').length;
           const isCollapsed = collapsed[section.id] === true;
           const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+          const checkpoint = checkpointBySection(section.id);
 
           return (
             <li key={section.id}>
@@ -109,6 +111,30 @@ export function Sidebar({
                       );
                     })}
                   </ul>
+
+                  {checkpoint && (
+                    <ul className="ml-3 mt-1">
+                      <li>
+                        <NavLink
+                          to={`/checkpoint/${section.id}`}
+                          onClick={onClose}
+                          className={({ isActive }) =>
+                            [
+                              'flex items-center gap-2 rounded px-2 py-1 text-xs italic transition-colors',
+                              isActive
+                                ? 'bg-line/60 text-gopher'
+                                : 'text-fg-muted hover:bg-surface hover:text-gopher',
+                            ].join(' ')
+                          }
+                        >
+                          <span aria-hidden="true" className="w-4 font-mono text-[10px] text-fg-subtle">
+                            →
+                          </span>
+                          <span>checkpoint</span>
+                        </NavLink>
+                      </li>
+                    </ul>
+                  )}
                 </>
               )}
             </li>
