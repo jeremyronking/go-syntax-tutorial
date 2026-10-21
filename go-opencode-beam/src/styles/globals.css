@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@fontsource/jetbrains-mono/400.css;
+@fontsource/jetbrains-mono/700.css;
+
+:root {
+  --color-app: 255 255 255;
+  --color-elevated: 248 250 252;
+  --color-card: 241 245 249;
+  --color-fg: 15 23 42;
+  --color-fg-muted: 71 85 105;
+  --color-fg-subtle: 100 116 139;
+  --color-divider: 226 232 240;
+}
+
+.dark {
+  --color-app: 11 14 24;
+  --color-elevated: 17 21 32;
+  --color-card: 24 29 44;
+  --color-fg: 226 232 240;
+  --color-fg-muted: 148 163 184;
+  --color-fg-subtle: 100 116 139;
+  --color-divider: 30 41 59;
+}
+
+html { font-family: system-ui, sans-serif; }
+code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.prose { max-width: 72ch; }
