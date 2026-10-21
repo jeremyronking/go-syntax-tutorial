@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'GoTour',
-  description: 'One Go-tutorial spec, four AI implementations.',
+  description: 'One Go-tutorial spec, five AI implementations.',
   cleanUrls: true,
   appearance: 'dark',
 
@@ -39,6 +39,7 @@ export default defineConfig({
           { text: 'go-gemini', link: 'https://go-gemini.jking.ai' },
           { text: 'go-glm', link: 'https://go-glm.jking.ai' },
           { text: 'go-minimax', link: 'https://go-minimax.jking.ai' },
+          { text: 'go-beam', link: 'https://go-beam.jking.ai' },
         ],
       },
       {
@@ -74,7 +75,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: 'Built as an experiment in three-model parity.',
+      message: 'Built as an experiment in five-model parity.',
       copyright: 'Source on <a href="https://github.com/jeremyronking/go-syntax-tutorial">GitHub</a>.',
     },
 
