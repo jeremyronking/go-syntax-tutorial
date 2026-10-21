@@ -43,6 +43,17 @@ services:
     environment:
       PLAYGROUND_UPSTREAM: https://play.golang.org/compile
 
+  go-opencode-beam:
+    build:
+      context: ./go-opencode-beam
+    image: go-opencode-beam:latest
+    container_name: go-opencode-beam
+    restart: unless-stopped
+    ports:
+      - "8185:8787"
+    environment:
+      PLAYGROUND_UPSTREAM: https://play.golang.org/compile
+
   go-landing:
     build:
       context: .
