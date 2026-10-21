@@ -71,6 +71,13 @@ import {
   formatting,
   vetAndDoc,
 } from './lessons/section-k2';
+import {
+  goGenerate,
+  goEnv,
+  crossCompilation,
+  ldflagsAndTrimpath,
+  profiling,
+} from './lessons/section-k3';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -131,6 +138,11 @@ export const lessons: Lesson[] = [
   raceAndCoverage,
   formatting,
   vetAndDoc,
+  goGenerate,
+  goEnv,
+  crossCompilation,
+  ldflagsAndTrimpath,
+  profiling,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
