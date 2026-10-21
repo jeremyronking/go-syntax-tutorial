@@ -63,6 +63,14 @@ import {
   moduleManagement,
   goWork,
 } from './lessons/section-k1';
+import {
+  goTestBasics,
+  goTestFailures,
+  benchmarksAndFuzzing,
+  raceAndCoverage,
+  formatting,
+  vetAndDoc,
+} from './lessons/section-k2';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -117,6 +125,12 @@ export const lessons: Lesson[] = [
   goInstall,
   moduleManagement,
   goWork,
+  goTestBasics,
+  goTestFailures,
+  benchmarksAndFuzzing,
+  raceAndCoverage,
+  formatting,
+  vetAndDoc,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
