@@ -45,6 +45,18 @@ import {
   atomicsAndMemoryModel,
   contextPackage,
 } from './lessons/section-h';
+import {
+  packages,
+  initOrder,
+  internalAndModule,
+  goEmbed,
+} from './lessons/section-i';
+import {
+  reflection,
+  unsafePackage,
+  cgo,
+  buildTags,
+} from './lessons/section-j';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -87,6 +99,14 @@ export const lessons: Lesson[] = [
   syncPrimitives,
   atomicsAndMemoryModel,
   contextPackage,
+  packages,
+  initOrder,
+  internalAndModule,
+  goEmbed,
+  reflection,
+  unsafePackage,
+  cgo,
+  buildTags,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));

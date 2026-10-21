@@ -7,6 +7,8 @@ import { interfacesCheckpoint } from './checkpoints/interfaces';
 import { genericsCheckpoint } from './checkpoints/generics';
 import { errorsCheckpoint } from './checkpoints/errors';
 import { concurrencyCheckpoint } from './checkpoints/concurrency';
+import { packagesCheckpoint } from './checkpoints/packages';
+import { lowLevelCheckpoint } from './checkpoints/low-level';
 
 /**
  * Checkpoints are authored per section. The registry maps a section id to its
@@ -21,6 +23,8 @@ export const checkpoints: Checkpoint[] = [
   genericsCheckpoint,
   errorsCheckpoint,
   concurrencyCheckpoint,
+  packagesCheckpoint,
+  lowLevelCheckpoint,
 ];
 
 const bySection = new Map<SectionId, Checkpoint>(
