@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme — the fallback before the dark class lands on <html>. */
+  --color-app: 255 255 255;
+  --color-surface: 247 249 251;
+  --color-raised: 240 244 248;
+  --color-fg: 11 14 24;
+  --color-fg-muted: 74 81 96;
+  --color-fg-subtle: 110 119 133;
+  --color-line: 197 202 211;
+  color-scheme: light;
+}
+
+:root.dark {
+  --color-app: 7 9 18;
+  --color-surface: 11 14 24;
+  --color-raised: 17 21 34;
+  --color-fg: 248 250 252;
+  --color-fg-muted: 197 202 211;
+  --color-fg-subtle: 138 148 163;
+  --color-line: 31 36 51;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: theme('fontFamily.sans');
+  background-color: rgb(var(--color-app));
+  color: rgb(var(--color-fg));
+  -webkit-font-smoothing: antialiased;
+}
+
+code,
+pre,
+kbd {
+  font-family: theme('fontFamily.mono');
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid #00add8;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
