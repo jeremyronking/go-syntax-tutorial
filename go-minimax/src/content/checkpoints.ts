@@ -3,6 +3,9 @@ import { fundamentalsCheckpoint } from './checkpoints/fundamentals';
 import { controlFlowCheckpoint } from './checkpoints/control-flow';
 import { compositeTypesCheckpoint } from './checkpoints/composite-types';
 import { functionsCheckpoint } from './checkpoints/functions';
+import { interfacesCheckpoint } from './checkpoints/interfaces';
+import { genericsCheckpoint } from './checkpoints/generics';
+import { errorsCheckpoint } from './checkpoints/errors';
 
 /**
  * Checkpoints are authored per section. The registry maps a section id to its
@@ -13,6 +16,9 @@ export const checkpoints: Checkpoint[] = [
   controlFlowCheckpoint,
   compositeTypesCheckpoint,
   functionsCheckpoint,
+  interfacesCheckpoint,
+  genericsCheckpoint,
+  errorsCheckpoint,
 ];
 
 const bySection = new Map<SectionId, Checkpoint>(

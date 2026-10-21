@@ -25,6 +25,18 @@ import {
   closures,
   methods,
 } from './lessons/section-d';
+import {
+  interfaces,
+  typeAssertions,
+  embedding,
+  stdlibInterfaces,
+  generics,
+  constraints,
+  whenNotGenerics,
+  errorInterface,
+  errorWrapping,
+  panicRecover,
+} from './lessons/section-efg';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -50,6 +62,16 @@ export const lessons: Lesson[] = [
   variadicFunctions,
   closures,
   methods,
+  interfaces,
+  typeAssertions,
+  embedding,
+  stdlibInterfaces,
+  generics,
+  constraints,
+  whenNotGenerics,
+  errorInterface,
+  errorWrapping,
+  panicRecover,
   channels,
 ];
 
