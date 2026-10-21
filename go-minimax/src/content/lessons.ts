@@ -57,6 +57,12 @@ import {
   cgo,
   buildTags,
 } from './lessons/section-j';
+import {
+  buildAndRun,
+  goInstall,
+  moduleManagement,
+  goWork,
+} from './lessons/section-k1';
 
 export const lessons: Lesson[] = [
   helloWorld,
@@ -107,6 +113,10 @@ export const lessons: Lesson[] = [
   unsafePackage,
   cgo,
   buildTags,
+  buildAndRun,
+  goInstall,
+  moduleManagement,
+  goWork,
 ];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
