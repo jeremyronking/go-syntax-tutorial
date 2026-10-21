@@ -1277,3 +1277,24 @@ func main() {
 program — not just that goroutine. Always recover at the top of a goroutine you
 start, or use a defer/recover in every worker.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [
+    interfaces,
+    typeAssertions,
+    embedding,
+    stdlibInterfaces,
+    generics,
+    constraints,
+    whenNotGenerics,
+    errorInterface,
+    errorWrapping,
+    panicRecover,
+  ].map((lesson) => [lesson.slug, lesson])
+);

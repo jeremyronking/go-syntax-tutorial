@@ -440,3 +440,16 @@ func main() {
 For counters that must not wrap, compare against the max before incrementing, or
 use a wider type.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [variables, constantsIota, basicTypes, stringsRunesBytes, numericTypes].map((lesson) => [
+    lesson.slug,
+    lesson,
+  ])
+);

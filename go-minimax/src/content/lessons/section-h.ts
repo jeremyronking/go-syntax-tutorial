@@ -795,3 +795,21 @@ func main() {
 context that is never cancelled leaks its timer and its children for as long as
 the parent lives — always \`defer cancel()\`.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [
+    goroutines,
+    channelBasics,
+    channelClose,
+    selectStatement,
+    syncPrimitives,
+    atomicsAndMemoryModel,
+    contextPackage,
+  ].map((lesson) => [lesson.slug, lesson])
+);

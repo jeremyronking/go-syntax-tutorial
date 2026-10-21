@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { sections } from '../content/sections';
-import { lessons, lessonsBySection } from '../content/lessons';
-import { checkpointBySection } from '../content/checkpoints';
+import { lessonManifest, manifestBySection } from '../content/lessons';
+import { hasCheckpoint } from '../content/checkpoints';
 import { useProgressStore } from '../store/progress';
 import { useSidebarStore } from '../store/sidebar';
 
@@ -35,12 +35,12 @@ export function Sidebar({
 
       <ul className="mt-3 space-y-1">
         {sections.map((section) => {
-          const sectionLessons = lessonsBySection(section.id);
+          const sectionLessons = manifestBySection(section.id);
           const total = sectionLessons.length;
           const done = sectionLessons.filter((l) => progress[l.slug] === 'complete').length;
           const isCollapsed = collapsed[section.id] === true;
           const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-          const checkpoint = checkpointBySection(section.id);
+          const checkpoint = hasCheckpoint(section.id);
 
           return (
             <li key={section.id}>
@@ -127,7 +127,10 @@ export function Sidebar({
                             ].join(' ')
                           }
                         >
-                          <span aria-hidden="true" className="w-4 font-mono text-[10px] text-fg-subtle">
+                          <span
+                            aria-hidden="true"
+                            className="w-4 font-mono text-[10px] text-fg-subtle"
+                          >
                             →
                           </span>
                           <span>checkpoint</span>
@@ -143,7 +146,7 @@ export function Sidebar({
       </ul>
 
       <p className="mt-6 border-t border-line px-2 pt-3 font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
-        {lessons.length} lessons
+        {lessonManifest.length} lessons
       </p>
     </>
   );
@@ -161,11 +164,7 @@ export function Sidebar({
       {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={onClose}
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 bg-black/60" onClick={onClose} aria-hidden="true" />
           <nav
             aria-label="Lesson navigation"
             className="absolute inset-y-0 left-0 w-72 overflow-y-auto border-r border-line bg-app p-4"

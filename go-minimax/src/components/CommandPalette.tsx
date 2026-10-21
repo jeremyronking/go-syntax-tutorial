@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { search, type SearchResult } from '../lib/search';
+import type { SearchResult } from '../lib/search';
 
 /** How long to wait after the last keystroke before re-running the search. */
 const QUERY_DEBOUNCE_MS = 120;
@@ -12,6 +12,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
   const [rawQuery, setRawQuery] = useState('');
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const restoreFocusRef = useRef<HTMLElement | null>(null);
@@ -23,7 +24,24 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
     return () => window.clearTimeout(id);
   }, [rawQuery]);
 
-  const results = useMemo<SearchResult[]>(() => (open ? search(query) : []), [query, open]);
+  // The prose index is built lazily, so the search is asynchronous. The
+  // search module itself — and the fuzzy matcher it pulls in — is only
+  // fetched the first time the palette is opened.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    void import('../lib/search').then(({ search }) =>
+      search(query).then((r) => {
+        if (!cancelled) {
+          setResults(r);
+          setActive(0);
+        }
+      })
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [query, open]);
 
   useEffect(() => {
     if (!open) return;
@@ -31,6 +49,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
     setRawQuery('');
     setQuery('');
     setActive(0);
+    setResults([]);
     const id = window.setTimeout(() => inputRef.current?.focus(), 0);
     return () => window.clearTimeout(id);
   }, [open]);
@@ -78,7 +97,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
         e.preventDefault();
         const r = results[active];
         if (r) {
-          navigate(`/lesson/${r.lesson.slug}`);
+          navigate(`/lesson/${r.slug}`);
           onClose();
         }
         return;
@@ -133,16 +152,14 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
         />
 
         <ul ref={listRef} id="palette-results" className="max-h-[50vh] overflow-y-auto py-1">
-          {results.length === 0 && (
-            <li className="px-4 py-6 text-sm text-fg-muted">No matches.</li>
-          )}
+          {results.length === 0 && <li className="px-4 py-6 text-sm text-fg-muted">No matches.</li>}
           {results.map((r, i) => (
-            <li key={r.lesson.slug}>
+            <li key={r.slug}>
               <button
                 type="button"
                 onMouseEnter={() => setActive(i)}
                 onClick={() => {
-                  navigate(`/lesson/${r.lesson.slug}`);
+                  navigate(`/lesson/${r.slug}`);
                   onClose();
                 }}
                 className={[
@@ -154,10 +171,8 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                   <span className="w-4 shrink-0 font-mono text-[10px] text-gopher">
                     {r.sectionLetter}
                   </span>
-                  <span className="flex-1 truncate text-sm text-fg">{r.lesson.title}</span>
-                  <span className="shrink-0 truncate text-xs text-fg-subtle">
-                    {r.sectionTitle}
-                  </span>
+                  <span className="flex-1 truncate text-sm text-fg">{r.title}</span>
+                  <span className="shrink-0 truncate text-xs text-fg-subtle">{r.sectionTitle}</span>
                 </span>
                 {r.snippet && (
                   <span className="pl-7 text-xs leading-snug text-fg-subtle">{r.snippet}</span>

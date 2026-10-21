@@ -1,156 +1,29 @@
 import type { Lesson } from './types';
-import { helloWorld } from './lessons/hello-world';
-import { goRunVsBuild } from './lessons/go-run-vs-build';
-import {
-  variables,
-  constantsIota,
-  basicTypes,
-  stringsRunesBytes,
-  numericTypes,
-} from './lessons/section-a';
-import {
-  ifStatements,
-  forLoops,
-  loopVariableCapture,
-  switchStatement,
-  typeSwitch,
-  deferStatement,
-  gotoAndLabels,
-} from './lessons/section-b';
-import { arrays, slices, maps, structs, pointers } from './lessons/section-c';
-import {
-  functions,
-  variadicFunctions,
-  closures,
-  methods,
-} from './lessons/section-d';
-import {
-  interfaces,
-  typeAssertions,
-  embedding,
-  stdlibInterfaces,
-  generics,
-  constraints,
-  whenNotGenerics,
-  errorInterface,
-  errorWrapping,
-  panicRecover,
-} from './lessons/section-efg';
-import {
-  goroutines,
-  channelBasics,
-  channelClose,
-  selectStatement,
-  syncPrimitives,
-  atomicsAndMemoryModel,
-  contextPackage,
-} from './lessons/section-h';
-import {
-  packages,
-  initOrder,
-  internalAndModule,
-  goEmbed,
-} from './lessons/section-i';
-import {
-  reflection,
-  unsafePackage,
-  cgo,
-  buildTags,
-} from './lessons/section-j';
-import {
-  buildAndRun,
-  goInstall,
-  moduleManagement,
-  goWork,
-} from './lessons/section-k1';
-import {
-  goTestBasics,
-  goTestFailures,
-  benchmarksAndFuzzing,
-  raceAndCoverage,
-  formatting,
-  vetAndDoc,
-} from './lessons/section-k2';
-import {
-  goGenerate,
-  goEnv,
-  crossCompilation,
-  ldflagsAndTrimpath,
-  profiling,
-} from './lessons/section-k3';
+import { lessonManifest, manifestBySection, metaBySlug } from './manifest';
 
-export const lessons: Lesson[] = [
-  helloWorld,
-  goRunVsBuild,
-  variables,
-  constantsIota,
-  basicTypes,
-  stringsRunesBytes,
-  numericTypes,
-  ifStatements,
-  forLoops,
-  loopVariableCapture,
-  switchStatement,
-  typeSwitch,
-  deferStatement,
-  gotoAndLabels,
-  arrays,
-  slices,
-  maps,
-  structs,
-  pointers,
-  functions,
-  variadicFunctions,
-  closures,
-  methods,
-  interfaces,
-  typeAssertions,
-  embedding,
-  stdlibInterfaces,
-  generics,
-  constraints,
-  whenNotGenerics,
-  errorInterface,
-  errorWrapping,
-  panicRecover,
-  goroutines,
-  channelBasics,
-  channelClose,
-  selectStatement,
-  syncPrimitives,
-  atomicsAndMemoryModel,
-  contextPackage,
-  packages,
-  initOrder,
-  internalAndModule,
-  goEmbed,
-  reflection,
-  unsafePackage,
-  cgo,
-  buildTags,
-  buildAndRun,
-  goInstall,
-  moduleManagement,
-  goWork,
-  goTestBasics,
-  goTestFailures,
-  benchmarksAndFuzzing,
-  raceAndCoverage,
-  formatting,
-  vetAndDoc,
-  goGenerate,
-  goEnv,
-  crossCompilation,
-  ldflagsAndTrimpath,
-  profiling,
-];
+export { lessonManifest, manifestBySection, metaBySlug };
+export type { LessonMeta, LessonSlug } from './manifest';
 
-const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
+export { loadLesson, loadSectionLessons, isKnownSlug } from './lessonLoader';
 
-export function lessonBySlug(slug: string): Lesson | undefined {
-  return slugIndex.get(slug);
+/**
+ * The registry used to be a plain array of every lesson. It is now a
+ * manifest of metadata plus a lazy loader, so the app's main bundle does
+ * not carry sixty-odd lessons' worth of prose.
+ *
+ * These helpers keep the old synchronous shape for the chrome — the
+ * sidebar, the landing page and the search index only need titles — and
+ * the async loader for the places that genuinely need the prose.
+ */
+export function lessonMetaBySlug(slug: string) {
+  return metaBySlug(slug);
 }
 
-export function lessonsBySection(sectionId: string): Lesson[] {
-  return lessons.filter((l) => l.sectionId === sectionId).sort((a, b) => a.order - b.order);
+export function lessonMetasBySection(sectionId: string) {
+  return manifestBySection(sectionId);
 }
+
+/** The number of lessons in the tour. */
+export const lessonCount = lessonManifest.length;
+
+export type { Lesson };

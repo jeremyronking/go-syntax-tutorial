@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { Checkpoint as CheckpointType, Question } from '../content/types';
 import { sectionById } from '../content/sections';
-import { lessonsBySection } from '../content/lessons';
+import { manifestBySection } from '../content/lessons';
 import { useProgressStore, useCheckpointScore } from '../store/progress';
 import { PASS_THRESHOLD, isCorrect, passed, scoreQuestions, type Answer } from '../lib/checkpoint';
 
@@ -20,7 +20,7 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointType }) {
   );
 
   const section = sectionById.get(checkpoint.sectionId);
-  const sectionLessons = lessonsBySection(checkpoint.sectionId);
+  const sectionLessons = manifestBySection(checkpoint.sectionId);
   const lastLesson = sectionLessons[sectionLessons.length - 1];
 
   const onSubmit = (e: React.FormEvent) => {
@@ -32,6 +32,8 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointType }) {
       lastAttempt: new Date().toISOString(),
     });
     if (passed(correct, total)) {
+      // Mark every lesson of the section complete. The slugs come from the
+      // manifest, so the section's prose does not have to be loaded here.
       markComplete(sectionLessons.map((l) => l.slug));
     }
   };
@@ -45,9 +47,8 @@ export function Checkpoint({ checkpoint }: { checkpoint: CheckpointType }) {
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">{checkpoint.title}</h1>
       <p className="mt-3 text-sm text-fg-muted">
-        {total} question{total === 1 ? '' : 's'}. Pass at{' '}
-        {Math.round(PASS_THRESHOLD * 100)}% to mark this section complete — but failing never
-        blocks the next section.
+        {total} question{total === 1 ? '' : 's'}. Pass at {Math.round(PASS_THRESHOLD * 100)}% to
+        mark this section complete — but failing never blocks the next section.
       </p>
       {previous && (
         <p className="mt-2 text-xs text-fg-subtle">
@@ -195,4 +196,3 @@ function QuestionCard({
     </fieldset>
   );
 }
-

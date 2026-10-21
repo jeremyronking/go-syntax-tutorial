@@ -44,3 +44,13 @@ is not "interpreted versus compiled" — it is "run immediately versus run later
 error unless you pass \`-o\`. The "no Go files" error only appears when the package
 pattern matches no \`.go\` files at all.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [goRunVsBuild].map((lesson) => [lesson.slug, lesson])
+);

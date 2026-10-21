@@ -103,14 +103,12 @@ Two rules make this safe:
     { kind: 'command', text: 'go test -v ./calc/' },
     {
       kind: 'stdout',
-      text:
-        '=== RUN   TestAdd\n=== RUN   TestAdd/zero\n=== RUN   TestAdd/positive\n=== RUN   TestAdd/negative\n--- PASS: TestAdd (0.00s)\n    --- PASS: TestAdd/zero (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\n    --- PASS: TestAdd/negative (0.00s)\nPASS\nok  \texample.com/calc/calc\t0.141s\n',
+      text: '=== RUN   TestAdd\n=== RUN   TestAdd/zero\n=== RUN   TestAdd/positive\n=== RUN   TestAdd/negative\n--- PASS: TestAdd (0.00s)\n    --- PASS: TestAdd/zero (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\n    --- PASS: TestAdd/negative (0.00s)\nPASS\nok  \texample.com/calc/calc\t0.141s\n',
     },
     { kind: 'command', text: 'go test -v -run "TestAdd/positive" ./calc/' },
     {
       kind: 'stdout',
-      text:
-        '=== RUN   TestAdd\n=== RUN   TestAdd/positive\n--- PASS: TestAdd (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\nPASS\nok  \texample.com/calc/calc\t0.183s\n',
+      text: '=== RUN   TestAdd\n=== RUN   TestAdd/positive\n--- PASS: TestAdd (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\nPASS\nok  \texample.com/calc/calc\t0.183s\n',
     },
     { kind: 'command', text: 'go test -run "TestNothing" ./calc/' },
     { kind: 'stdout', text: 'ok  \texample.com/calc/calc\t0.140s [no tests to run]\n' },
@@ -198,8 +196,7 @@ handy for checking your \`-run\` pattern.`,
     { kind: 'command', text: 'go test -v ./calc/' },
     {
       kind: 'stdout',
-      text:
-        '=== RUN   TestAdd\n=== RUN   TestAdd/zero\n=== RUN   TestAdd/positive\n=== RUN   TestAdd/negative\n    calc_test.go:18: Add(-2, 3) = 1, want -1\n--- FAIL: TestAdd (0.00s)\n    --- PASS: TestAdd/zero (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\n    --- FAIL: TestAdd/negative (0.00s)\nFAIL\nFAIL\texample.com/calc/calc\t0.177s\nFAIL\n',
+      text: '=== RUN   TestAdd\n=== RUN   TestAdd/zero\n=== RUN   TestAdd/positive\n=== RUN   TestAdd/negative\n    calc_test.go:18: Add(-2, 3) = 1, want -1\n--- FAIL: TestAdd (0.00s)\n    --- PASS: TestAdd/zero (0.00s)\n    --- PASS: TestAdd/positive (0.00s)\n    --- FAIL: TestAdd/negative (0.00s)\nFAIL\nFAIL\texample.com/calc/calc\t0.177s\nFAIL\n',
     },
     { kind: 'command', text: 'go test -list . ./calc/' },
     {
@@ -318,8 +315,7 @@ assert inside the fuzz function yourself.`,
     { kind: 'command', text: 'go test -bench=. -benchmem ./calc/' },
     {
       kind: 'stdout',
-      text:
-        'goos: darwin\ngoarch: arm64\npkg: example.com/calc/calc\ncpu: Apple M4 Max\nBenchmarkAdd-14           	1000000000	         0.2309 ns/op	       0 B/op	       0 allocs/op\nBenchmarkAddParallel-14    	1000000000	         0.02660 ns/op	       0 B/op	       0 allocs/op\nPASS\nok  	example.com/calc/calc	0.484s\n',
+      text: 'goos: darwin\ngoarch: arm64\npkg: example.com/calc/calc\ncpu: Apple M4 Max\nBenchmarkAdd-14           	1000000000	         0.2309 ns/op	       0 B/op	       0 allocs/op\nBenchmarkAddParallel-14    	1000000000	         0.02660 ns/op	       0 B/op	       0 allocs/op\nPASS\nok  	example.com/calc/calc	0.484s\n',
     },
     { kind: 'command', text: 'go test -v -run Example ./calc/' },
     {
@@ -329,14 +325,12 @@ assert inside the fuzz function yourself.`,
     { kind: 'command', text: 'go test -fuzz=FuzzAdd -fuzztime=5s ./calc/' },
     {
       kind: 'stdout',
-      text:
-        'fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed\nfuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 14 workers\nfuzz: elapsed: 3s, execs: 3468169 (1156032/sec), new interesting: 0 (total: 2)\nfuzz: elapsed: 5s, execs: 5861790 (1141610/sec), new interesting: 0 (total: 2)\nPASS\nok  	example.com/calc/calc	5.318s\n',
+      text: 'fuzz: elapsed: 0s, gathering baseline coverage: 0/2 completed\nfuzz: elapsed: 0s, gathering baseline coverage: 2/2 completed, now fuzzing with 14 workers\nfuzz: elapsed: 3s, execs: 3468169 (1156032/sec), new interesting: 0 (total: 2)\nfuzz: elapsed: 5s, execs: 5861790 (1141610/sec), new interesting: 0 (total: 2)\nPASS\nok  	example.com/calc/calc	5.318s\n',
     },
     { kind: 'command', text: 'go test -run=FuzzAdd/c260aa57a7bc1d37 ./calc/' },
     {
       kind: 'stdout',
-      text:
-        '--- FAIL: FuzzAdd (0.00s)\n    --- FAIL: FuzzAdd/c260aa57a7bc1d37 (0.00s)\n        calc_fuzz_test.go:9: found the magic pair: Add(7, 9) = 16\nFAIL\nFAIL\texample.com/calc/calc\t0.188s\nFAIL\n',
+      text: '--- FAIL: FuzzAdd (0.00s)\n    --- FAIL: FuzzAdd/c260aa57a7bc1d37 (0.00s)\n        calc_fuzz_test.go:9: found the magic pair: Add(7, 9) = 16\nFAIL\nFAIL\texample.com/calc/calc\t0.188s\nFAIL\n',
     },
   ],
   gotcha: `A benchmark loop must run \`b.N\` times, not a fixed number. The
@@ -429,8 +423,7 @@ test for.`,
     { kind: 'command', text: 'go test -race ./calc/' },
     {
       kind: 'stdout',
-      text:
-        '==================\nWARNING: DATA RACE\nRead at 0x00c000114188 by goroutine 17:\n  example.com/calc/calc.TestConcurrentAdd.func1()\n      calc/calc_race_test.go:15 +0x68\n\nPrevious write at 0x00c000114188 by goroutine 9:\n  example.com/calc/calc.TestConcurrentAdd.func1()\n      calc/calc_race_test.go:15 +0x78\n...\n==================\n--- FAIL: TestConcurrentAdd (0.00s)\n    testing.go:1865: race detected during execution of test\nFAIL\nFAIL\texample.com/calc/calc\t0.304s\nFAIL\n',
+      text: '==================\nWARNING: DATA RACE\nRead at 0x00c000114188 by goroutine 17:\n  example.com/calc/calc.TestConcurrentAdd.func1()\n      calc/calc_race_test.go:15 +0x68\n\nPrevious write at 0x00c000114188 by goroutine 9:\n  example.com/calc/calc.TestConcurrentAdd.func1()\n      calc/calc_race_test.go:15 +0x78\n...\n==================\n--- FAIL: TestConcurrentAdd (0.00s)\n    testing.go:1865: race detected during execution of test\nFAIL\nFAIL\texample.com/calc/calc\t0.304s\nFAIL\n',
     },
     { kind: 'command', text: 'go test -cover ./calc/' },
     {
@@ -445,8 +438,7 @@ test for.`,
     { kind: 'command', text: 'go tool cover -func=coverage.out' },
     {
       kind: 'stdout',
-      text:
-        'example.com/calc/calc/calc.go:9:	Add		100.0%\nexample.com/calc/calc/calc.go:14:	Div		0.0%\ntotal:					(statements)	25.0%\n',
+      text: 'example.com/calc/calc/calc.go:9:	Add		100.0%\nexample.com/calc/calc/calc.go:14:	Div		0.0%\ntotal:					(statements)	25.0%\n',
     },
     { kind: 'command', text: 'go tool cover -html=coverage.out -o coverage.html' },
   ],
@@ -536,8 +528,7 @@ the simplifications from \`go fix\`) are the other two you will meet.`,
     { kind: 'command', text: 'gofmt -d calc/calc.go' },
     {
       kind: 'stdout',
-      text:
-        'diff calc/calc.go.orig calc/calc.go\n--- calc/calc.go.orig\n+++ calc/calc.go\n@@ -1,10 +1,11 @@\n package calc\n \n import (\n-"errors"\n+\t"errors"\n )\n-func Add(a,b int) int {\n-  return a+b\n+\n+func Add(a, b int) int {\n+\treturn a + b\n }\n \n func Div(a, b int) (int, error) {\n',
+      text: 'diff calc/calc.go.orig calc/calc.go\n--- calc/calc.go.orig\n+++ calc/calc.go\n@@ -1,10 +1,11 @@\n package calc\n \n import (\n-"errors"\n+\t"errors"\n )\n-func Add(a,b int) int {\n-  return a+b\n+\n+func Add(a, b int) int {\n+\treturn a + b\n }\n \n func Div(a, b int) (int, error) {\n',
     },
     { kind: 'command', text: 'gofmt -w calc/calc.go' },
     { kind: 'command', text: 'gofmt -l .' },
@@ -546,8 +537,7 @@ the simplifications from \`go fix\`) are the other two you will meet.`,
     { kind: 'command', text: 'goimports -d calc/calc.go' },
     {
       kind: 'stdout',
-      text:
-        'diff -u calc/calc.go.orig calc/calc.go\n--- calc/calc.go.orig\n+++ calc/calc.go\n@@ -1,6 +1,9 @@\n package calc\n \n-import "errors"\n+import (\n+\t"errors"\n+\t"strings"\n+)\n',
+      text: 'diff -u calc/calc.go.orig calc/calc.go\n--- calc/calc.go.orig\n+++ calc/calc.go\n@@ -1,6 +1,9 @@\n package calc\n \n-import "errors"\n+import (\n+\t"errors"\n+\t"strings"\n+)\n',
     },
   ],
   gotcha: `\`gofmt\` sorts the imports already present in a file, but it does
@@ -650,22 +640,19 @@ tool the first time.`,
     { kind: 'command', text: 'go vet ./...' },
     {
       kind: 'stderr',
-      text:
-        'calc/calc.go:14:28: fmt.Sprintf format %s reads arg #1, but call has 0 args\ncalc/calc.go:18:14: fmt.Printf format %d has arg "not a number" of wrong type string\n',
+      text: 'calc/calc.go:14:28: fmt.Sprintf format %s reads arg #1, but call has 0 args\ncalc/calc.go:18:14: fmt.Printf format %d has arg "not a number" of wrong type string\n',
     },
     { kind: 'command', text: 'go vet -printf=false ./...' },
     { kind: 'stdout', text: '' },
     { kind: 'command', text: 'go doc ./calc' },
     {
       kind: 'stdout',
-      text:
-        'package calc // import "example.com/calc/calc"\n\nvar ErrDivideByZero = errors.New("divide by zero")\nfunc Add(a, b int) int\nfunc Div(a, b int) (int, error)\n',
+      text: 'package calc // import "example.com/calc/calc"\n\nvar ErrDivideByZero = errors.New("divide by zero")\nfunc Add(a, b int) int\nfunc Div(a, b int) (int, error)\n',
     },
     { kind: 'command', text: 'go doc -src ./calc Add' },
     {
       kind: 'stdout',
-      text:
-        'package calc // import "example.com/calc/calc"\n\n// Add returns the sum of a and b.\nfunc Add(a, b int) int {\n\treturn a + b\n}\n',
+      text: 'package calc // import "example.com/calc/calc"\n\n// Add returns the sum of a and b.\nfunc Add(a, b int) int {\n\treturn a + b\n}\n',
     },
   ],
   gotcha: `A doc comment that does not start with the symbol's name reads
@@ -673,3 +660,15 @@ wrong in the generated documentation — "This function adds two numbers"
 becomes "Add This function adds two numbers". Start the comment with the
 name and the summary comes out right.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [goTestBasics, goTestFailures, benchmarksAndFuzzing, raceAndCoverage, formatting, vetAndDoc].map(
+    (lesson) => [lesson.slug, lesson]
+  )
+);

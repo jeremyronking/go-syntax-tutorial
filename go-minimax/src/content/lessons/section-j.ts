@@ -235,14 +235,12 @@ watching.`,
     { kind: 'command', text: 'cat main.go' },
     {
       kind: 'stdout',
-      text:
-        'package main\n\nimport (\n\t"fmt"\n\t"reflect"\n\t"unsafe"\n)\n\ntype Point struct {\n\tX, Y int\n}\n\nfunc main() {\n\tfmt.Println("Sizeof(int):", unsafe.Sizeof(int(0)))\n\tfmt.Println("Sizeof(Point):", unsafe.Sizeof(Point{}))\n\tfmt.Println("Sizeof(string):", unsafe.Sizeof(""))\n\tfmt.Println("Sizeof([]int):", unsafe.Sizeof([]int{}))\n\tfmt.Println("Sizeof(*Point):", unsafe.Sizeof(&Point{}))\n\tfmt.Println("Alignof(Point):", unsafe.Alignof(Point{}))\n\n\tx := 42\n\tp := unsafe.Pointer(&x)\n\tfmt.Println("read through unsafe.Pointer:", *(*int)(p))\n\t*(*int)(p) = 99\n\tfmt.Println("x after write:", x)\n\n\tfmt.Println("slice header size:", unsafe.Sizeof(struct {\n\t\tptr unsafe.Pointer\n\t\tlen int\n\t\tcap int\n\t}{}))\n\n\tfmt.Println("reflect Sizeof int:", reflect.TypeOf(int(0)).Size())\n\tfmt.Println("reflect Sizeof Point:", reflect.TypeOf(Point{}).Size())\n}\n',
+      text: 'package main\n\nimport (\n\t"fmt"\n\t"reflect"\n\t"unsafe"\n)\n\ntype Point struct {\n\tX, Y int\n}\n\nfunc main() {\n\tfmt.Println("Sizeof(int):", unsafe.Sizeof(int(0)))\n\tfmt.Println("Sizeof(Point):", unsafe.Sizeof(Point{}))\n\tfmt.Println("Sizeof(string):", unsafe.Sizeof(""))\n\tfmt.Println("Sizeof([]int):", unsafe.Sizeof([]int{}))\n\tfmt.Println("Sizeof(*Point):", unsafe.Sizeof(&Point{}))\n\tfmt.Println("Alignof(Point):", unsafe.Alignof(Point{}))\n\n\tx := 42\n\tp := unsafe.Pointer(&x)\n\tfmt.Println("read through unsafe.Pointer:", *(*int)(p))\n\t*(*int)(p) = 99\n\tfmt.Println("x after write:", x)\n\n\tfmt.Println("slice header size:", unsafe.Sizeof(struct {\n\t\tptr unsafe.Pointer\n\t\tlen int\n\t\tcap int\n\t}{}))\n\n\tfmt.Println("reflect Sizeof int:", reflect.TypeOf(int(0)).Size())\n\tfmt.Println("reflect Sizeof Point:", reflect.TypeOf(Point{}).Size())\n}\n',
     },
     { kind: 'command', text: 'go run main.go' },
     {
       kind: 'stdout',
-      text:
-        'Sizeof(int): 8\nSizeof(Point): 16\nSizeof(string): 16\nSizeof([]int): 24\nSizeof(*Point): 8\nAlignof(Point): 8\nread through unsafe.Pointer: 42\nx after write: 99\nslice header size: 24\nreflect Sizeof int: 8\nreflect Sizeof Point: 16\n',
+      text: 'Sizeof(int): 8\nSizeof(Point): 16\nSizeof(string): 16\nSizeof([]int): 24\nSizeof(*Point): 8\nAlignof(Point): 8\nread through unsafe.Pointer: 42\nx after write: 99\nslice header size: 24\nreflect Sizeof int: 8\nreflect Sizeof Point: 16\n',
     },
     { kind: 'command', text: 'go vet ./...' },
   ],
@@ -330,8 +328,7 @@ build, and easier to reason about.`,
     { kind: 'command', text: 'cat main.go' },
     {
       kind: 'stdout',
-      text:
-        'package main\n\n/*\n#include <stdlib.h>\n#include <string.h>\n\nstatic int add(int a, int b) {\n\treturn a + b;\n}\n*/\nimport "C"\n\nimport (\n\t"fmt"\n\t"unsafe"\n)\n\nfunc main() {\n\tsum := C.add(3, 4)\n\tfmt.Println("3 + 4 =", int(sum))\n\n\tcstr := C.CString("hello from C")\n\tdefer C.free(unsafe.Pointer(cstr))\n\tfmt.Println("C string:", C.GoString(cstr))\n\tfmt.Println("C string len:", len(C.GoString(cstr)))\n}\n',
+      text: 'package main\n\n/*\n#include <stdlib.h>\n#include <string.h>\n\nstatic int add(int a, int b) {\n\treturn a + b;\n}\n*/\nimport "C"\n\nimport (\n\t"fmt"\n\t"unsafe"\n)\n\nfunc main() {\n\tsum := C.add(3, 4)\n\tfmt.Println("3 + 4 =", int(sum))\n\n\tcstr := C.CString("hello from C")\n\tdefer C.free(unsafe.Pointer(cstr))\n\tfmt.Println("C string:", C.GoString(cstr))\n\tfmt.Println("C string len:", len(C.GoString(cstr)))\n}\n',
     },
     { kind: 'command', text: 'go run .' },
     {
@@ -443,3 +440,13 @@ if that leaves the package with *no* files, the error is
 \`build constraints exclude all Go files in …\`, which reads like a missing
 file rather than an excluded one.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [reflection, unsafePackage, cgo, buildTags].map((lesson) => [lesson.slug, lesson])
+);

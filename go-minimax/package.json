@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "readme:slugs": "node scripts/readme-slugs.mjs"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.1.1",

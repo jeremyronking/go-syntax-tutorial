@@ -210,8 +210,7 @@ built-in default.`,
     { kind: 'command', text: 'go env GOROOT GOPATH GOMODCACHE GOCACHE GOBIN' },
     {
       kind: 'stdout',
-      text:
-        '/opt/homebrew/Cellar/go/1.27.1/libexec\n/Users/king/go\n/Users/king/go/pkg/mod\n/Users/king/Library/Caches/go-build\n\n',
+      text: '/opt/homebrew/Cellar/go/1.27.1/libexec\n/Users/king/go\n/Users/king/go/pkg/mod\n/Users/king/Library/Caches/go-build\n\n',
     },
     { kind: 'command', text: 'go env GOPROXY GOSUMDB GOTOOLCHAIN CGO_ENABLED' },
     {
@@ -341,14 +340,12 @@ variables, it writes a binary for the target platform into \`$GOBIN\`.`,
     { kind: 'command', text: 'ls -1 out*' },
     {
       kind: 'stdout',
-      text:
-        'out-darwin-arm64\nout-linux-386\nout-linux-amd64\nout-linux-arm64\nout-windows-amd64\nout.wasm\n',
+      text: 'out-darwin-arm64\nout-linux-386\nout-linux-amd64\nout-linux-arm64\nout-windows-amd64\nout.wasm\n',
     },
     { kind: 'command', text: 'file out-linux-amd64 out-windows-amd64 out.wasm' },
     {
       kind: 'stdout',
-      text:
-        'out-linux-amd64:   ELF 64-bit LSB executable, x86-64, statically linked\nout-windows-amd64: PE32+ executable (console) x86-64, for MS Windows\nout.wasm:           WebAssembly (wasm) binary module version 0x1 (MVP)\n',
+      text: 'out-linux-amd64:   ELF 64-bit LSB executable, x86-64, statically linked\nout-windows-amd64: PE32+ executable (console) x86-64, for MS Windows\nout.wasm:           WebAssembly (wasm) binary module version 0x1 (MVP)\n',
     },
     { kind: 'command', text: 'GOOS=windows GOARCH=amd64 go env GOOS GOARCH CGO_ENABLED' },
     { kind: 'stdout', text: 'windows\namd64\n0\n' },
@@ -458,7 +455,7 @@ in the same repository. \`-buildvcs=false\` omits it;
   terminalOutput: [
     {
       kind: 'command',
-      text: 'go build -ldflags "-X \'main.version=1.4.2\' -X \'main.commit=abc1234\' -X \'main.date=2026-10-20\'" -o app .',
+      text: "go build -ldflags \"-X 'main.version=1.4.2' -X 'main.commit=abc1234' -X 'main.date=2026-10-20'\" -o app .",
     },
     { kind: 'command', text: './app' },
     {
@@ -468,8 +465,7 @@ in the same repository. \`-buildvcs=false\` omits it;
     { kind: 'command', text: 'go version -m app' },
     {
       kind: 'stdout',
-      text:
-        'app: go1.27.1\n\tpath\texample.com/cross\n\tmod\texample.com/cross\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-ldflags="-X \'main.version=1.4.2\' -X \'main.commit=abc1234\' -X \'main.date=2026-10-20\'"\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n',
+      text: "app: go1.27.1\n\tpath\texample.com/cross\n\tmod\texample.com/cross\t(devel)\t\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\t-ldflags=\"-X 'main.version=1.4.2' -X 'main.commit=abc1234' -X 'main.date=2026-10-20'\"\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n",
     },
     { kind: 'command', text: 'go build -trimpath -o app-trim .' },
     { kind: 'command', text: 'go version -m app-trim | grep trimpath' },
@@ -587,8 +583,7 @@ profile in a staging environment, or behind a flag.`,
     { kind: 'command', text: 'go tool pprof -top cpu.prof' },
     {
       kind: 'stdout',
-      text:
-        'File: app\nType: cpu\nTime: 2026-10-20 22:03:25 EDT\nDuration: 204.31ms, Total samples = 30ms (14.68%)\nShowing nodes accounting for 30ms, 100% of 30ms total\n      flat  flat%   sum%        cum   cum%\n      20ms 66.67% 66.67%       30ms   100%  main.work (inline)\n      10ms 33.33%  100%       10ms 33.33%  runtime.asyncPreempt\n         0     0%   100%       30ms   100%  main.main\n         0     0%   100%       30ms   100%  runtime.main\n',
+      text: 'File: app\nType: cpu\nTime: 2026-10-20 22:03:25 EDT\nDuration: 204.31ms, Total samples = 30ms (14.68%)\nShowing nodes accounting for 30ms, 100% of 30ms total\n      flat  flat%   sum%        cum   cum%\n      20ms 66.67% 66.67%       30ms   100%  main.work (inline)\n      10ms 33.33%  100%       10ms 33.33%  runtime.asyncPreempt\n         0     0%   100%       30ms   100%  main.main\n         0     0%   100%       30ms   100%  runtime.main\n',
     },
     { kind: 'command', text: 'go tool pprof -http=:8080 cpu.prof' },
     { kind: 'command', text: 'go run ./cmd/app' },
@@ -601,3 +596,16 @@ you write it. Call \`runtime.GC()\` first, or you will be reading the
 allocations you have not freed yet rather than the ones you are
 actually holding on to.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [goGenerate, goEnv, crossCompilation, ldflagsAndTrimpath, profiling].map((lesson) => [
+    lesson.slug,
+    lesson,
+  ])
+);

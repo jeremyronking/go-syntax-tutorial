@@ -196,8 +196,7 @@ suffix is part of the path, not a tag.`,
     { kind: 'command', text: 'ls -l "$(go env GOPATH)/bin/greet"' },
     {
       kind: 'stdout',
-      text:
-        '-rwxr-xr-x  1 king  staff  2429714 Oct 20 21:56 /Users/king/go/bin/greet\n',
+      text: '-rwxr-xr-x  1 king  staff  2429714 Oct 20 21:56 /Users/king/go/bin/greet\n',
     },
     { kind: 'command', text: 'go install golang.org/x/tools/cmd/goimports@latest' },
     {
@@ -207,8 +206,7 @@ suffix is part of the path, not a tag.`,
     { kind: 'command', text: 'go version -m "$(go env GOPATH)/bin/goimports"' },
     {
       kind: 'stdout',
-      text:
-        '/Users/king/go/bin/goimports: go1.27.1\n\tpath\tgolang.org/x/tools/cmd/goimports\n\tmod\tgolang.org/x/tools\tv0.52.0\th1:ryxg4U63oaUYk7uOLTF37n43f4qgtGvqV4Ioit1BaEs=\n\tdep\tgolang.org/x/mod\tv0.42.0\th1:ICeL3t2L30ljSPHHxDnR4fqVcBt/zR2zJAb9juavmQg=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n',
+      text: '/Users/king/go/bin/goimports: go1.27.1\n\tpath\tgolang.org/x/tools/cmd/goimports\n\tmod\tgolang.org/x/tools\tv0.52.0\th1:ryxg4U63oaUYk7uOLTF37n43f4qgtGvqV4Ioit1BaEs=\n\tdep\tgolang.org/x/mod\tv0.42.0\th1:ICeL3t2L30ljSPHHxDnR4fqVcBt/zR2zJAb9juavmQg=\n\tbuild\t-buildmode=exe\n\tbuild\t-compiler=gc\n\tbuild\tCGO_ENABLED=1\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=darwin\n',
     },
   ],
   gotcha: `\`go install ./cmd/tool\` inside a module does **not** update your
@@ -328,36 +326,34 @@ internet.
     { kind: 'command', text: 'cat go.mod' },
     {
       kind: 'stdout',
-      text:
-        'module example.com/toolchain-demo\n\ngo 1.27.1\n\nrequire github.com/google/uuid v1.6.0\n',
+      text: 'module example.com/toolchain-demo\n\ngo 1.27.1\n\nrequire github.com/google/uuid v1.6.0\n',
     },
     { kind: 'command', text: 'go mod why github.com/google/uuid' },
     {
       kind: 'stdout',
-      text:
-        '# github.com/google/uuid\nexample.com/toolchain-demo\ngithub.com/google/uuid\n',
+      text: '# github.com/google/uuid\nexample.com/toolchain-demo\ngithub.com/google/uuid\n',
     },
     { kind: 'command', text: 'go mod graph' },
     {
       kind: 'stdout',
-      text:
-        'example.com/toolchain-demo github.com/google/uuid@v1.6.0\nexample.com/toolchain-demo go@1.27.1\ngo@1.27.1 toolchain@go1.27.1\n',
+      text: 'example.com/toolchain-demo github.com/google/uuid@v1.6.0\nexample.com/toolchain-demo go@1.27.1\ngo@1.27.1 toolchain@go1.27.1\n',
     },
     { kind: 'command', text: 'go mod verify' },
     { kind: 'stdout', text: 'all modules verified\n' },
-    { kind: 'command', text: 'go mod edit -replace=github.com/google/uuid=github.com/google/uuid@v1.5.0' },
+    {
+      kind: 'command',
+      text: 'go mod edit -replace=github.com/google/uuid=github.com/google/uuid@v1.5.0',
+    },
     { kind: 'command', text: 'cat go.mod' },
     {
       kind: 'stdout',
-      text:
-        'module example.com/toolchain-demo\n\ngo 1.27.1\n\nrequire github.com/google/uuid v1.6.0\n\nreplace github.com/google/uuid => github.com/google/uuid v1.5.0\n',
+      text: 'module example.com/toolchain-demo\n\ngo 1.27.1\n\nrequire github.com/google/uuid v1.6.0\n\nreplace github.com/google/uuid => github.com/google/uuid v1.5.0\n',
     },
     { kind: 'command', text: 'go mod vendor' },
     { kind: 'command', text: 'find vendor -type f | sort' },
     {
       kind: 'stdout',
-      text:
-        'vendor/github.com/google/uuid/CHANGELOG.md\nvendor/github.com/google/uuid/CONTRIBUTING.md\nvendor/github.com/google/uuid/LICENSE\nvendor/github.com/google/uuid/doc.go\nvendor/github.com/google/uuid/hash.go\nvendor/github.com/google/uuid/marshal.go\nvendor/github.com/google/uuid/node.go\nvendor/github.com/google/uuid/null.go\nvendor/github.com/google/uuid/uuid.go\nvendor/github.com/google/uuid/version4.go\nvendor/github.com/google/uuid/version7.go\nvendor/modules.txt\n',
+      text: 'vendor/github.com/google/uuid/CHANGELOG.md\nvendor/github.com/google/uuid/CONTRIBUTING.md\nvendor/github.com/google/uuid/LICENSE\nvendor/github.com/google/uuid/doc.go\nvendor/github.com/google/uuid/hash.go\nvendor/github.com/google/uuid/marshal.go\nvendor/github.com/google/uuid/node.go\nvendor/github.com/google/uuid/null.go\nvendor/github.com/google/uuid/uuid.go\nvendor/github.com/google/uuid/version4.go\nvendor/github.com/google/uuid/version7.go\nvendor/modules.txt\n',
     },
   ],
   gotcha: `A \`replace\` directive only applies to the **main** module. A
@@ -447,8 +443,7 @@ is.`,
     { kind: 'command', text: 'cd service && go build ./...' },
     {
       kind: 'stderr',
-      text:
-        'main.go:6:2: no required module provides package example.com/lib; to add it:\n\tgo get example.com/lib\n',
+      text: 'main.go:6:2: no required module provides package example.com/lib; to add it:\n\tgo get example.com/lib\n',
     },
     { kind: 'command', text: 'cd .. && go work init ./service ./lib' },
     { kind: 'command', text: 'cat go.work' },
@@ -461,23 +456,30 @@ is.`,
     { kind: 'command', text: 'cd .. && go env GOWORK' },
     {
       kind: 'stdout',
-      text:
-        '/private/var/folders/r6/zq0vzqbd2g14rs2dypk9ky2c0000gn/T/opencode/wsdemo/go.work\n',
+      text: '/private/var/folders/r6/zq0vzqbd2g14rs2dypk9ky2c0000gn/T/opencode/wsdemo/go.work\n',
     },
     { kind: 'command', text: 'go work edit -json' },
     {
       kind: 'stdout',
-      text:
-        '{\n\t"Go": "1.27.1",\n\t"Use": [\n\t\t{\n\t\t\t"DiskPath": "./lib"\n\t\t},\n\t\t{\n\t\t\t"DiskPath": "./service"\n\t\t}\n\t]\n}\n',
+      text: '{\n\t"Go": "1.27.1",\n\t"Use": [\n\t\t{\n\t\t\t"DiskPath": "./lib"\n\t\t},\n\t\t{\n\t\t\t"DiskPath": "./service"\n\t\t}\n\t]\n}\n',
     },
     { kind: 'command', text: 'cd service && GOWORK=off go build ./...' },
     {
       kind: 'stderr',
-      text:
-        'main.go:6:2: no required module provides package example.com/lib; to add it:\n\tgo get example.com/lib\n',
+      text: 'main.go:6:2: no required module provides package example.com/lib; to add it:\n\tgo get example.com/lib\n',
     },
   ],
   gotcha: `A workspace **overrides** the \`replace\` directives in your
 modules — while \`go.work\` is in effect they are ignored entirely. Set
 \`GOWORK=off\` to build the way your CI does.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [buildAndRun, goInstall, moduleManagement, goWork].map((lesson) => [lesson.slug, lesson])
+);

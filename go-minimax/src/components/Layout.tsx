@@ -38,7 +38,10 @@ export function Layout() {
           <div className="flex-1">
             <Outlet />
           </div>
-          <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-6 py-5 lg:px-10">
+          {/* The footer sticks to the bottom of the viewport so that loading
+              a lesson — which grows the page from a placeholder to the full
+              article — does not shove it down the screen. */}
+          <footer className="sticky bottom-0 z-10 flex flex-wrap items-center justify-between gap-3 border-t border-line bg-app px-6 py-5 lg:px-10">
             <p className="font-mono text-[10px] uppercase tracking-widest text-fg-subtle">
               GoTour · localStorage namespace gotour:v1
             </p>

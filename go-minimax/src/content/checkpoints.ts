@@ -1,42 +1,103 @@
 import type { Checkpoint, SectionId } from './types';
-import { fundamentalsCheckpoint } from './checkpoints/fundamentals';
-import { controlFlowCheckpoint } from './checkpoints/control-flow';
-import { compositeTypesCheckpoint } from './checkpoints/composite-types';
-import { functionsCheckpoint } from './checkpoints/functions';
-import { interfacesCheckpoint } from './checkpoints/interfaces';
-import { genericsCheckpoint } from './checkpoints/generics';
-import { errorsCheckpoint } from './checkpoints/errors';
-import { concurrencyCheckpoint } from './checkpoints/concurrency';
-import { packagesCheckpoint } from './checkpoints/packages';
-import { lowLevelCheckpoint } from './checkpoints/low-level';
-import { toolchainCheckpoint } from './checkpoints/toolchain';
 
 /**
  * Checkpoints are authored per section. The registry maps a section id to its
  * checkpoint; sections without one simply have no entry.
+ *
+ * Only the *existence* of a checkpoint is needed to draw the chrome — the
+ * sidebar's "checkpoint" link and the lesson footer. The questions
+ * themselves are needed on exactly one route, so they are loaded there.
  */
-export const checkpoints: Checkpoint[] = [
-  fundamentalsCheckpoint,
-  controlFlowCheckpoint,
-  compositeTypesCheckpoint,
-  functionsCheckpoint,
-  interfacesCheckpoint,
-  genericsCheckpoint,
-  errorsCheckpoint,
-  concurrencyCheckpoint,
-  packagesCheckpoint,
-  lowLevelCheckpoint,
-  toolchainCheckpoint,
+
+/** The sections that have a checkpoint. Kept eager so the chrome can render. */
+export const SECTIONS_WITH_CHECKPOINT: readonly SectionId[] = [
+  'fundamentals',
+  'control-flow',
+  'composite-types',
+  'functions',
+  'interfaces',
+  'generics',
+  'errors',
+  'concurrency',
+  'packages',
+  'low-level',
+  'toolchain',
 ];
 
-const bySection = new Map<SectionId, Checkpoint>(
-  checkpoints.map((c) => [c.sectionId, c] as const)
-);
-
-export function checkpointBySection(sectionId: string): Checkpoint | undefined {
-  return bySection.get(sectionId as SectionId);
+interface CheckpointChunk {
+  /** The name of the exported checkpoint inside the chunk module. */
+  exportName: string;
+  load: () => Promise<Record<string, unknown>>;
 }
 
-export function checkpointById(id: string): Checkpoint | undefined {
-  return checkpoints.find((c) => c.id === id);
+const checkpointChunks: Partial<Record<SectionId, CheckpointChunk>> = {
+  fundamentals: {
+    exportName: 'fundamentalsCheckpoint',
+    load: () => import('./checkpoints/fundamentals'),
+  },
+  'control-flow': {
+    exportName: 'controlFlowCheckpoint',
+    load: () => import('./checkpoints/control-flow'),
+  },
+  'composite-types': {
+    exportName: 'compositeTypesCheckpoint',
+    load: () => import('./checkpoints/composite-types'),
+  },
+  functions: {
+    exportName: 'functionsCheckpoint',
+    load: () => import('./checkpoints/functions'),
+  },
+  interfaces: {
+    exportName: 'interfacesCheckpoint',
+    load: () => import('./checkpoints/interfaces'),
+  },
+  generics: {
+    exportName: 'genericsCheckpoint',
+    load: () => import('./checkpoints/generics'),
+  },
+  errors: {
+    exportName: 'errorsCheckpoint',
+    load: () => import('./checkpoints/errors'),
+  },
+  concurrency: {
+    exportName: 'concurrencyCheckpoint',
+    load: () => import('./checkpoints/concurrency'),
+  },
+  packages: {
+    exportName: 'packagesCheckpoint',
+    load: () => import('./checkpoints/packages'),
+  },
+  'low-level': {
+    exportName: 'lowLevelCheckpoint',
+    load: () => import('./checkpoints/low-level'),
+  },
+  toolchain: {
+    exportName: 'toolchainCheckpoint',
+    load: () => import('./checkpoints/toolchain'),
+  },
+};
+
+const cache = new Map<SectionId, Checkpoint>();
+
+/** Does this section have a checkpoint? Synchronous, cheap, eager. */
+export function hasCheckpoint(sectionId: string): boolean {
+  return SECTIONS_WITH_CHECKPOINT.includes(sectionId as SectionId);
+}
+
+/** Load a section's checkpoint. Returns undefined when there is none. */
+export async function loadCheckpoint(sectionId: string): Promise<Checkpoint | undefined> {
+  const key = sectionId as SectionId;
+  const cached = cache.get(key);
+  if (cached) return cached;
+
+  const chunk = checkpointChunks[key];
+  if (!chunk) return undefined;
+
+  const mod = await chunk.load();
+  const value = mod[chunk.exportName];
+  if (!value) return undefined;
+
+  const checkpoint = value as Checkpoint;
+  cache.set(key, checkpoint);
+  return checkpoint;
 }

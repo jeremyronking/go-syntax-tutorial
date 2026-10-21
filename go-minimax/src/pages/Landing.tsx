@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { sections } from '../content/sections';
-import { lessons } from '../content/lessons';
+import { lessonManifest } from '../content/lessons';
 
 export function Landing() {
-  const firstLesson = lessons[0];
+  const firstLesson = lessonManifest[0];
 
   return (
     <div className="px-6 py-12 lg:px-10 lg:py-16">
@@ -48,7 +48,7 @@ export function Landing() {
         </h2>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {sections.map((s) => {
-            const count = lessons.filter((l) => l.sectionId === s.id).length;
+            const count = lessonManifest.filter((l) => l.sectionId === s.id).length;
             return (
               <li key={s.id}>
                 <article

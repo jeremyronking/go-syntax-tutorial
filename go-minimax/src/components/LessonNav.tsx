@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { lessons } from '../content/lessons';
+import { lessonManifest } from '../content/lessons';
 
-const sorted = [...lessons].sort((a, b) => a.order - b.order);
+const sorted = [...lessonManifest].sort((a, b) => a.order - b.order);
 
 /**
  * Previous / next links. Traversal follows the global lesson order, so it

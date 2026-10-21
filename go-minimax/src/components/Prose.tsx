@@ -1,6 +1,5 @@
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
 const components: Components = {
   code({ className, children, ...rest }) {
     const text = String(children);
@@ -44,15 +43,18 @@ const components: Components = {
   th: ({ children }) => (
     <th className="border border-line bg-surface px-3 py-2 text-left font-semibold">{children}</th>
   ),
-  td: ({ children }) => (
-    <td className="border border-line px-3 py-2 align-top">{children}</td>
-  ),
+  td: ({ children }) => <td className="border border-line px-3 py-2 align-top">{children}</td>,
   blockquote: ({ children }) => (
     <blockquote className="my-4 border-l-2 border-gopher pl-4 text-fg-muted">{children}</blockquote>
   ),
   hr: () => <hr className="my-8 border-line" />,
 };
 
+/**
+ * The markdown renderer is the single heaviest dependency in the app and
+ * it is only needed once a lesson is open, so `Prose` is loaded lazily
+ * (see `LessonView`). This module is the chunk it lands in.
+ */
 export function Prose({ children }: { children: string }) {
   return (
     <div className="max-w-prose text-fg leading-relaxed">

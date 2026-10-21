@@ -513,3 +513,13 @@ inside \`func (c Counter) Inc()\` changes a copy and is silently lost. Use a
 pointer receiver for anything that mutates, and keep one receiver style per
 type.`,
 };
+
+/**
+ * The lessons in this file, keyed by slug. The lazy loader imports the
+ * section chunk and reads this record, so a lesson never has to be
+ * reachable by a hard-coded switch — and the key comes from the lesson
+ * itself, so the two can never drift apart.
+ */
+export const lessons: Record<string, Lesson> = Object.fromEntries(
+  [functions, variadicFunctions, closures, methods].map((lesson) => [lesson.slug, lesson])
+);
