@@ -1,13 +1,19 @@
 import { Suspense, lazy } from 'react';
 import type { Lesson } from '../content/types';
+import { TerminalPane } from './TerminalPane';
+import { AnnotatedPane } from './AnnotatedPane';
 
 const CodeRunner = lazy(() =>
   import('./CodeRunner').then((m) => ({ default: m.CodeRunner }))
 );
 
 /**
- * The code pane on the right of a lesson. Phase 06 adds the TerminalPane for
- * lessons the Playground sandbox cannot execute.
+ * The code pane on the right of a lesson. Which pane appears depends on the
+ * lesson's `runMode`:
+ *
+ * - `playground` — the Monaco editor plus Run/Reset and the output pane
+ * - `terminal`   — a recorded shell transcript, read-only
+ * - `annotated`  — a static, syntax-highlighted snippet
  */
 export function CodeArea({ lesson }: { lesson: Lesson }) {
   if (lesson.runMode === 'playground' && lesson.starterCode) {
@@ -17,6 +23,15 @@ export function CodeArea({ lesson }: { lesson: Lesson }) {
       </Suspense>
     );
   }
+
+  if (lesson.runMode === 'terminal' && lesson.terminalOutput) {
+    return <TerminalPane key={lesson.slug} lines={lesson.terminalOutput} />;
+  }
+
+  if (lesson.runMode === 'annotated' && lesson.starterCode) {
+    return <AnnotatedPane key={lesson.slug} code={lesson.starterCode} />;
+  }
+
   return null;
 }
 
