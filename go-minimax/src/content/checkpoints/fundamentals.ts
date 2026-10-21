@@ -43,11 +43,17 @@ export const fundamentalsCheckpoint: Checkpoint = {
     },
     {
       kind: 'mcq',
-      prompt: 'How many bytes does `len("héllo")` report?',
-      options: ['5', '6', '7', '4'],
-      correctIndex: 1,
+      prompt:
+        'What is the type of `const Big = 1 << 40` before it is used in any expression?',
+      options: [
+        'It is an `int`',
+        'It is an `int64`',
+        'It is untyped — it takes the type of the context it is used in',
+        'It is a `uint64`',
+      ],
+      correctIndex: 2,
       explanation:
-        'len() on a string counts bytes, not runes. "héllo" is 6 bytes because é is two bytes in UTF-8. range over the string, not len, to count characters.',
+        'A constant with no explicit type is an untyped constant with arbitrary precision. It acquires a type when it is used, and the compiler rejects it if the value does not fit that type.',
     },
   ],
 };

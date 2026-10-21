@@ -2,8 +2,40 @@ import type { Lesson } from './types';
 import { helloWorld } from './lessons/hello-world';
 import { goRunVsBuild } from './lessons/go-run-vs-build';
 import { channels } from './lessons/channels';
+import {
+  variables,
+  constantsIota,
+  basicTypes,
+  stringsRunesBytes,
+  numericTypes,
+} from './lessons/section-a';
+import {
+  ifStatements,
+  forLoops,
+  loopVariableCapture,
+  switchStatement,
+  typeSwitch,
+  deferStatement,
+  gotoAndLabels,
+} from './lessons/section-b';
 
-export const lessons: Lesson[] = [helloWorld, goRunVsBuild, channels];
+export const lessons: Lesson[] = [
+  helloWorld,
+  goRunVsBuild,
+  variables,
+  constantsIota,
+  basicTypes,
+  stringsRunesBytes,
+  numericTypes,
+  ifStatements,
+  forLoops,
+  loopVariableCapture,
+  switchStatement,
+  typeSwitch,
+  deferStatement,
+  gotoAndLabels,
+  channels,
+];
 
 const slugIndex = new Map(lessons.map((l) => [l.slug, l] as const));
 
