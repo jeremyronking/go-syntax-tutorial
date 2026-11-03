@@ -49,7 +49,14 @@ cd server && pnpm install && STATIC_DIR=../dist pnpm start
 
 The proxy is the only part that needs a server. It accepts `POST /api/compile`, forwards the form body upstream, and returns the Playground JSON unchanged. `PLAYGROUND_UPSTREAM` defaults to `https://play.golang.org/compile`.
 
-Docker:
+The top-level Dockerfile builds the frontend and proxy into one image:
+
+```bash
+docker build -t go-deepseek .
+docker run -p 8787:8787 -e PLAYGROUND_UPSTREAM=https://play.golang.org/compile go-deepseek
+```
+
+Proxy only, with the frontend mounted from the host:
 
 ```bash
 docker build -t gotour-proxy server/
