@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Landing from './pages/Landing';
 import LessonPage from './pages/LessonPage';
+import CommandPalette from './components/CommandPalette';
 
 export default function AppRouter() {
   return (
@@ -10,6 +11,7 @@ export default function AppRouter() {
         <Route path="/lesson/:slug" element={<LessonPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <CommandPalette />
     </BrowserRouter>
   );
 }

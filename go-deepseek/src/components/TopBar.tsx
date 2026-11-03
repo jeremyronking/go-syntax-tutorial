@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useThemeStore } from '../store/theme';
+import { useUIStore } from '../store/ui';
 
 export default function TopBar() {
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
+  const openPalette = useUIStore((state) => state.openPalette);
 
   return (
     <header className="sticky top-0 z-40 border-b border-divider bg-app/90 backdrop-blur">
@@ -21,6 +23,7 @@ export default function TopBar() {
 
         <button
           type="button"
+          onClick={openPalette}
           className="hidden items-center gap-2 rounded-md border border-divider bg-elevated px-3 py-1.5 text-sm text-muted transition-colors hover:border-gopher-600 hover:text-fg sm:flex"
           aria-label="Search lessons (Command or Control K)"
           title="Search lessons"
