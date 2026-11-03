@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Landing from './pages/Landing';
-import LessonPlaceholder from './pages/LessonPlaceholder';
+import LessonPage from './pages/LessonPage';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/lesson/:slug" element={<LessonPlaceholder />} />
+        <Route path="/lesson/:slug" element={<LessonPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
