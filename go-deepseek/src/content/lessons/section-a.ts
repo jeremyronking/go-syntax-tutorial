@@ -202,7 +202,7 @@ export const sectionALessons: Lesson[] = [
     order: 7.5,
     runMode: 'annotated',
     body: `Five questions on the parts of Section A that bite in real code: ` +
-      '\`iota\` arithmetic, zero values, implicit conversion, byte-vs-rune, and `:=` rules. No score gate — a pass marks the section complete.',
+      '`iota` arithmetic, zero values, implicit conversion, byte-vs-rune, and `:=` rules. No score gate — a pass marks the section complete.',
     checkpoint: {
       id: 'checkpoint-fundamentals',
       sectionId: 'fundamentals',
