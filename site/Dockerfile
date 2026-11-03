@@ -16,4 +16,5 @@ COPY go-glm/specs/requirements.md ./go-glm/specs/requirements.md
 RUN cd site && npm run build
 
 FROM nginx:alpine
+COPY site/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /work/site/.vitepress/dist /usr/share/nginx/html
