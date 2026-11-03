@@ -1,11 +1,12 @@
 import type { Lesson } from './types';
 import { sections } from './sections';
-import { helloWorld } from './lessons/hello-world';
+import { sectionALessons } from './lessons/section-a';
+import { sectionBLessons } from './lessons/section-b';
 
 /**
  * Every lesson, in reading order. Content phases append their section modules here.
  */
-export const lessons: Lesson[] = [helloWorld];
+export const lessons: Lesson[] = [...sectionALessons, ...sectionBLessons];
 
 const byOrder = [...lessons].sort((a, b) => a.order - b.order);
 
