@@ -4,7 +4,7 @@ title: The prompt
 
 # The prompt
 
-Each of the five coding agents — **Claude** (via Claude Code), **Gemini** (via Google Antigravity), **GLM-5.1** (via the Pi coding agent), **MiniMax** (via OpenAI's Codex CLI), and **Beam** (via opencode) — was handed the same product [spec](/spec) and the same set of [phased GitHub issues](/issues/epic), then given the instruction below.
+Each of the six coding agents — **Claude** (via Claude Code), **Gemini** (via Google Antigravity), **GLM-5.1** (via the Pi coding agent), **MiniMax** (via OpenAI's Codex CLI), **Beam** (via opencode), and **DeepSeek V4.1 Flash** (via Ollama cloud, in Claude Code) — was handed the same product [spec](/spec) and the same set of [phased GitHub issues](/issues/epic), then given the instruction below.
 
 > What I would like you to do is create this application in a folder called `go-XXX` using a git worktree (from `main`) to not affect the current active branch. You are responsible for implementing **ALL issues** which are mapped out in `gh issue #1`. **DO NOT CLOSE THE ISSUES**, please.
 >
@@ -22,6 +22,6 @@ Each of the five coding agents — **Claude** (via Claude Code), **Gemini** (via
 
 ## Where to look next
 
-- [The spec](/spec) — the product brief shared across all five runs.
+- [The spec](/spec) — the product brief shared across all six runs.
 - [The epic](/issues/epic) — the phase-by-phase plan all five agents executed.
-- The five apps: [go-claude](https://go-claude.jking.ai) · [go-gemini](https://go-gemini.jking.ai) · [go-glm](https://go-glm.jking.ai) · [go-minimax](https://go-minimax.jking.ai) · [go-beam](https://go-beam.jking.ai).
+- The six apps: [go-claude](https://go-claude.jking.ai) · [go-gemini](https://go-gemini.jking.ai) · [go-glm](https://go-glm.jking.ai) · [go-minimax](https://go-minimax.jking.ai) · [go-beam](https://go-beam.jking.ai) · [go-deepseek](https://go-deepseek.jking.ai).

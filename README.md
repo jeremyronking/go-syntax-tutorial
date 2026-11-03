@@ -1,54 +1,56 @@
 # GoTour
 
-**Five takes on the same Go tutorial.**
+**Six takes on the same Go tutorial.**
 
 Live site: [go.jking.ai](https://go.jking.ai)
 
-One spec, five model families. Pick one to compare prose, pacing, the runner UI, and how each handles the parts the Playground sandbox can't actually run.
+One spec, six model families. Pick one to compare prose, pacing, the runner UI, and how each handles the parts the Playground sandbox can't actually run.
 
 - [Read the spec](./site/spec.md)
 - [Read the prompt](./site/prompt.md)
 - [Browse issues](./site/issues/epic.md)
 
-## The five apps
+## The six apps
 
 - **go-claude** — Built by Claude (Opus 4.7) in Claude Code. Right-hand sticky code panel, terminal pane for non-runnable lessons, Cmd+K palette. → [go-claude.jking.ai](https://go-claude.jking.ai)
 - **go-gemini** — Built by Gemini in Google Antigravity. The Gemini take on the same lesson set. → [go-gemini.jking.ai](https://go-gemini.jking.ai)
 - **go-glm** — Built by GLM-5.1 (cloud) in the Pi coding agent. The GLM take on the same lesson set. → [go-glm.jking.ai](https://go-glm.jking.ai)
 - **go-minimax** — Built by MiniMax (via Ollama cloud) in OpenAI's Codex CLI. The MiniMax take on the same lesson set. → [go-minimax.jking.ai](https://go-minimax.jking.ai)
 - **go-beam** — Built by Beam in the opencode agent harness, on opencode's free hosted tier (`beam-free`). The Beam take on the same lesson set. → [go-beam.jking.ai](https://go-beam.jking.ai)
+- **go-deepseek** — Built by DeepSeek V4.1 Flash (via Ollama cloud) in Claude Code. Sticky right-hand runner with streamed replay, one lesson module per section, and route-level code splitting. → [go-deepseek.jking.ai](https://go-deepseek.jking.ai)
 
 ## By the numbers
 
 Wall-clock between the agent's first phase commit and its Phase 19 polish commit, plus a few git-derivable side-channels:
 
-| | go-claude | go-gemini | go-glm | go-minimax | go-beam |
-|---|---|---|---|---|---|
-| **Implementation time** | 24m 32s | 36m 18s | 1h 13m 18s | 48m 15s | 5m 01s |
-| **Commits** (Phase 01–19) | 19 | 19 | 15 (some bundled) | 19 | 19 (empty, see below) |
-| **Lines added** (excl. lockfile) | 4,997 | 4,744 | 5,494 | 5,331 | 2,273 |
-| **Files created** | 125 | 54 | 47 | 73 | 28 |
-| **Subscription** | Claude Max ($100/mo) | Google AI Pro ($20/mo, via Google One) | Ollama ($20/mo) | Ollama ($20/mo) | Free (opencode `beam-free`) |
+| | go-claude | go-gemini | go-glm | go-minimax | go-beam | go-deepseek |
+|---|---|---|---|---|---|---|
+| **Implementation time** | 24m 32s | 36m 18s | 1h 13m 18s | 48m 15s | 5m 01s | 15m 59s |
+| **Commits** (Phase 01–19) | 19 | 19 | 15 (some bundled) | 19 | 19 (empty, see below) | 19 |
+| **Lines added** (excl. lockfile) | 4,997 | 4,744 | 5,494 | 5,331 | 2,273 | 5,846 |
+| **Files created** | 125 | 54 | 47 | 73 | 28 | 68 |
+| **Subscription** | Claude Max ($100/mo) | Google AI Pro ($20/mo, via Google One) | Ollama ($20/mo) | Ollama ($20/mo) | Free (opencode `beam-free`) | Ollama ($20/mo) |
 
 A few honest caveats:
 
 - "Implementation time" is wall-clock between commits, not active model think-time. It includes any pauses, retries, or tool waits the agent didn't actively bill against.
-- All five started from the same `458d83c` baseline (the spec commit). The clock starts at each agent's first phase commit so kickoff lag isn't counted.
+- All six started from the same `458d83c` baseline (the spec commit). The clock starts at each agent's first phase commit so kickoff lag isn't counted.
 - **go-glm**'s extra hour is mid-run rework, not after-the-fact debugging: clean cadence through Phase 12, then ~41 minutes across two bundled "Phase 12–14" / "Phase 14–18" commits that revisit earlier work. Post-Phase-19 commits (a directory restructure and a dark-mode fix) are not included.
 - **go-minimax** ran clean — one commit per phase, all 19. Those per-phase commits live on the `codex/full-implementation` branch; they were folded into a single commit when the app was merged to `main`, so the granular history is preserved on the branch.
 - **go-beam**'s time comes from the opencode session log (prompt at 20:25:01, run marked done at 20:30:02), not from git. All of its code landed in one commit (`0aeb1a1`); the 19 phase commits after it were made with `git commit --allow-empty` and share a single timestamp, so git can't time the run phase by phase. It also wrote the least code of the five: one `lessons.ts` registry holding 64 lessons.
 - **go-beam** was started with `ollama launch opencode --model beam:cloud`, but the session log records every model call against opencode's own hosted `beam-free` model, not Ollama cloud, at a recorded cost of $0.
-- **go-claude**'s file count is an architecture choice — one TypeScript module per lesson — not 2× the work. The others leaned on fewer, registry-style modules.
+- **go-deepseek** ran through Claude Code pointed at Ollama's cloud endpoint rather than a vendor-native harness; the model recorded for every call was `deepseek-v4.1-flash:1017-cloud`. It landed 63 lessons and 11 checkpoints in 5,846 non-lockfile lines across 68 files, with one lesson module per section.
+- **go-claude**'s file count is an architecture choice — one TypeScript module per lesson — not 2× the work. The others leaned on fewer, registry-style modules. **go-deepseek** used per-section modules, a middle ground.
 - Token usage and model think-time aren't shown; git can't see them. Subscription cost is the flat monthly rate, not the marginal cost of this run.
-- All five runs were driven from the same workstation — an **M4 Max MacBook Pro (36 GB)** — but inference happened in each provider's cloud, so the laptop spec didn't influence the comparison.
+- All six runs were driven from the same workstation — an **M4 Max MacBook Pro (36 GB)** — but inference happened in each provider's cloud, so the laptop spec didn't influence the comparison.
 
 ## What this is
 
-Five coding agents — **Claude Code**, **Google Antigravity**, the **Pi coding agent** running **GLM-5.1**, **OpenAI's Codex CLI** running **MiniMax** (via Ollama cloud), and **opencode** running **Beam** (opencode's free hosted tier) — were each handed the same brief and the same set of GitHub issues, then turned loose to build an interactive Go tutorial autonomously.
+Six coding agents — **Claude Code**, **Google Antigravity**, the **Pi coding agent** running **GLM-5.1**, **OpenAI's Codex CLI** running **MiniMax** (via Ollama cloud), **opencode** running **Beam** (opencode's free hosted tier), and **Claude Code** running **DeepSeek V4.1 Flash** (via Ollama cloud) — were each handed the same brief and the same set of GitHub issues, then turned loose to build an interactive Go tutorial autonomously.
 
-The [spec](./site/spec.md) is the brief that defines the product. The [prompt](./site/prompt.md) is the meta-instruction that told each agent how to work. The [issues](./site/issues/epic.md) are the phased breakdown all five followed.
+The [spec](./site/spec.md) is the brief that defines the product. The [prompt](./site/prompt.md) is the meta-instruction that told each agent how to work. The [issues](./site/issues/epic.md) are the phased breakdown all six followed.
 
-This repo holds the read-only docs surface (under `site/`) and the five app implementations (`go-claude/`, `go-gemini/`, `go-glm/`, `go-codex-minimax/`, `go-opencode-beam/`). The five apps themselves are linked above.
+This repo holds the read-only docs surface (under `site/`) and the six app implementations (`go-claude/`, `go-gemini/`, `go-glm/`, `go-codex-minimax/`, `go-opencode-beam/`, `go-deepseek/`). The six apps themselves are linked above.
 
 ## License
 
