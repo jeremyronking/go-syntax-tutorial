@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import LessonView from '../components/LessonView';
 import CodeRunner from '../components/CodeRunner';
+import TerminalPane from '../components/TerminalPane';
+import AnnotatedPane from '../components/AnnotatedPane';
 import { lessonBySlug } from '../content/lessons';
 import type { Lesson } from '../content/types';
 
@@ -39,14 +41,14 @@ export default function LessonPage() {
 }
 
 function LessonWorkbench({ lesson }: { lesson: Lesson }) {
-  if (lesson.runMode === 'playground') return <CodeRunner lesson={lesson} />;
-  return (
-    <div className="p-4">
-      <div className="rounded-lg border border-dashed border-divider bg-card/60 p-4 text-sm text-muted">
-        {lesson.runMode === 'terminal'
-          ? 'Captured terminal output renders here.'
-          : 'An annotated code block renders here.'}
-      </div>
-    </div>
-  );
+  switch (lesson.runMode) {
+    case 'playground':
+      return <CodeRunner lesson={lesson} />;
+    case 'terminal':
+      return (
+        <TerminalPane title={lesson.title} lines={lesson.terminalOutput ?? []} />
+      );
+    case 'annotated':
+      return <AnnotatedPane source={lesson.starterCode ?? ''} />;
+  }
 }
