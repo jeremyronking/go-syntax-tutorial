@@ -54,6 +54,17 @@ services:
     environment:
       PLAYGROUND_UPSTREAM: https://play.golang.org/compile
 
+  go-deepseek:
+    build:
+      context: ./go-deepseek
+    image: go-deepseek:latest
+    container_name: go-deepseek
+    restart: unless-stopped
+    ports:
+      - "8186:8787"
+    environment:
+      PLAYGROUND_UPSTREAM: https://play.golang.org/compile
+
   go-landing:
     build:
       context: .
