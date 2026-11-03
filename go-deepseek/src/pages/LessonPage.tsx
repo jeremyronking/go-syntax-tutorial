@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import LessonView from '../components/LessonView';
 import CodeRunner from '../components/CodeRunner';
 import TerminalPane from '../components/TerminalPane';
+import Checkpoint from '../components/Checkpoint';
 import AnnotatedPane from '../components/AnnotatedPane';
 import { lessonBySlug, neighbouringLessons } from '../content/lessons';
 import type { Lesson } from '../content/types';
@@ -57,11 +58,26 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
   const { prev, next } = neighbouringLessons(lesson.slug);
 
   return (
-    <Layout aside={<LessonWorkbench lesson={lesson} onRun={() => markStarted(lesson.slug)} onDraftChange={handleDraftChange} />}>
+    <Layout
+      aside={
+        lesson.checkpoint ? undefined : (
+          <LessonWorkbench
+            lesson={lesson}
+            onRun={() => markStarted(lesson.slug)}
+            onDraftChange={handleDraftChange}
+          />
+        )
+      }
+    >
       <LessonView
         lesson={lesson}
         prev={prev}
         next={next}
+        checkpointSlot={
+          lesson.checkpoint ? (
+            <Checkpoint checkpoint={lesson.checkpoint} returnSlug={prev?.slug} />
+          ) : undefined
+        }
         footer={
           <footer className="mt-8 flex flex-wrap items-center gap-3 border-t border-divider pt-4">
             <button

@@ -9,12 +9,21 @@ type LessonViewProps = {
   lesson: Lesson;
   /** Live runner, terminal pane, or annotated block. */
   runnerSlot?: ReactNode;
+  /** Checkpoint quiz rendered after the prose. */
+  checkpointSlot?: ReactNode;
   footer?: ReactNode;
   prev?: Lesson;
   next?: Lesson;
 };
 
-export default function LessonView({ lesson, runnerSlot, footer, prev, next }: LessonViewProps) {
+export default function LessonView({
+  lesson,
+  runnerSlot,
+  checkpointSlot,
+  footer,
+  prev,
+  next,
+}: LessonViewProps) {
   const section = sectionForLesson(lesson);
 
   return (
@@ -52,6 +61,8 @@ export default function LessonView({ lesson, runnerSlot, footer, prev, next }: L
       ) : null}
 
       {runnerSlot}
+
+      {checkpointSlot}
 
       {lesson.gotcha ? <Gotcha text={lesson.gotcha} /> : null}
 
