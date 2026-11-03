@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import type { Lesson } from '../content/types';
@@ -9,9 +10,11 @@ type LessonViewProps = {
   /** Live runner, terminal pane, or annotated block. */
   runnerSlot?: ReactNode;
   footer?: ReactNode;
+  prev?: Lesson;
+  next?: Lesson;
 };
 
-export default function LessonView({ lesson, runnerSlot, footer }: LessonViewProps) {
+export default function LessonView({ lesson, runnerSlot, footer, prev, next }: LessonViewProps) {
   const section = sectionForLesson(lesson);
 
   return (
@@ -53,6 +56,35 @@ export default function LessonView({ lesson, runnerSlot, footer }: LessonViewPro
       {lesson.gotcha ? <Gotcha text={lesson.gotcha} /> : null}
 
       {footer}
+
+      <nav className="mt-6 flex items-stretch justify-between gap-3" aria-label="Lesson navigation">
+        {prev ? (
+          <Link
+            to={`/lesson/${prev.slug}`}
+            className="group max-w-[48%] rounded-lg border border-divider bg-elevated px-3 py-2.5 text-left transition-colors hover:border-gopher-600"
+          >
+            <span className="block text-[10px] uppercase tracking-[0.16em] text-subtle">Previous</span>
+            <span className="mt-0.5 block truncate text-sm text-muted group-hover:text-fg">
+              {prev.title}
+            </span>
+          </Link>
+        ) : (
+          <span />
+        )}
+        {next ? (
+          <Link
+            to={`/lesson/${next.slug}`}
+            className="group max-w-[48%] rounded-lg border border-divider bg-elevated px-3 py-2.5 text-right transition-colors hover:border-gopher-600"
+          >
+            <span className="block text-[10px] uppercase tracking-[0.16em] text-subtle">Next</span>
+            <span className="mt-0.5 block truncate text-sm text-muted group-hover:text-fg">
+              {next.title}
+            </span>
+          </Link>
+        ) : (
+          <span />
+        )}
+      </nav>
     </article>
   );
 }

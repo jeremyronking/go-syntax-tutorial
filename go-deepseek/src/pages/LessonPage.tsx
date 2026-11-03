@@ -5,7 +5,7 @@ import LessonView from '../components/LessonView';
 import CodeRunner from '../components/CodeRunner';
 import TerminalPane from '../components/TerminalPane';
 import AnnotatedPane from '../components/AnnotatedPane';
-import { lessonBySlug } from '../content/lessons';
+import { lessonBySlug, neighbouringLessons } from '../content/lessons';
 import type { Lesson } from '../content/types';
 import { useLessonStatus, useProgressStore } from '../store/progress';
 
@@ -54,10 +54,14 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
 
   useEffect(() => () => window.clearTimeout(draftTimer.current), []);
 
+  const { prev, next } = neighbouringLessons(lesson.slug);
+
   return (
     <Layout aside={<LessonWorkbench lesson={lesson} onRun={() => markStarted(lesson.slug)} onDraftChange={handleDraftChange} />}>
       <LessonView
         lesson={lesson}
+        prev={prev}
+        next={next}
         footer={
           <footer className="mt-8 flex flex-wrap items-center gap-3 border-t border-divider pt-4">
             <button
