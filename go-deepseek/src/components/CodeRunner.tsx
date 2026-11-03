@@ -3,10 +3,12 @@ import Editor from '@monaco-editor/react';
 import type { Lesson } from '../content/types';
 import { delayToMs, runProgram, type PlaygroundEvent, type PlaygroundResponse } from '../lib/playground';
 import { useThemeStore } from '../store/theme';
+import { useEditorDraft } from '../store/progress';
 
 type CodeRunnerProps = {
   lesson: Lesson;
   onDraftChange?: (source: string) => void;
+  onRun?: () => void;
 };
 
 type RunState =
@@ -14,9 +16,10 @@ type RunState =
   | { phase: 'running' }
   | { phase: 'replaying' };
 
-export default function CodeRunner({ lesson, onDraftChange }: CodeRunnerProps) {
+export default function CodeRunner({ lesson, onDraftChange, onRun }: CodeRunnerProps) {
   const starter = lesson.starterCode ?? '';
-  const [source, setSource] = useState(starter);
+  const savedDraft = useEditorDraft(lesson.slug);
+  const [source, setSource] = useState(savedDraft ?? starter);
   const [response, setResponse] = useState<PlaygroundResponse | null>(null);
   const [events, setEvents] = useState<PlaygroundEvent[]>([]);
   const [state, setState] = useState<RunState>({ phase: 'idle' });
@@ -42,6 +45,7 @@ export default function CodeRunner({ lesson, onDraftChange }: CodeRunnerProps) {
 
   const run = useCallback(async () => {
     clearTimers();
+    onRun?.();
     setError(null);
     setResponse(null);
     setEvents([]);
@@ -72,7 +76,7 @@ export default function CodeRunner({ lesson, onDraftChange }: CodeRunnerProps) {
       setError(caught instanceof Error ? caught.message : 'Could not reach the Playground proxy.');
       setState({ phase: 'idle' });
     }
-  }, [clearTimers, lesson.streamReplay, source]);
+  }, [clearTimers, lesson.streamReplay, onRun, source]);
 
   const skipReplay = useCallback(() => {
     clearTimers();
