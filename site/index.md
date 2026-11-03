@@ -48,7 +48,7 @@ features:
 Wall-clock between the agent's first phase commit and its Phase 19 polish commit, plus a few git-derivable side-channels:
 
 | | go-claude | go-gemini | go-glm | go-minimax | go-beam | go-deepseek |
-|---|---|---|---|---|---|
+|---|---|---|---|---|---|---|
 | **Implementation time** | 24m 32s | 36m 18s | 1h 13m 18s | 48m 15s | 5m 01s | 15m 59s |
 | **Commits** (Phase 01–19) | 19 | 19 | 15 (some bundled) | 19 | 19 (empty, see below) | 19 |
 | **Lines added** (excl. lockfile) | 4,997 | 4,744 | 5,494 | 5,331 | 2,273 | 5,846 |
