@@ -4,6 +4,9 @@ import { sectionALessons } from './lessons/section-a';
 import { sectionBLessons } from './lessons/section-b';
 import { sectionCLessons } from './lessons/section-c';
 import { sectionDLessons } from './lessons/section-d';
+import { sectionELessons } from './lessons/section-e';
+import { sectionFLessons } from './lessons/section-f';
+import { sectionGLessons } from './lessons/section-g';
 
 /**
  * Every lesson, in reading order. Content phases append their section modules here.
@@ -13,6 +16,9 @@ export const lessons: Lesson[] = [
   ...sectionBLessons,
   ...sectionCLessons,
   ...sectionDLessons,
+  ...sectionELessons,
+  ...sectionFLessons,
+  ...sectionGLessons,
 ];
 
 const byOrder = [...lessons].sort((a, b) => a.order - b.order);
