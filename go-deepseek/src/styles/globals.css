@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-app: 248 250 252;
+    --color-elevated: 255 255 255;
+    --color-card: 241 245 249;
+    --color-fg: 15 23 42;
+    --color-muted: 71 85 105;
+    --color-subtle: 100 116 139;
+    --color-divider: 203 213 225;
+    color-scheme: light;
+  }
+
+  .dark {
+    --color-app: 9 12 20;
+    --color-elevated: 17 22 34;
+    --color-card: 22 28 42;
+    --color-fg: 226 232 240;
+    --color-muted: 148 163 184;
+    --color-subtle: 100 116 139;
+    --color-divider: 39 48 66;
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-app text-fg font-sans antialiased;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(0, 173, 216, 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid #00add8;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .prose-gotour {
+    line-height: 1.7;
+  }
+
+  .prose-gotour p {
+    @apply my-3 text-[0.975rem];
+  }
+
+  .prose-gotour h1,
+  .prose-gotour h2,
+  .prose-gotour h3 {
+    @apply font-semibold tracking-tight;
+  }
+
+  .prose-gotour h2 {
+    @apply mt-7 mb-2 text-lg;
+  }
+
+  .prose-gotour h3 {
+    @apply mt-5 mb-1 text-base;
+  }
+
+  .prose-gotour ul,
+  .prose-gotour ol {
+    @apply my-3 space-y-1 pl-5;
+  }
+
+  .prose-gotour ul {
+    @apply list-disc;
+  }
+
+  .prose-gotour ol {
+    @apply list-decimal;
+  }
+
+  .prose-gotour a {
+    @apply text-gopher-400 underline decoration-gopher-500/40 underline-offset-2 hover:decoration-gopher-400;
+  }
+
+  .prose-gotour code {
+    @apply rounded bg-card px-1 py-0.5 font-mono text-[0.85em] text-gopher-300;
+  }
+
+  .prose-gotour pre {
+    @apply my-4 overflow-x-auto rounded-lg border border-divider bg-card p-4;
+  }
+
+  .prose-gotour pre code {
+    @apply bg-transparent p-0 text-[0.85rem] leading-relaxed text-fg;
+  }
+
+  .prose-gotour blockquote {
+    @apply my-4 border-l-2 border-gopher-600 pl-4 italic text-muted;
+  }
+
+  .prose-gotour table {
+    @apply my-4 w-full border-collapse text-sm;
+  }
+
+  .prose-gotour th,
+  .prose-gotour td {
+    @apply border border-divider px-2 py-1 text-left;
+  }
+
+  .prose-gotour th {
+    @apply bg-card font-semibold;
+  }
+
+  .prose-gotour hr {
+    @apply my-6 border-divider;
+  }
+}
