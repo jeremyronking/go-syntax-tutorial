@@ -29,7 +29,7 @@ export default function Layout({ children, aside }: LayoutProps) {
           {children}
         </main>
         {aside ? (
-          <div className="hidden min-h-0 border-l border-divider bg-elevated/30 md:block">
+          <div className="min-h-0 border-t border-divider bg-elevated/30 md:block lg:border-l lg:border-t-0">
             {aside}
           </div>
         ) : null}

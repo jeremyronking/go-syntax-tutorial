@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import LessonView from '../components/LessonView';
+import CodeRunner from '../components/CodeRunner';
 import { lessonBySlug } from '../content/lessons';
+import type { Lesson } from '../content/types';
 
 export default function LessonPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -30,26 +32,21 @@ export default function LessonPage() {
   }
 
   return (
-    <Layout
-      aside={
-        <div className="p-4">
-          <div className="rounded-lg border border-divider bg-card p-4">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-subtle">Editor</p>
-            <p className="mt-2 text-sm text-muted">The runner arrives in the next phase.</p>
-          </div>
-        </div>
-      }
-    >
-      <LessonView
-        lesson={lesson}
-        runnerSlot={
-          <div className="mt-6 rounded-lg border border-dashed border-divider bg-card/60 p-4 text-sm text-muted">
-            {lesson.runMode === 'terminal'
-              ? 'Captured terminal output renders here.'
-              : 'A code area renders here.'}
-          </div>
-        }
-      />
+    <Layout aside={<LessonWorkbench lesson={lesson} />}>
+      <LessonView lesson={lesson} />
     </Layout>
+  );
+}
+
+function LessonWorkbench({ lesson }: { lesson: Lesson }) {
+  if (lesson.runMode === 'playground') return <CodeRunner lesson={lesson} />;
+  return (
+    <div className="p-4">
+      <div className="rounded-lg border border-dashed border-divider bg-card/60 p-4 text-sm text-muted">
+        {lesson.runMode === 'terminal'
+          ? 'Captured terminal output renders here.'
+          : 'An annotated code block renders here.'}
+      </div>
+    </div>
   );
 }
