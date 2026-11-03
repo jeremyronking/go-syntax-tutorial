@@ -22,6 +22,23 @@ TypeScript + Tailwind, Monaco editor, and a proxy to the public Go Playground fo
 
 The production proxy lives in `server/`; see the README there.
 
+## Deploying the proxy
+
+The app is static; only the proxy needs a host. Build the image and run it on port 8787:
+
+```bash
+docker build -t go-deepseek-proxy server/
+docker run -p 8787:8787 -e PLAYGROUND_UPSTREAM=https://play.golang.org/compile go-deepseek-proxy
+```
+
+- **Fly.io** — `fly launch --dockerfile server/Dockerfile`, then `fly deploy` and point the static
+  host's `/api/compile` at the app's hostname.
+- **Render** — create a Web Service from this repo, root directory `server/`, Dockerfile path
+  `Dockerfile`, and set `PLAYGROUND_UPSTREAM` in the environment.
+
+`PLAYGROUND_UPSTREAM` defaults to `https://play.golang.org/compile`. Upstream errors are passed
+through unmodified.
+
 ## Layout
 
 ```
