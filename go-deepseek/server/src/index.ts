@@ -1,7 +1,10 @@
 import express from 'express';
+import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const PLAYGROUND_UPSTREAM = 'https://play.golang.org/compile';
+const STATIC_DIR = process.env.STATIC_DIR;
+const STATIC_ROOT = STATIC_DIR ? path.resolve(STATIC_DIR) : undefined;
 
 export function createApp(upstream = process.env.PLAYGROUND_UPSTREAM ?? PLAYGROUND_UPSTREAM) {
   const app = express();
@@ -43,6 +46,22 @@ export function createApp(upstream = process.env.PLAYGROUND_UPSTREAM ?? PLAYGROU
     }
   });
 
+  if (STATIC_ROOT) {
+    app.use(
+      express.static(STATIC_ROOT, {
+        // Hashed asset filenames are immutable; index.html must revalidate.
+        maxAge: '1y',
+        immutable: true,
+        setHeaders: (res, filePath) => {
+          if (filePath.endsWith('index.html')) res.setHeader('Cache-Control', 'no-cache');
+        },
+      })
+    );
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(STATIC_ROOT, 'index.html'));
+    });
+  }
+
   return app;
 }
 
@@ -53,6 +72,8 @@ const isEntrypoint =
 
 if (isEntrypoint) {
   createApp().listen(PORT, () => {
-    console.log(`go-deepseek proxy listening on :${PORT}`);
+    console.log(
+      `go-deepseek proxy listening on :${PORT}` + (STATIC_DIR ? ` · static: ${STATIC_DIR}` : '')
+    );
   });
 }

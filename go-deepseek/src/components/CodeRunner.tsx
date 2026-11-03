@@ -55,7 +55,9 @@ export default function CodeRunner({ lesson, onDraftChange, onRun }: CodeRunnerP
       const result = await runProgram(source);
       setResponse(result);
 
-      const streamed = lesson.streamReplay === true && result.Events.some((event) => event.Delay > 0);
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const streamed =
+        lesson.streamReplay === true && !reducedMotion && result.Events.some((event) => event.Delay > 0);
       if (!streamed) {
         setEvents(result.Events);
         setState({ phase: 'idle' });

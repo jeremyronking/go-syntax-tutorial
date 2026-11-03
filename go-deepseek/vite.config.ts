@@ -9,6 +9,17 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            markdown: ['react-markdown', 'remark-gfm'],
+            search: ['fuse.js'],
+          },
+        },
+      },
+    },
     server: {
       port: 5173,
       proxy: {

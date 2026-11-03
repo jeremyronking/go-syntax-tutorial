@@ -8,8 +8,8 @@
     --color-elevated: 255 255 255;
     --color-card: 241 245 249;
     --color-fg: 15 23 42;
-    --color-muted: 71 85 105;
-    --color-subtle: 100 116 139;
+    --color-muted: 51 65 85;
+    --color-subtle: 71 85 105;
     --color-divider: 203 213 225;
     color-scheme: light;
   }
@@ -19,8 +19,8 @@
     --color-elevated: 17 22 34;
     --color-card: 22 28 42;
     --color-fg: 226 232 240;
-    --color-muted: 148 163 184;
-    --color-subtle: 100 116 139;
+    --color-muted: 203 213 225;
+    --color-subtle: 148 163 184;
     --color-divider: 39 48 66;
     color-scheme: dark;
   }
@@ -95,11 +95,11 @@
   }
 
   .prose-gotour a {
-    @apply text-gopher-400 underline decoration-gopher-500/40 underline-offset-2 hover:decoration-gopher-400;
+    @apply text-gopher-700 underline decoration-gopher-500/40 underline-offset-2 hover:decoration-gopher-600 dark:text-gopher-400 dark:hover:decoration-gopher-400;
   }
 
   .prose-gotour code {
-    @apply rounded bg-card px-1 py-0.5 font-mono text-[0.85em] text-gopher-300;
+    @apply rounded bg-card px-1 py-0.5 font-mono text-[0.85em] text-gopher-700 dark:text-gopher-300;
   }
 
   .prose-gotour pre {

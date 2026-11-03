@@ -9,6 +9,15 @@
       content="GoTour — an interactive Go syntax and toolchain tutorial for experienced engineers."
     />
     <title>GoTour — interactive Go syntax & toolchain</title>
+    <script>
+      try {
+        if (localStorage.getItem('gotour:v1:theme') === 'light') {
+          document.documentElement.classList.remove('dark');
+        }
+      } catch (error) {
+        // Storage can be blocked; the default dark theme applies.
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

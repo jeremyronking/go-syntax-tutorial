@@ -66,7 +66,7 @@ function SidebarSection({ sectionId, letter, title, lessons, complete }: Sidebar
         aria-controls={listId}
         className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm text-fg transition-colors hover:bg-card"
       >
-        <span className="font-mono text-xs text-gopher-500">{letter}</span>
+        <span className="font-mono text-xs text-gopher-700 dark:text-gopher-500">{letter}</span>
         <span className="flex-1 truncate font-medium">{title}</span>
         <span className="font-mono text-[10px] text-subtle">
           {complete}/{lessons.length}
@@ -98,12 +98,12 @@ function SidebarLesson({ lesson }: { lesson: Lesson }) {
         to={`/lesson/${lesson.slug}`}
         className={({ isActive }) =>
           `flex items-center gap-2 rounded-md px-2 py-1 text-[13px] transition-colors ${
-            isActive ? 'bg-gopher-900/40 text-gopher-300' : 'text-muted hover:bg-card hover:text-fg'
+            isActive ? 'bg-gopher-100 text-gopher-800 dark:bg-gopher-900/40 dark:text-gopher-300' : 'text-muted hover:bg-card hover:text-fg'
           }`
         }
       >
         <span className="w-5 shrink-0 text-right font-mono text-[10px] text-subtle">
-          {lesson.order}
+          {lesson.checkpoint ? 'CP' : lesson.order}
         </span>
         <span className="flex-1 truncate">{lesson.title}</span>
         {status === 'complete' ? <Check /> : null}

@@ -15,7 +15,7 @@ export default function TopBar() {
           className="flex items-baseline gap-2 rounded font-semibold tracking-tight"
           aria-label="GoTour home"
         >
-          <span className="font-mono text-lg text-gopher-400">Go</span>
+          <span className="font-mono text-lg text-gopher-700 dark:text-gopher-400">Go</span>
           <span className="text-lg">Tour</span>
         </Link>
 
@@ -25,13 +25,13 @@ export default function TopBar() {
           type="button"
           onClick={openPalette}
           className="hidden items-center gap-2 rounded-md border border-divider bg-elevated px-3 py-1.5 text-sm text-muted transition-colors hover:border-gopher-600 hover:text-fg sm:flex"
-          aria-label="Search lessons (Command or Control K)"
           title="Search lessons"
         >
           <span>Search lessons</span>
-          <kbd className="rounded border border-divider bg-card px-1.5 py-0.5 font-mono text-[11px] text-subtle">
+          <kbd aria-hidden="true" className="rounded border border-divider bg-card px-1.5 py-0.5 font-mono text-[11px] text-subtle">
             &#8984;K
           </kbd>
+          <span className="sr-only">Command or Control K</span>
         </button>
 
         <button

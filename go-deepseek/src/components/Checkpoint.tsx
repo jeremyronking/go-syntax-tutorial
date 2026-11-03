@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Checkpoint as CheckpointType, Question } from '../content/types';
 import { lessonsInSection } from '../content/lessons';
 import { useCheckpointScore, useProgressStore } from '../store/progress';
@@ -67,10 +69,22 @@ export default function Checkpoint({ checkpoint, returnSlug }: CheckpointProps) 
           const answeredCorrectly = submitted ? result[index] : undefined;
           return (
             <li key={index} className="rounded-lg border border-divider bg-card/60 p-3.5">
-              <p className="text-sm font-medium text-fg">
+              <div className="text-sm font-medium text-fg">
                 <span className="mr-1.5 font-mono text-xs text-subtle">{index + 1}.</span>
-                {question.prompt}
-              </p>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    p: ({ children }) => <span className="block">{children}</span>,
+                    code: ({ children }) => (
+                      <code className="rounded bg-app px-1 py-0.5 font-mono text-[0.85em] text-gopher-700 dark:text-gopher-300">
+                        {children}
+                      </code>
+                    ),
+                  }}
+                >
+                  {question.prompt}
+                </ReactMarkdown>
+              </div>
 
               {question.kind === 'mcq' ? (
                 <fieldset className="mt-2.5 space-y-1.5">

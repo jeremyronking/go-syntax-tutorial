@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import LessonView from '../components/LessonView';
-import CodeRunner from '../components/CodeRunner';
 import TerminalPane from '../components/TerminalPane';
+const CodeRunner = lazy(() => import('../components/CodeRunner'));
 import Checkpoint from '../components/Checkpoint';
 import AnnotatedPane from '../components/AnnotatedPane';
 import { lessonBySlug, neighbouringLessons } from '../content/lessons';
@@ -22,12 +22,12 @@ export default function LessonPage() {
     return (
       <Layout>
         <div className="mx-auto max-w-prose px-5 py-12">
-          <p className="font-mono text-sm text-gopher-500">404</p>
+          <p className="font-mono text-sm text-gopher-700 dark:text-gopher-500">404</p>
           <h1 className="mt-2 text-2xl font-semibold">Lesson not found</h1>
           <p className="mt-2 text-muted">
             No lesson is registered under <code className="font-mono">{slug}</code>.
           </p>
-          <Link to="/" className="mt-6 inline-block text-sm text-gopher-400 hover:underline">
+          <Link to="/" className="mt-6 inline-block text-sm text-gopher-700 hover:underline dark:text-gopher-400">
             &larr; Back to overview
           </Link>
         </div>
@@ -84,7 +84,7 @@ function LessonContent({ lesson }: { lesson: Lesson }) {
               type="button"
               onClick={() => markComplete(lesson.slug)}
               disabled={status === 'complete'}
-              className="rounded-md border border-divider bg-elevated px-3 py-1.5 text-sm text-muted transition-colors hover:border-gopher-600 hover:text-fg disabled:cursor-default disabled:border-gopher-700 disabled:text-gopher-300"
+              className="rounded-md border border-divider bg-elevated px-3 py-1.5 text-sm text-muted transition-colors hover:border-gopher-600 hover:text-fg disabled:cursor-default disabled:border-gopher-700 disabled:text-gopher-700 dark:disabled:text-gopher-300"
             >
               {status === 'complete' ? 'Completed' : 'Mark complete'}
             </button>
@@ -112,12 +112,20 @@ function LessonWorkbench({ lesson, onRun, onDraftChange }: WorkbenchProps) {
   switch (lesson.runMode) {
     case 'playground':
       return (
-        <CodeRunner
-          key={lesson.slug}
-          lesson={lesson}
-          onRun={onRun}
-          onDraftChange={onDraftChange}
-        />
+        <Suspense
+          fallback={
+            <div className="grid min-h-[24rem] place-items-center bg-app font-mono text-xs text-subtle">
+              Loading editor…
+            </div>
+          }
+        >
+          <CodeRunner
+            key={lesson.slug}
+            lesson={lesson}
+            onRun={onRun}
+            onDraftChange={onDraftChange}
+          />
+        </Suspense>
       );
     case 'terminal':
       return <TerminalPane title={lesson.title} lines={lesson.terminalOutput ?? []} />;

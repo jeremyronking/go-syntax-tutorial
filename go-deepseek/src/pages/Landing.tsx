@@ -8,12 +8,12 @@ export default function Landing() {
   return (
     <Layout>
       <div className="mx-auto max-w-prose px-5 py-10 sm:py-16">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gopher-500">GoTour</p>
+        <p className="font-mono text-xs uppercase tracking-[0.3em] text-gopher-700 dark:text-gopher-500">GoTour</p>
         <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
           Go, the way you&rsquo;d learn it on the job
         </h1>
         <p className="mt-4 text-muted">
-          Sixty-three runnable lessons and eleven checkpoints for engineers who already program.
+          Sixty-three lessons and eleven checkpoints for engineers who already program.
           Syntax, idioms, gotchas, and the toolchain commands you will actually type.
         </p>
 
@@ -47,8 +47,8 @@ export default function Landing() {
                 to={`/lesson/${section.firstSlug}`}
                 className="group block h-full rounded-lg border border-divider bg-elevated p-4 transition-colors hover:border-gopher-600"
               >
-                <span className="font-mono text-xs text-gopher-500">{section.letter}</span>
-                <span className="ml-2 font-medium group-hover:text-gopher-300">
+                <span className="font-mono text-xs text-gopher-700 dark:text-gopher-500">{section.letter}</span>
+                <span className="ml-2 font-medium group-hover:text-gopher-700 dark:group-hover:text-gopher-300">
                   {section.title}
                 </span>
                 <p className="mt-1 text-sm text-muted">{section.blurb}</p>
